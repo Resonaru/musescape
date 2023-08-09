@@ -1,0 +1,29 @@
+{
+  "name": "musescape",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "npm run build && firebase deploy",
+    "test:unit": "vitest",
+    "test:e2e": "start-server-and-test preview http://localhost:4173 'cypress run --e2e'",
+    "test:e2e:dev": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress open --e2e'"
+  },
+  "dependencies": {
+    "firebase": "^10.1.0",
+    "pinia": "^2.1.4",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "@vue/test-utils": "^2.4.1",
+    "cypress": "^12.17.2",
+    "jsdom": "^22.1.0",
+    "start-server-and-test": "^2.0.0",
+    "vite": "^4.4.6",
+    "vitest": "^0.33.0"
+  }
+}
