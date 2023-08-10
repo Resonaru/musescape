@@ -1,3 +1,8 @@
 # Musescape
-#### A Resonar™ project.
-eeee
+
+## A Resonar™ project.
+
+[Komay Sugiyama](https://github.com/zenxha)
+
+
+
