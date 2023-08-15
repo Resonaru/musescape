@@ -1,23 +1,36 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+
 import HelloWorld from './components/HelloWorld.vue'
+import Sidebar from './components/Sidebar.vue'
+import Feed from './components/Feed.vue'
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <v-container>
+    <v-layout class="rounded rounded-md">
+    <v-app-bar color="surface-variant" title="Musescape"></v-app-bar>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+    <v-navigation-drawer>
+      <v-list>
+        <Sidebar/>
+      </v-list>
+    </v-navigation-drawer>
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
+    <v-navigation-drawer location="right">
+      <v-list>
+        <v-list-item title="Drawer right"></v-list-item>
+      </v-list>
+    </v-navigation-drawer>
 
-  <RouterView />
+    <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
+      <Feed/>
+    </v-main>
+  </v-layout>
+</v-container>
+
+  
 </template>
 
 <style scoped>
@@ -31,30 +44,6 @@ header {
   margin: 0 auto 2rem;
 }
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
 
 @media (min-width: 1024px) {
   header {
