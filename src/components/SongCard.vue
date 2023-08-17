@@ -18,7 +18,7 @@
                 variant="outlined"
                 size="small"
                 >
-                Join Discussion
+                <RouterLink :to="'/song/'+songObject.ID">Join discussion</RouterLink>
                 </v-btn>
             </v-card-actions>
             </div>
@@ -50,7 +50,8 @@
                     artist: "YOASOBI",
                     img: "https://i.scdn.co/image/ab67616d0000b273b7d6ca50bf766ad72226290c",
                     text: "default text",
-                    timestamp: new Date('August 15, 2023 03:24:00')
+                    timestamp: new Date('August 15, 2023 03:24:00'),
+                    ID: "0001"
                 };
             }
         }
