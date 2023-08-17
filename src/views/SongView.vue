@@ -2,9 +2,10 @@
     <div class="about">
       <h1>This is a song page</h1>
     </div>
-  </template>
+
+</template>
   
-  <style>
+<style>
   @media (min-width: 1024px) {
     .about {
       min-height: 100vh;
@@ -12,5 +13,9 @@
       align-items: center;
     }
   }
-  </style>
-  
+</style>
+
+<script setup>
+    import SongCard from '../components/SongCard.vue';
+    
+</script>
