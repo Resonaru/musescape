@@ -28,16 +28,13 @@
 </script>
 
 <template>
+    <!-- <div class="scrollable text-center green flex-grow-1 flex-shrink-0 overflow-auto"> -->
       <v-row dense>
-        
-        <template v-for="songItem in songList">
-            <v-col cols="12">
-                <SongCard :songObject="songItem"/>
-            </v-col>
-        </template>
- 
-        
-
-       
+            <template v-for="songItem in songList">
+                <v-col cols="12">
+                    <SongCard :songObject="songItem"/>
+                </v-col>
+            </template> 
       </v-row>
+    <!-- </div> -->
 </template>

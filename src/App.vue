@@ -1,7 +1,4 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-
-import HelloWorld from './components/HelloWorld.vue'
 import Sidebar from './components/Sidebar.vue'
 import Feed from './components/Feed.vue'
 import Search from './components/Search.vue'
@@ -73,10 +70,10 @@ header {
   }
 
   nav {
-    text-align: left;
+    text-align: middle;
     margin-left: -1rem;
     font-size: 1rem;
-
+    background-color: rgb(16, 16, 16);
     padding: 1rem 0;
     margin-top: 1rem;
   }
