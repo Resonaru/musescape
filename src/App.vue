@@ -1,14 +1,24 @@
 <script setup>
 import Sidebar from './components/Sidebar.vue'
 import Feed from './components/Feed.vue'
+import Search from './components/Search.vue'
 
 </script>
 
 <template>
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
   <v-container>
     <v-layout class="rounded rounded-md">
-    <v-app-bar color="surface-variant" title="Musescape"></v-app-bar>
-
+    <v-app-bar app color="surface-variant">
+      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <v-toolbar-title class="mx-auto">Musescape</v-toolbar-title>
+      <div class="mx-auto">
+        <Search style="width: 300px;" />
+      </div>
+      <v-spacer></v-spacer>
+      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+    </v-app-bar>
+      
     <v-navigation-drawer>
       <v-list>
         <Sidebar/>
