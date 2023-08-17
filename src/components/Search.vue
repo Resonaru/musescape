@@ -6,11 +6,12 @@
 
 
 <template>
-    <v-text-field
+
+      <v-text-field
         :loading="loading"
         density="compact"
         variant="solo"
-        label="Search for a song"
+        label="Search songs"
         append-inner-icon="mdi-magnify"
         single-line
         hide-details

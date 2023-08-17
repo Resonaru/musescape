@@ -11,13 +11,14 @@
 
             <v-card-subtitle>{{ songObject.artist }}</v-card-subtitle>
             <v-card-text>{{ songObject.text }}</v-card-text>
+            <v-card-subtitle>{{ songObject.timestamp }}</v-card-subtitle>
             <v-card-actions>
                 <v-btn
                 class="ms-2"
                 variant="outlined"
                 size="small"
                 >
-                Join discussion
+                Join Discussion
                 </v-btn>
             </v-card-actions>
             </div>
@@ -49,8 +50,7 @@
                     artist: "YOASOBI",
                     img: "https://i.scdn.co/image/ab67616d0000b273b7d6ca50bf766ad72226290c",
                     text: "default text",
-                    timestamp: new Date('August 15, 2023 03:24:00'),
-                    ID: "abcdef"
+                    timestamp: new Date('August 15, 2023 03:24:00')
                 };
             }
         }

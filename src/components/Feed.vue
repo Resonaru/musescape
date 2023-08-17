@@ -34,6 +34,20 @@
                     img: "https://i.scdn.co/image/ab67616d0000b273b7d6ca50bf766ad72226290c",
                     timestamp: new Date('August 15, 2023 03:24:00'),
                     ID: "0002"
+                },
+                {
+                    title: "Idol",
+                    artist: "YOASOBI",
+                    img: "https://i.scdn.co/image/ab67616d0000b273b7d6ca50bf766ad72226290c",
+                    timestamp: new Date('August 15, 2023 03:24:00'),
+                    ID: "0002"
+                },
+                {
+                    title: "Idol",
+                    artist: "YOASOBI",
+                    img: "https://i.scdn.co/image/ab67616d0000b273b7d6ca50bf766ad72226290c",
+                    timestamp: new Date('August 15, 2023 03:24:00'),
+                    ID: "0002"
                 }
         ]
             }
