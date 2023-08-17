@@ -2,6 +2,7 @@
 import Sidebar from './components/Sidebar.vue'
 import Feed from './components/Feed.vue'
 import Search from './components/Search.vue'
+import SpotifyAuth from './components/SpotifyAuth.vue';
 
 </script>
 
@@ -13,7 +14,15 @@ import Search from './components/Search.vue'
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
       <v-toolbar-title class="mx-auto">Musescape</v-toolbar-title>
       <div class="mx-auto">
-        <Search style="width: 300px;" />
+        <v-sheet class="d-flex">
+          <div>
+            <Search style="width: 300px;" />
+          </div>
+          <div>
+            <SpotifyAuth />
+          </div>
+        </v-sheet>
+
       </div>
       <v-spacer></v-spacer>
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
