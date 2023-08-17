@@ -18,7 +18,7 @@
                 variant="outlined"
                 size="small"
                 >
-                Join Discussion
+                <RouterLink to="/songView">Join discussion</RouterLink>
                 </v-btn>
             </v-card-actions>
             </div>
