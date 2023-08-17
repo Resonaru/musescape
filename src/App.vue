@@ -1,23 +1,43 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import Sidebar from './components/Sidebar.vue'
+import Feed from './components/Feed.vue'
+import Search from './components/Search.vue'
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <v-container>
+    <v-layout class="rounded rounded-md">
+    <v-app-bar app color="surface-variant">
+      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <v-toolbar-title class="mx-auto">Musescape</v-toolbar-title>
+      <div class="mx-auto">
+        <Search style="width: 300px;" />
+      </div>
+      <v-spacer></v-spacer>
+      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+    </v-app-bar>
+      
+    <v-navigation-drawer>
+      <v-list>
+        <Sidebar/>
+      </v-list>
+    </v-navigation-drawer>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+    <v-navigation-drawer location="right">
+      <v-list>
+        <v-list-item title="Drawer right"></v-list-item>
+      </v-list>
+    </v-navigation-drawer>
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
+    <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
+      <Feed/>
+    </v-main>
+  </v-layout>
+</v-container>
 
-  <RouterView />
+  
 </template>
 
 <style scoped>
@@ -31,30 +51,6 @@ header {
   margin: 0 auto 2rem;
 }
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
 
 @media (min-width: 1024px) {
   header {
@@ -74,10 +70,10 @@ nav a:first-of-type {
   }
 
   nav {
-    text-align: left;
+    text-align: middle;
     margin-left: -1rem;
     font-size: 1rem;
-
+    background-color: rgb(16, 16, 16);
     padding: 1rem 0;
     margin-top: 1rem;
   }

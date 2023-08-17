@@ -11,6 +11,7 @@
 
             <v-card-subtitle>{{ songObject.artist }}</v-card-subtitle>
             <v-card-text>{{ songObject.text }}</v-card-text>
+            <v-card-subtitle>{{ songObject.timestamp }}</v-card-subtitle>
             <v-card-actions>
                 <v-btn
                 class="ms-2"
