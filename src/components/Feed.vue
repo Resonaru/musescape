@@ -99,7 +99,10 @@ const songConverter = {
 <template>
     <!-- <div class="scrollable text-center green flex-grow-1 flex-shrink-0 overflow-auto"> -->
       <v-row dense>
-        <template v-if="!loading">
+        <template v-if="loading">
+            <h1>Loading feed...</h1>
+        </template>
+        <template v-else>
             <template v-for="songItem in songList">
                 <v-col cols="12">
                     <SongCard :songObject="songItem"/>
