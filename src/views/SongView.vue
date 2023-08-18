@@ -8,8 +8,14 @@
         <v-col cols="12" md="8">
           <v-row>
             <v-col cols="12">
-              <h1 class="song-title">Idol</h1>
-              <h2 class="song-artist">YOASOBI</h2>
+              <template v-if="songData">
+                <h1 class="song-title">{{ songData.title }}</h1>
+                <h2 class="song-artist">YOASOBI</h2>
+                <h2>ID: {{ id }}</h2>
+              </template>
+              <template v-else>
+                <h1>Loading song data...</h1>
+              </template>
             </v-col>
             <v-col cols="12">
               <v-card class="lyrics">
@@ -61,21 +67,41 @@ import {
   where,
   deleteDoc,
 } from 'firebase/firestore'
+
+
 export default {
+
   props: ['id'], // Access the song ID from the route parameter
   data() {
     return {
       songData: null, // Initialize with null or an empty object
     };
   },
-  created() {
-    // Fetch song data using the ID from Firestore
-    // Update this.songData with the fetched data
-  },
+
+  async created() {
+      try {
+        console.log(`Attempting to fetch song ${this.id}`);
+        const docRef = doc(db, "songs", "ycaBLqkvQ412TEzrVJnO");
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          console.log("Document data:", docSnap.data());
+          
+          this.songData = {
+            title: docSnap.data().title,
+            img: docSnap.data().img
+          }
+          console.log(`Successfully fetched song ${this.songData.title}`)
+        } else {
+          // docSnap.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      } catch(e) {
+
+      }
+    },
+
   methods: {
-    querySong() {
-      console.log("querying current song")
-    }
         }
 };
 </script>

@@ -12,43 +12,15 @@
                     title: "Eat the Wind",
                     img: "https://i.scdn.co/image/ab67616d0000b2734e25902b79f09e0c71f6c552",
                     timestamp: new Date('August 15, 2023 03:24:00'),
-                    ID: "0001"
+                    ID: "qgVboFyiK6uvSxvKgvwk"
                 },
                 {
                     title: "Idol",
                     artist: "YOASOBI",
                     img: "https://i.scdn.co/image/ab67616d0000b273b7d6ca50bf766ad72226290c",
                     timestamp: new Date('August 15, 2023 03:24:00'),
-                    ID: "0002"
+                    ID: "ycaBLqkvQ412TEzrVJnO"
                 },
-                {
-                    title: "Idol",
-                    artist: "YOASOBI",
-                    img: "https://i.scdn.co/image/ab67616d0000b273b7d6ca50bf766ad72226290c",
-                    timestamp: new Date('August 15, 2023 03:24:00'),
-                    ID: "0002"
-                },
-                {
-                    title: "Idol",
-                    artist: "YOASOBI",
-                    img: "https://i.scdn.co/image/ab67616d0000b273b7d6ca50bf766ad72226290c",
-                    timestamp: new Date('August 15, 2023 03:24:00'),
-                    ID: "0002"
-                },
-                {
-                    title: "Idol",
-                    artist: "YOASOBI",
-                    img: "https://i.scdn.co/image/ab67616d0000b273b7d6ca50bf766ad72226290c",
-                    timestamp: new Date('August 15, 2023 03:24:00'),
-                    ID: "0002"
-                },
-                {
-                    title: "Idol",
-                    artist: "YOASOBI",
-                    img: "https://i.scdn.co/image/ab67616d0000b273b7d6ca50bf766ad72226290c",
-                    timestamp: new Date('August 15, 2023 03:24:00'),
-                    ID: "0002"
-                }
         ]
             }
         }
