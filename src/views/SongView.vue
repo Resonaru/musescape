@@ -48,6 +48,19 @@
 </template>
 
 <script>
+
+import { db } from '@/firebase';
+import {
+  collection,
+  doc,
+  addDoc,
+  setDoc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+  deleteDoc,
+} from 'firebase/firestore'
 export default {
   props: ['id'], // Access the song ID from the route parameter
   data() {
@@ -59,6 +72,11 @@ export default {
     // Fetch song data using the ID from Firestore
     // Update this.songData with the fetched data
   },
+  methods: {
+    querySong() {
+      console.log("querying current song")
+    }
+        }
 };
 </script>
 
