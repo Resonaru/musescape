@@ -20,5 +20,21 @@
       username: null,
       password: null,
     }),
-  }
+    methods: {
+    async login(event) {
+      event.preventDefault();
+      try {
+        const response = await this.$axios.post('/api/login', {
+          username: this.username,
+          password: this.password,
+        });
+        const token = response.data.token; 
+        this.$store.dispatch('login', token);
+        this.$router.push('/'); //redirects to home 
+      } catch (error) {
+        console.error('Login failed:', error);
+      }
+    },
+  },
+};
 </script>
