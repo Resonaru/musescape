@@ -77,12 +77,13 @@ const songConverter = {
             this.loading = true;
             console.log("querying song database...")
             const querySnapshot = await getDocs(collection(db, "songs"));
-            querySnapshot.forEach((doc) => {
+            querySnapshot.forEach(async (doc) => {
             // doc.data() is never undefined for query doc snapshots
                 const song = doc.data();
+                const artist = (await getDoc(song.artist)).data();
                 this.songList.push({
                     title: song.title,
-                    artist: 'placeholder',
+                    artist: artist.name,
                     img: song.img,
                     timestamp: new Date('August 15, 2023 03:24:00'),
                     ID: doc.id
