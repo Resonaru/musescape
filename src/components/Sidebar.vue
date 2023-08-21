@@ -8,6 +8,8 @@
         <RouterLink to="/"><i class="material-icons icon-center">home</i>Home</RouterLink>
         <RouterLink to="/notifications"><i class="material-icons icon-center">notifications</i>Notifications</RouterLink>
         <RouterLink to="/profile"><i class="material-icons icon-center">account_circle</i>Profile</RouterLink>
+        <RouterLink to="/login"><i class="material-icons icon-center">account_circle</i>Login</RouterLink>
+        <!-- TODO: if user is logged in, show profile, else show login -->
       </nav>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" title="User Authentication">
+  <v-card class="mx-auto" max_width="355" title="User Authentication">
     <v-container>
       <v-text-field v-model="username" label="Username" variant="underlined"></v-text-field>
       <v-text-field v-model="password" label="Password" variant="underlined"></v-text-field>

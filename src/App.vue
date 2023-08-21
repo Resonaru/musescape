@@ -9,11 +9,9 @@ import Search from './components/Search.vue'
   <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
   <v-container>
     <v-layout class="rounded rounded-md">
-    <v-app-bar app color="rgb(16,16,16)">
-      <v-app-bar-nav-icon>
-        <RouterLink to="/"></RouterLink>
-      </v-app-bar-nav-icon>
-      <v-toolbar-title class="mx-auto" style="color: hsla(160, 100%, 37%, 1);;">Musescape</v-toolbar-title>
+    <v-app-bar app color="surface-variant">
+      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <v-toolbar-title class="mx-auto">Musescape</v-toolbar-title>
       <div class="mx-auto">
         <Search style="width: 300px;" />
       </div>
@@ -34,7 +32,7 @@ import Search from './components/Search.vue'
     </v-navigation-drawer>
 
     <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
-      <Feed/>
+      <RouterView/>
     </v-main>
   </v-layout>
 </v-container>
