@@ -2,6 +2,7 @@
 import Sidebar from './components/Sidebar.vue'
 import Feed from './components/Feed.vue'
 import Search from './components/Search.vue'
+import { RouterLink, RouterView } from 'vue-router'
 
 </script>
 
@@ -27,14 +28,10 @@ import Search from './components/Search.vue'
       </v-list>
     </v-navigation-drawer>
 
-    <v-navigation-drawer location="right" style="background-color: black;" :width="325">
-          Trending now
-    </v-navigation-drawer>
+
+    <RouterView/>
 
 
-      <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
-        <RouterView/>
-    </v-main>
 
   </v-layout>
 </v-container>

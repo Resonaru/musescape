@@ -10,3 +10,14 @@ export const useCounterStore = defineStore('counter', () => {
 
   return { count, doubleCount, increment }
 })
+
+export const useSongStore = defineStore('song', {
+  state: () => ({
+    songDetails: null,
+  }),
+  actions: {
+    setSongDetails(details) {
+      this.songDetails = details;
+    },
+  },
+});
