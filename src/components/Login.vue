@@ -19,23 +19,24 @@
     data: () => ({
       username: null,
       password: null,
+      loggedIn: false,
     }),
-    methods: {
-    async login(event) {
-      event.preventDefault();
-      try {
-        const response = await this.$axios.post('/api/login', {
-          username: this.username,
-          password: this.password,
-        });
-        const token = response.data.token; 
-        this.$store.dispatch('login', token);
-        this.$router.push('/'); //redirects to home 
-      } 
-      catch (error) {
-        console.error('Login failed:', error);
-      }
-    },
-  },
-};
+  }
+
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+const auth = getAuth();
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    loggedIn = true;
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/auth.user
+    const uid = user.uid;
+    // ...
+  } else {
+    loggedIn = false;
+    // User is signed out
+    // ...
+  }
+});
 </script>
