@@ -24,9 +24,12 @@
                 No posts yet
               </template>
               <template v-else>
+
                 <template v-for="post in posts">
-                  <h1>{{ post.title }}</h1>
-                  <p>{{ post.content }}</p>
+                  <v-card color="#5A5252" theme="dark">
+                    <v-card-title>{{ post.title }}</v-card-title>
+                  <v-card-text>{{ post.content }}</v-card-text>
+                  </v-card>
                 </template>
               </template>
           </v-col-12>
