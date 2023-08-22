@@ -3,8 +3,6 @@ import Feed from '../components/Feed.vue'
 </script>
 
 <template>
-
-      <Feed/>
-
+    Profile Page
     
 </template>

@@ -3,14 +3,11 @@
 
 </script>
 
-
-
 <template>
       <nav class="sidebar-nav">
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/notifications">Notifications</RouterLink>
-        <RouterLink to="/profile">Profile</RouterLink>
-
+        <RouterLink to="/"><i class="material-icons icon-center">home</i>Home</RouterLink>
+        <RouterLink to="/notifications"><i class="material-icons icon-center">notifications</i>Notifications</RouterLink>
+        <RouterLink to="/profile"><i class="material-icons icon-center">account_circle</i>Profile</RouterLink>
       </nav>
 </template>
 
@@ -19,31 +16,33 @@ nav {
   width: 100%;
   font-size: 12px;
   text-align: center;
-  margin-top: 2rem;
 }
 
 nav {
   width: 100%;
   font-size: 12px;
-  text-align: center;
+  text-align: left;
   display: flex;
   flex-direction: column;
   justify-content: center; 
-  margin-top: 2rem;
+  padding-left:20px;
   height: 100%; 
 }
 
 nav a.router-link-exact-active {
-  color: var(--color-text);
+  color: rgb(24, 249, 174);
+  font-weight:bold;
 }
 
 nav a.router-link-exact-active:hover {
   background-color: transparent;
+  border-radius: 10px;
 }
 
 nav a {
   display: inline-block;
-  padding: 0 1rem;
+  padding: 1rem;
+  padding-left:5rem;
   border-left: 1px solid var(--color-border);
 }
 
@@ -59,5 +58,13 @@ nav a:first-of-type {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.icon-center {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  padding-right:5px;
+  padding-bottom:5px;
 }
 </style>

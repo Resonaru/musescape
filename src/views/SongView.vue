@@ -1,21 +1,178 @@
 <template>
-    <div class="about">
-      <h1>This is a song page</h1>
-    </div>
+      <!-- Right side (Song Card) -->
+      <!-- <v-navigation-drawer location="right" style="background-color: black;" :width="325"> -->
+        
+        <v-navigation-drawer location="right" style="background-color: black;" :width="325">
+          <v-container class="fill-height d-flex align-center justify-center">
+           <template v-if="loading">
+            Loading song...
+            </template>
+            <template v-else>
+              <v-card cover class="song-card rounded-xl">
+                <v-img class="align-content-center rounded-xl" :src="songData.img" alt="Album Cover"></v-img>
+                <v-card-title style="color: aliceblue">{{ songData.title }}</v-card-title>
+                  <h2 class="song-artist">{{ songData.artist.name }}</h2>
+                  <h2>ID: {{ id }}</h2>
+                
+              </v-card>
+            </template>
+          </v-container>
+        </v-navigation-drawer>
+
+
+    <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
+      <v-row>
+          <v-col-12>
+
+          </v-col-12>
+          <v-col-12>
+          <h1>Discussions</h1>
+
+              <template v-if="noPosts">
+                No posts yet
+              </template>
+              <template v-else>
+                <v-chip class="ma-2" color="success" variant="outlined">
+                  <v-icon start icon="mdi-music"></v-icon>
+                  Music Theory
+                </v-chip>
+
+                <v-chip class="ma-2" color="primary" variant="outlined">
+                  Composition
+                  <v-icon end icon="mdi-grease-pencil"></v-icon>
+                </v-chip>
+
+                <v-chip class="ma-2" color="#fc389a" variant="outlined">
+                  Production
+                  <v-icon end icon="mdi-grease-pencil"></v-icon>
+                </v-chip>
+
+
+                <template v-for="post in posts">
+                  <col-12>
+                    <v-card class="rounded-xl" color="#5A5252" theme="dark">
+                      <v-card-subtitle>
+                        <v-avatar color="surface-variant" image="https://64.media.tumblr.com/e3e14a0b25723def857bb5cd8561b30c/720d78986e7588b3-49/s540x810/9b0565d3ea4eacd4b0b85f460be4afd5719556a3.jpg"></v-avatar>
+                        {{ post.author }}
+                      </v-card-subtitle>
+                      <v-card-title>{{ post.title }}</v-card-title>
+                    <v-card-text>{{ post.content }}</v-card-text>
+                  </v-card>
+                  </col-12>
+
+                </template>
+              </template>
+          </v-col-12>
+        </v-row>
+
+    </v-main>
+
+
+
+      <!-- </v-navigation-drawer> -->
+
+      <!-- Center side (Discussions) -->
+      
 
 </template>
-  
-<style>
-  @media (min-width: 1024px) {
-    .about {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-    }
-  }
-</style>
 
-<script setup>
-    import SongCard from '../components/SongCard.vue';
-    
+<script>
+
+import { db } from '@/firebase';
+import {
+  collection,
+  doc,
+  addDoc,
+  setDoc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+  deleteDoc,
+} from 'firebase/firestore'
+
+
+export default {
+
+  props: ['id'], // Access the song ID from the route parameter
+  data() {
+    return {
+      songData: null,
+      posts: [],
+      loading: true, // Loading screen renderred
+      noPosts: null
+    };
+  },
+
+  async created() {
+      try {
+        console.log(`Attempting to fetch song with id '${this.id}''`);
+        const songDocRef = doc(db, "songs", this.id);
+        const docSnap = await getDoc(songDocRef);
+        const song = docSnap.data();
+
+        if (docSnap.exists()) {
+          
+          this.songData = {
+            title: song.title,
+            img: song.img
+          }
+          console.log(`Successfully fetched song ${this.songData.title}`)
+
+          console.log("Now fetching artist...");
+          const artist = (await getDoc(song.artist)).data() // get artist object from firestore from reference
+          console.log(`Successfully fetched artist ${artist.name}`)
+          this.songData.artist = {
+            name: artist.name,
+            img: artist.img
+          }
+          console.log("Fetching discussions")
+          song.posts.forEach(async postReference => {
+            try {
+              const postObject = (await getDoc(postReference)).data();
+              console.log(postObject)
+              this.posts.push({
+                title: postObject.title,
+                author: (await getDoc(postObject.author)).data().username,
+                content: postObject.content
+            })
+            } catch(e) {
+              this.noPosts = true;
+            }
+          })
+          this.loading = false;
+  
+
+
+        } else {
+          // docSnap.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      } catch(e) {
+        console.error('Something went wrong bruh')
+      }
+    },
+
+  methods: {
+
+  }
+};
 </script>
+
+<style>
+
+.song-img {
+  
+}
+.song-title {
+  color: #FFFFFF
+}
+.song-artist {
+  color: #959090
+}
+
+.song-card {
+
+  background-color: #423A42;
+}
+</style>
