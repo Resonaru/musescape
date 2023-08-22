@@ -10,8 +10,12 @@ import Search from './components/Search.vue'
   <v-container>
     <v-layout class="rounded rounded-md">
     <v-app-bar app color="surface-variant">
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon>
+        <RouterLink to="/"></RouterLink>
+      </v-app-bar-nav-icon>
+      
       <v-toolbar-title class="mx-auto">Musescape</v-toolbar-title>
+      
       <div class="mx-auto">
         <Search style="width: 300px;" />
       </div>
