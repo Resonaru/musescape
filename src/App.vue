@@ -22,7 +22,7 @@ import { RouterLink, RouterView } from 'vue-router'
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
     </v-app-bar>
       
-    <v-navigation-drawer location="left">
+    <v-navigation-drawer location="left" :width="300">
       <v-list>
         <Sidebar/>
       </v-list>
