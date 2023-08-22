@@ -73,7 +73,7 @@ header {
     margin-left: -1rem;
     font-size: 1rem;
     background-color: rgb(16, 16, 16);
-    padding: 1rem 0;
+    /* padding: 1rem 0; */
     margin-top: 1rem;
   }
 }

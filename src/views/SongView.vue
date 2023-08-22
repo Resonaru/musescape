@@ -8,14 +8,15 @@
             Loading song...
             </template>
             <template v-else>
-              <v-card cover class="song-card rounded-xl justify-center" min-height="500" min-width="350">
-                <br><br>
-                <v-img class="rounded-xl mx-auto" :src="songData.img" alt="Album Cover" :width="250"></v-img>
+              
+                <v-card cover class="song-card rounded-xl justify-center" min-height="500" min-width="350">
+                  <br><br>
+                  <v-img class="rounded-xl mx-auto" :src="songData.img" alt="Album Cover" :width="250"></v-img>
 
-                <v-card-title class="text-center" style="color: aliceblue">{{ songData.title }}</v-card-title>
-                  <v-card-subtitle class="text-center song-artist">{{ songData.artist.name }}</v-card-subtitle>
-                
-              </v-card>
+                  <v-card-title class="text-center" style="color: aliceblue">{{ songData.title }}</v-card-title>
+                    <v-card-subtitle class="text-center song-artist">{{ songData.artist.name }}</v-card-subtitle>
+                  
+                </v-card>
             </template>
           </v-container>
         </v-navigation-drawer>
@@ -52,6 +53,7 @@
 
                 <template v-for="post in posts">
                   <col-12>
+                    <RouterLink :to="'/post/' + post.ID">
                     <v-card class="rounded-xl" color="#5A5252" theme="dark" min-width="500">
                       <v-card-subtitle>
                         <v-avatar color="surface-variant" image="https://64.media.tumblr.com/e3e14a0b25723def857bb5cd8561b30c/720d78986e7588b3-49/s540x810/9b0565d3ea4eacd4b0b85f460be4afd5719556a3.jpg"></v-avatar>
@@ -60,9 +62,10 @@
                       <v-card-title>{{ post.title }}</v-card-title>
                     <v-card-text>{{ post.content }}</v-card-text>
                   </v-card>
+                    </RouterLink>
+                  
                   </col-12>
                   <br>
-
                 </template>
               </template>
           </v-col-12>
@@ -133,26 +136,26 @@ export default {
           song.posts.forEach(async postReference => {
             try {
               const postObject = (await getDoc(postReference)).data();
+              const postID = postReference.id;
+              const author = (await getDoc(postObject.author)).data().username
               console.log(postObject)
               this.posts.push({
                 title: postObject.title,
-                author: (await getDoc(postObject.author)).data().username,
-                content: postObject.content
-            })
+                author: author,
+                content: postObject.content,
+                ID: postID,
+              })
             } catch(e) {
               this.noPosts = true;
             }
           })
           this.loading = false;
-  
-
-
         } else {
           // docSnap.data() will be undefined in this case
           console.log("No such document!");
         }
       } catch(e) {
-        console.error('Something went wrong bruh')
+        console.error('Something went wrong bruh', e)
       }
     },
 
@@ -164,9 +167,9 @@ export default {
 
 <style>
 
-.song-img {
+/* .song-img {
   
-}
+} */
 .song-title {
   color: #FFFFFF
 }
