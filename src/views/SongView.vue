@@ -2,27 +2,23 @@
       <!-- Right side (Song Card) -->
       <!-- <v-navigation-drawer location="right" style="background-color: black;" :width="325"> -->
         <v-row>
-          <v-col col="12">
+          <v-col-12>
             <template v-if="loading">
-          Loading song...
+            Loading song...
           
-        </template>
-        <template v-else>
-          <v-card cover class="song-card rounded-xl">
-            <v-img class="align-content-center rounded-xl" :src="songData.img" alt="Album Cover"></v-img>
-            <div class="song-details">
-              <h1 class="song-title">{{ songData.title }}</h1>
-              <h2 class="song-artist">{{ songData.artist.name }}</h2>
-              <h2>ID: {{ id }}</h2>
-            </div>
-          </v-card>
-        </template>
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col col="12">
-            <div>
+            </template>
+            <template v-else>
+              <v-card cover class="song-card rounded-xl">
+                <v-img class="align-content-center rounded-xl" :src="songData.img" alt="Album Cover"></v-img>
+                <div class="song-details">
+                  <h1 class="song-title">{{ songData.title }}</h1>
+                  <h2 class="song-artist">{{ songData.artist.name }}</h2>
+                  <h2>ID: {{ id }}</h2>
+                </div>
+              </v-card>
+            </template>
+          </v-col-12>
+          <v-col-12>
           <h1>Discussions</h1>
               <template v-if="noPosts">
                 No posts yet
@@ -33,9 +29,9 @@
                   <p>{{ post.content }}</p>
                 </template>
               </template>
-        </div>
-          </v-col>
+          </v-col-12>
         </v-row>
+
 
 
 
