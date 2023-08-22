@@ -25,15 +25,15 @@ import Search from './components/Search.vue'
       </v-list>
     </v-navigation-drawer>
 
-    <v-navigation-drawer location="right">
-      <v-list>
-        <v-list-item title="Drawer right"></v-list-item>
-      </v-list>
+    <v-navigation-drawer location="right" style="background-color: black;" :width="325">
+          Trending now
     </v-navigation-drawer>
 
-    <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
-      <RouterView/>
+
+      <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
+        <RouterView/>
     </v-main>
+
   </v-layout>
 </v-container>
 
