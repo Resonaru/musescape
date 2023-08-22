@@ -92,7 +92,7 @@ const songConverter = {
             });
             console.log('all songs loaded')
             this.loading = false;
-            this.songList.forEach(song => console.log(song.title))
+            this.songList.forEach(song => console.log(song))
         },
     }
 </script>
