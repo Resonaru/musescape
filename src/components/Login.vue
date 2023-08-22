@@ -31,7 +31,8 @@
         const token = response.data.token; 
         this.$store.dispatch('login', token);
         this.$router.push('/'); //redirects to home 
-      } catch (error) {
+      } 
+      catch (error) {
         console.error('Login failed:', error);
       }
     },
