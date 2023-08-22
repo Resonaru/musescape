@@ -1,12 +1,18 @@
 <script>
-    export default {
-        
-    }
+  import { mapStores } from 'pinia'
+  import { useSpotifyStore } from '../stores/spotifyAuthStore.js' 
+  export default {
+    computed: {
+      ...mapStores(useSpotifyStore),
+    },
+
+  }
 </script>
 
 
 <template>
 
+  
       <v-text-field
         :loading="loading"
         density="compact"
