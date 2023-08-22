@@ -15,28 +15,51 @@
 </template>
   
 <script>
-  export default {
-    data: () => ({
-      username: null,
-      password: null,
-      loggedIn: false,
-    }),
-  }
+//   export default {
+//     data: () => ({
+//       username: null,
+//       password: null,
+//       loggedIn: false,
+//     }),
+//   }
 
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+// import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-const auth = getAuth();
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    loggedIn = true;
-    // User is signed in, see docs for a list of available properties
-    // https://firebase.google.com/docs/reference/js/auth.user
-    const uid = user.uid;
-    // ...
-  } else {
-    loggedIn = false;
-    // User is signed out
-    // ...
-  }
-});
+// const auth = getAuth();
+// onAuthStateChanged(auth, (user) => {
+//   if (user) {
+//     loggedIn = true;
+//     // User is signed in, see docs for a list of available properties
+//     // https://firebase.google.com/docs/reference/js/auth.user
+//     const uid = user.uid;
+//     // ...
+//   } else {
+//     loggedIn = false;
+//     // User is signed out
+//     // ...
+//   }
+// });
+
+//Above is the example code from Firebase
+import { useAuthStore } from './auth';
+
+export default {
+  setup() {
+    const authStore = useAuthStore();
+
+    const login = () => {
+      authStore.login(email, password);
+    };
+
+    const logout = () => {
+      authStore.logout();
+    };
+
+    return {
+      login,
+      logout,
+    };
+  },
+};
+
 </script>
