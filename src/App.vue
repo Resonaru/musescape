@@ -11,7 +11,7 @@ import { RouterLink, RouterView } from 'vue-router'
   <v-container>
     <v-layout class="rounded rounded-md">
     <v-app-bar app color="rgb(16,16,16)">
-      <v-app-bar-nav-icon>
+      <v-app-bar-nav-icon icon="mdi-music" style="color: green">
         <RouterLink to="/"></RouterLink>
       </v-app-bar-nav-icon>
       <v-toolbar-title class="mx-auto" style="color: hsla(160, 100%, 37%, 1);;">Musescape</v-toolbar-title>

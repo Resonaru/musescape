@@ -2,17 +2,18 @@
       <!-- Right side (Song Card) -->
       <!-- <v-navigation-drawer location="right" style="background-color: black;" :width="325"> -->
         
-        <v-navigation-drawer location="right" style="background-color: black;" :width="325">
+        <v-navigation-drawer location="right" style="background-color: black;" :width="500">
           <v-container class="fill-height d-flex align-center justify-center">
            <template v-if="loading">
             Loading song...
             </template>
             <template v-else>
-              <v-card cover class="song-card rounded-xl">
-                <v-img class="align-content-center rounded-xl" :src="songData.img" alt="Album Cover"></v-img>
-                <v-card-title style="color: aliceblue">{{ songData.title }}</v-card-title>
-                  <h2 class="song-artist">{{ songData.artist.name }}</h2>
-                  <h2>ID: {{ id }}</h2>
+              <v-card cover class="song-card rounded-xl justify-center" min-height="500" min-width="350">
+                <br><br>
+                <v-img class="rounded-xl mx-auto" :src="songData.img" alt="Album Cover" :width="250"></v-img>
+
+                <v-card-title class="text-center" style="color: aliceblue">{{ songData.title }}</v-card-title>
+                  <v-card-subtitle class="text-center song-artist">{{ songData.artist.name }}</v-card-subtitle>
                 
               </v-card>
             </template>
@@ -20,13 +21,14 @@
         </v-navigation-drawer>
 
 
-    <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
+    <!-- <v-main class="d-flex align-center justify-center" style="min-height: 300px;"> -->
+      <v-main class="d-flex align-center" style="min-height: 300px;">
       <v-row>
           <v-col-12>
 
           </v-col-12>
           <v-col-12>
-          <h1>Discussions</h1>
+          <h1 class="text-left">Discussions</h1>
 
               <template v-if="noPosts">
                 No posts yet
@@ -50,7 +52,7 @@
 
                 <template v-for="post in posts">
                   <col-12>
-                    <v-card class="rounded-xl" color="#5A5252" theme="dark">
+                    <v-card class="rounded-xl" color="#5A5252" theme="dark" min-width="500">
                       <v-card-subtitle>
                         <v-avatar color="surface-variant" image="https://64.media.tumblr.com/e3e14a0b25723def857bb5cd8561b30c/720d78986e7588b3-49/s540x810/9b0565d3ea4eacd4b0b85f460be4afd5719556a3.jpg"></v-avatar>
                         {{ post.author }}
@@ -59,6 +61,7 @@
                     <v-card-text>{{ post.content }}</v-card-text>
                   </v-card>
                   </col-12>
+                  <br>
 
                 </template>
               </template>
