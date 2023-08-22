@@ -8,7 +8,6 @@
 <template>
 
       <v-text-field
-        :loading="loading"
         density="compact"
         variant="solo"
         label="Search songs"
