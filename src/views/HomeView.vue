@@ -4,9 +4,9 @@ import Feed from '../components/Feed.vue'
 
 <template>
 
-      <Feed/>
+      
       <v-navigation-drawer location="right" style="background-color: black;">
-        
+        <Feed/>
       </v-navigation-drawer>
 
     
