@@ -7,8 +7,8 @@
       <nav class="sidebar-nav">
         <RouterLink to="/"><i class="material-icons icon-center">home</i>Home</RouterLink>
         <RouterLink to="/notifications"><i class="material-icons icon-center">notifications</i>Notifications</RouterLink>
-        <RouterLink to="/profile" v-if="loggedIn"><i class="material-icons icon-center">account_circle</i>Profile</RouterLink>
-        <RouterLink to="/login" v-else><i class="material-icons icon-center">account_circle</i>Login</RouterLink>
+        <RouterLink to="/profile"><i class="material-icons icon-center" v-if="loggedIn">account_circle</i>Profile</RouterLink>
+        <RouterLink to="/login"><i class="material-icons icon-center">account_circle</i>Login</RouterLink>
         
         <!-- TODO: if user is logged in, show profile, else show login -->
       </nav>
