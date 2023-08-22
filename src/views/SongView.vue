@@ -1,22 +1,29 @@
 <template>
       <!-- Right side (Song Card) -->
       <!-- <v-navigation-drawer location="right" style="background-color: black;" :width="325"> -->
-        <v-row>
-          <v-col-12>
-            <template v-if="loading">
+        
+        <v-navigation-drawer location="right" style="background-color: black;" :width="325">
+          <v-container class="fill-height d-flex align-center justify-center">
+           <template v-if="loading">
             Loading song...
-          
             </template>
             <template v-else>
               <v-card cover class="song-card rounded-xl">
                 <v-img class="align-content-center rounded-xl" :src="songData.img" alt="Album Cover"></v-img>
-                <div class="song-details">
-                  <h1 class="song-title">{{ songData.title }}</h1>
+                <v-card-title style="color: aliceblue">{{ songData.title }}</v-card-title>
                   <h2 class="song-artist">{{ songData.artist.name }}</h2>
                   <h2>ID: {{ id }}</h2>
-                </div>
+                
               </v-card>
             </template>
+          </v-container>
+        </v-navigation-drawer>
+
+
+    <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
+      <v-row>
+          <v-col-12>
+
           </v-col-12>
           <v-col-12>
           <h1>Discussions</h1>
@@ -42,16 +49,23 @@
 
 
                 <template v-for="post in posts">
-                  <v-card color="#5A5252" theme="dark">
-                    <v-card-title>{{ post.title }}</v-card-title>
-                  <v-card-text>{{ post.content }}</v-card-text>
+                  <col-12>
+                    <v-card class="rounded-xl" color="#5A5252" theme="dark">
+                      <v-card-subtitle>
+                        <v-avatar color="surface-variant" image="https://64.media.tumblr.com/e3e14a0b25723def857bb5cd8561b30c/720d78986e7588b3-49/s540x810/9b0565d3ea4eacd4b0b85f460be4afd5719556a3.jpg"></v-avatar>
+                        {{ post.author }}
+                      </v-card-subtitle>
+                      <v-card-title>{{ post.title }}</v-card-title>
+                    <v-card-text>{{ post.content }}</v-card-text>
                   </v-card>
+                  </col-12>
+
                 </template>
               </template>
           </v-col-12>
         </v-row>
 
-
+    </v-main>
 
 
 
@@ -118,9 +132,9 @@ export default {
               const postObject = (await getDoc(postReference)).data();
               console.log(postObject)
               this.posts.push({
-              title: postObject.title,
-              author: (await getDoc(postObject.author)).data().username,
-              content: postObject.content
+                title: postObject.title,
+                author: (await getDoc(postObject.author)).data().username,
+                content: postObject.content
             })
             } catch(e) {
               this.noPosts = true;

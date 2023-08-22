@@ -28,16 +28,10 @@ import { RouterLink, RouterView } from 'vue-router'
       </v-list>
     </v-navigation-drawer>
 
-    <v-navigation-drawer location="right" style="background-color: black;" :width="325">
-      <v-container class="fill-height d-flex align-center justify-center">
-      <h1 style="color: aliceblue">Trending Now</h1>
-    </v-container>
-    </v-navigation-drawer>
+
+    <RouterView/>
 
 
-      <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
-        <RouterView/>
-    </v-main>
 
   </v-layout>
 </v-container>
