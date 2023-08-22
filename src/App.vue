@@ -2,6 +2,7 @@
 import Sidebar from './components/Sidebar.vue'
 import Feed from './components/Feed.vue'
 import Search from './components/Search.vue'
+import { RouterLink, RouterView } from 'vue-router'
 
 </script>
 
@@ -28,7 +29,9 @@ import Search from './components/Search.vue'
     </v-navigation-drawer>
 
     <v-navigation-drawer location="right" style="background-color: black;" :width="325">
-          Trending now
+      <v-container class="fill-height d-flex align-center justify-center">
+      <h1 style="color: aliceblue">Trending Now</h1>
+    </v-container>
     </v-navigation-drawer>
 
 

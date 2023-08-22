@@ -20,10 +20,26 @@
           </v-col-12>
           <v-col-12>
           <h1>Discussions</h1>
+
               <template v-if="noPosts">
                 No posts yet
               </template>
               <template v-else>
+                <v-chip class="ma-2" color="success" variant="outlined">
+                  <v-icon start icon="mdi-music"></v-icon>
+                  Music Theory
+                </v-chip>
+
+                <v-chip class="ma-2" color="primary" variant="outlined">
+                  Composition
+                  <v-icon end icon="mdi-grease-pencil"></v-icon>
+                </v-chip>
+
+                <v-chip class="ma-2" color="#fc389a" variant="outlined">
+                  Production
+                  <v-icon end icon="mdi-grease-pencil"></v-icon>
+                </v-chip>
+
 
                 <template v-for="post in posts">
                   <v-card color="#5A5252" theme="dark">
