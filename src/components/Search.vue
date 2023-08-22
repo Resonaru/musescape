@@ -17,6 +17,7 @@ import { useSpotifyStore } from '../stores/spotifyAuthStore';
 export default {
   components: {
     SearchResultsItem,
+    SearchResultsDropdown,
   },
   data() {
     return {

@@ -2,7 +2,6 @@
 import Sidebar from './components/Sidebar.vue'
 import Feed from './components/Feed.vue'
 import Search from './components/Search.vue'
-import SpotifyAuth from './components/SpotifyAuth.vue';
 
 </script>
 
@@ -17,9 +16,6 @@ import SpotifyAuth from './components/SpotifyAuth.vue';
         <v-sheet class="d-flex">
           <div>
             <Search style="width: 300px;" />
-          </div>
-          <div>
-            <SpotifyAuth />
           </div>
         </v-sheet>
 
