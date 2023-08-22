@@ -8,12 +8,62 @@
             Loading song...
             </template>
             <template v-else>
-              <v-card cover class="song-card rounded-xl justify-center" min-height="500" min-width="350">
+              <v-card cover class="song-card rounded-xl justify-center" min-height="500" width="350">
                 <br><br>
                 <v-img class="rounded-xl mx-auto" :src="songData.img" alt="Album Cover" :width="250"></v-img>
 
                 <v-card-title class="text-center" style="color: aliceblue">{{ songData.title }}</v-card-title>
-                  <v-card-subtitle class="text-center song-artist">{{ songData.artist.name }}</v-card-subtitle>
+                <v-card-subtitle class="text-center song-artist">{{ songData.artist.name }}</v-card-subtitle>
+                <v-card-text style="color: aliceblue">
+                  I hate the silence now that you're not here<br>
+                  I thought one day you'd come around<br>
+                  Am I living in the past with all these questions never asked?<br>
+                  Will they keep me here?<br>
+                  It's so quiet in the stratosphere<br>
+                  I keep my space but I'm still bound<br>
+                  To the spell that we both cast but sometimes magic doesn't last<br>
+                  For me it did, for me it did<br>
+                  <br>
+                  I played out this scene<br>
+                  Of you with each other<br>
+                  But not that with me<br>
+                  And that kind of love<br>
+                  Is so hard to see<br>
+                  Now here we are<br>
+                  It's him that you need<br>
+                  Looks just like us<br>
+                  Us without me<br>
+                  <br>
+                  Why do I fade into that heart of yours?<br>
+                  'Cause you still hold a spot in mine<br>
+                  But you're in someone else's room<br>
+                  While mine still smells of your perfume<br>
+                  I'm tethered<br>
+                  Forever<br>
+                  <br>
+                  I played out this scene<br>
+                  Of you with each other<br>
+                  But not that with me<br>
+                  And that kind of love<br>
+                  Is so hard to see<br>
+                  Now here we are<br>
+                  It's him that you need<br>
+                  Looks just like us<br>
+                  Us without me<br>
+                  <br>
+                  Ooh, oh oh oh<br>
+                  Without me, oh oh<br>
+                  <br>
+                  Oh, I played out this scene<br>
+                  Of you with each other<br>
+                  But not that with me<br>
+                  And that kind of love<br>
+                  Is so hard to see<br>
+                  Now here we are<br>
+                  It's him that you need<br>
+                  Looks just like us<br>
+                  Us without me
+                </v-card-text>
                 
               </v-card>
             </template>
@@ -22,7 +72,7 @@
 
 
     <!-- <v-main class="d-flex align-center justify-center" style="min-height: 300px;"> -->
-      <v-main class="d-flex align-center" style="min-height: 300px;">
+      <v-main class="d-flex align-center">
       <v-row>
           <v-col-12>
 
@@ -49,10 +99,15 @@
                   <v-icon end icon="mdi-grease-pencil"></v-icon>
                 </v-chip>
 
+                <v-chip class="ma-2" color="orange" variant="outlined">
+                  Lyrics
+                  <v-icon end icon="mdi-note"></v-icon>
+                </v-chip>
+
 
                 <template v-for="post in posts">
                   <col-12>
-                    <v-card class="rounded-xl" color="#5A5252" theme="dark" min-width="500">
+                    <v-card class="rounded-xl" color="#5A5252" theme="dark" min-width="650">
                       <v-card-subtitle>
                         <v-avatar color="surface-variant" image="https://64.media.tumblr.com/e3e14a0b25723def857bb5cd8561b30c/720d78986e7588b3-49/s540x810/9b0565d3ea4eacd4b0b85f460be4afd5719556a3.jpg"></v-avatar>
                         {{ post.author }}
