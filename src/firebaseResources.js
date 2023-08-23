@@ -8,7 +8,12 @@ import { getAuth } from 'firebase/auth'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  // TODO: Insert your firebase config information here
+  apiKey: "AIzaSyC0lYI5tp_6rTOFeoaWOKVNPO6h21HyJF4",
+  authDomain: "musescape-89f0a.firebaseapp.com",
+  projectId: "musescape-89f0a",
+  storageBucket: "musescape-89f0a.appspot.com",
+  messagingSenderId: "282894828706",
+  appId: "1:282894828706:web:87a34af063973817b703fb"
 };
 
 // Initialize Firebase

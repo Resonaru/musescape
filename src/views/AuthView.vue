@@ -17,28 +17,33 @@
 </template>
 
 <script>
-    import { useAuthStore } from '../stores/auth';
-    console.log("hi")
-    const register = ref(false);
-    const authStore = useAuthStore();
-    const credentials = reactive({
-        email:'',
-        password:''
-    });
-
-    const formTitle = computed(() => {
-        return register.value ? 'Register' : 'Login';
-    });
-    const onSubmit = () => {
-        if(!credentials.email || !credentials.password){
-            alert('please enter email and password');
-            return;
-        }
-        if(register.value){
-            authStore.registerUser(credentials);
-        }
-        else{
-            authStore.loginUser(credentials);
-        }
+export default {
+  data() {
+    return {
+      register: false,
+      credentials: {
+        email: '',
+        password: ''
+      }
+    };
+  },
+  computed: {
+    formTitle() {
+      return this.register ? 'Register' : 'Login';
     }
+  },
+  methods: {
+    onSubmit() {
+      if (!this.credentials.email || !this.credentials.password) {
+        alert('Please enter email and password');
+        return;
+      }
+      if (this.register) {
+        this.$store.dispatch('auth/registerUser', this.credentials);
+      } else {
+        this.$store.dispatch('auth/loginUser', this.credentials);
+      }
+    }
+  }
+};
 </script>
