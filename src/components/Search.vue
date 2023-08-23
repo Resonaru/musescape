@@ -10,7 +10,21 @@
       hide-no-data
       hide-details
       label="Search songs"
-    ></v-autocomplete>
+    >
+      <template v-slot:item="{ props, item }">
+        <SearchResultsItem
+          v-bind="props"
+          :info="item"
+        ></SearchResultsItem>
+
+        <!-- <v-list-item
+          v-bind="props"
+          :prepend-avatar="item?.raw?.avatar"
+          :title="item?.raw?.name"
+          :subtitle="item?.raw?.group"
+        ></v-list-item> -->
+      </template>
+    </v-autocomplete>
 </template>
 
 <script>
@@ -21,7 +35,7 @@ import { useSpotifyAuthStore } from '../stores/spotifyAuthStore.js';
 
 export default {
   components: {
-    // SearchResultsItem,
+    SearchResultsItem,
     // SearchResultsDropdown,
   },
   computed: {
@@ -48,7 +62,7 @@ export default {
   },
   methods: {
     async getSearchQuery(userInput) {
-      loading = true;
+      this.loading = true;
       console.log('getSearchQuery')
       // console.log(this.spotifyAuthStore);
       // console.log(this.token);
@@ -58,7 +72,6 @@ export default {
         this.token = this.spotifyAuthStore.token; // Access the token from the store
       }
       if (userInput && this.token) {
-        setTimeout(() => {
             try {
             console.log('token ' + this.token)
             const response = await fetch(
@@ -82,12 +95,10 @@ export default {
           } catch (error) {
             console.error('Error fetching data from API:', error);
           }
-          loading = false;
-        }, 500)
+          this.loading = false;
       } else {
         this.searchResults = [];
       }
-
     },
   },
 
