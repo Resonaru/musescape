@@ -1,8 +1,9 @@
+<!-- Search.vue -->
 <template>
   <div class="search-bar">
     <input
       v-model="searchQuery"
-      @input="handleSearchInput"
+      @input="getSearchQuery"
       placeholder="Search..."
     />
     <SearchResultsDropdown v-if="showDropdown" :results="searchResults" />
@@ -12,28 +13,47 @@
 <script>
 import SearchResultsItem from './SearchResultsItem.vue';
 import SearchResultsDropdown from './SearchResultsDropdown.vue';
-import { useSpotifyStore } from '../stores/spotifyAuthStore';
+import { mapStores } from 'pinia';
+import { useSpotifyAuthStore } from '../stores/spotifyAuthStore.js';
 
 export default {
   components: {
     SearchResultsItem,
     SearchResultsDropdown,
   },
+  computed: {
+    ...mapStores(useSpotifyAuthStore), 
+    // {
+    //   token: 'token', // Access the token property from the store
+    //   getSpotifyToken: 'getSpotifyToken', // Access the action from the store
+    // }),
+  },
   data() {
     return {
       searchQuery: '',
       searchResults: [],
+      showDropdown: true,
+      token : ""
     };
   },
   methods: {
     async getSearchQuery() {
-      if (this.searchQuery) {
+      console.log('getSearchQuery')
+      // console.log(this.spotifyAuthStore);
+      // console.log(this.token);
+      if (!this.token) {
+        console.log('fetching token')
+        await this.spotifyAuthStore.getSpotifyToken(); // Call the action to get the token
+        this.token = this.spotifyAuthStore.token; // Access the token from the store
+      }
+      if (this.searchQuery && this.token) {
         try {
+          console.log('token ' + this.token)
           const response = await fetch(
-            `https://api.spotify.com/v1/search?q=${this.searchQuery}&type=track`, 
+            `https://api.spotify.com/v1/search?q=${this.searchQuery}&type=track&limit=3`, 
             {
               headers: {
-                Authorization: 'Bearer ' + useSpotifyStore.token,
+                Authorization: 'Bearer ' + this.token,
               }
             }
           );
@@ -44,8 +64,9 @@ export default {
             img: track.album.images.length > 0 ? track.album.images[0].url : '',
             type: track.type,
             id: track.id,
-            link: '/'+ `${this.type === track ? 'song' : 'artist'}  '/track${this.id}`,
+            link:`/${track.type === 'track' ? 'song' : 'artist'}/${track.id}`,
           }));
+          console.log(this.searchResults[0].name);
         } catch (error) {
           console.error('Error fetching data from API:', error);
         }
@@ -54,5 +75,6 @@ export default {
       }
     },
   },
+
 };
 </script>

@@ -41,9 +41,4 @@ export default {
 </script>
 
 <template>
-    <div>
-        <v-btn variant="outlined" @click="getAccessToken">Get Access Token</v-btn>
-        <br>
-        Access Token: {{ token }}
-    </div>
 </template>

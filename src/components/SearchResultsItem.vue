@@ -11,8 +11,9 @@ export default {
 
 <template>
     <v-btn
+    :class="bg-grey-darken-2"
     :href="info.link"
-    :rounded="rounded"
+    :rounded="lg"
     elevation="2">
         <template v-slot:prepend>
             <v-img
@@ -23,7 +24,7 @@ export default {
                 src="info.img"
             ></v-img>
         </template>
-            <div>
+            <div class="text-white">
                 {{ info.name }}
             </div>
     </v-btn>
