@@ -1,6 +1,7 @@
 <!-- Search.vue -->
 <template>
-      <v-autocomplete
+  <div class="bg-black">
+    <v-autocomplete
       v-model="select"
       v-model:search="search"
       :loading="loading"
@@ -9,35 +10,36 @@
       density="comfortable"
       hide-no-data
       hide-details
+      chips
+      closable-chips
       label="Search songs"
     >
-      <template v-slot:item="{ props, item }">
-        <SearchResultsItem
+      <template v-slot:chip="{ props, item }">
+        <v-chip
           v-bind="props"
-          :info="item"
-        ></SearchResultsItem>
+          :prepend-avatar="item.raw.img"
+          :text="item.raw.name"
+        ></v-chip>
+      </template>
 
-        <!-- <v-list-item
+      <template v-slot:item="{ props, item }">
+        <v-list-item
           v-bind="props"
-          :prepend-avatar="item?.raw?.avatar"
-          :title="item?.raw?.name"
-          :subtitle="item?.raw?.group"
-        ></v-list-item> -->
+          :prepend-avatar="item?.raw.img"
+          :title="item?.raw.name"
+          :subtitle="item?.raw.artist"
+          :href="item?.raw.link"
+        ></v-list-item>
       </template>
     </v-autocomplete>
+  </div>
 </template>
 
 <script>
-import SearchResultsItem from './SearchResultsItem.vue';
-import SearchResultsDropdown from './SearchResultsDropdown.vue';
 import { mapStores } from 'pinia';
 import { useSpotifyAuthStore } from '../stores/spotifyAuthStore.js';
 
 export default {
-  components: {
-    SearchResultsItem,
-    // SearchResultsDropdown,
-  },
   computed: {
     ...mapStores(useSpotifyAuthStore), 
     // {
@@ -91,7 +93,8 @@ export default {
               id: track.id,
               link:`/${track.type === 'track' ? 'song' : 'artist'}/${track.id}`,
             }));
-            console.log(this.searchResults[0].name);
+            console.log('Song name: ' + this.searchResults[0].name);
+            console.log(this.searchResults[0])
           } catch (error) {
             console.error('Error fetching data from API:', error);
           }
