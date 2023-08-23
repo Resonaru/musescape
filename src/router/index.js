@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import SongView from '../views/SongView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,7 +8,12 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../components/Feed.vue')
+      component: () => import('../views/HomeView.vue')
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: () => import('../views/ProfileView.vue')
     },
     {
       path: '/about',
@@ -18,14 +24,14 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     },
     {
-      path: '/songView',
-      name: 'songView',
-      component: () => import('../views/SongView.vue')
+      path: '/song/:id', // Dynamic route parameter :id
+      component: () => import('../views/SongView.vue'),
+      props: true, // Pass props to the component
     },
     {
-      path: '/login',
-      name: 'login',
-      component: () => import('../views/AuthView.vue')
+      path: '/post/:id',
+      component: () => import('../views/PostView.vue'),
+      props: true,
     }
   ]
 })

@@ -2,6 +2,7 @@
 import Sidebar from './components/Sidebar.vue'
 import Feed from './components/Feed.vue'
 import Search from './components/Search.vue'
+import { RouterLink, RouterView } from 'vue-router'
 
 </script>
 
@@ -9,9 +10,11 @@ import Search from './components/Search.vue'
   <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
   <v-container>
     <v-layout class="rounded rounded-md">
-    <v-app-bar app color="surface-variant">
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
-      <v-toolbar-title class="mx-auto">Musescape</v-toolbar-title>
+    <v-app-bar app color="rgb(16,16,16)">
+      <v-app-bar-nav-icon icon="mdi-music" style="color: green">
+        <RouterLink to="/"></RouterLink>
+      </v-app-bar-nav-icon>
+      <v-toolbar-title class="mx-auto" style="color: hsla(160, 100%, 37%, 1);;">Musescape</v-toolbar-title>
       <div class="mx-auto">
         <Search style="width: 300px;" />
       </div>
@@ -19,21 +22,17 @@ import Search from './components/Search.vue'
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
     </v-app-bar>
       
-    <v-navigation-drawer>
+    <v-navigation-drawer location="left" :width="300">
       <v-list>
         <Sidebar/>
       </v-list>
     </v-navigation-drawer>
 
-    <v-navigation-drawer location="right">
-      <v-list>
-        <v-list-item title="Drawer right"></v-list-item>
-      </v-list>
-    </v-navigation-drawer>
 
-    <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
-      <RouterView/>
-    </v-main>
+    <RouterView/>
+
+
+
   </v-layout>
 </v-container>
 
@@ -74,7 +73,7 @@ header {
     margin-left: -1rem;
     font-size: 1rem;
     background-color: rgb(16, 16, 16);
-    padding: 1rem 0;
+    /* padding: 1rem 0; */
     margin-top: 1rem;
   }
 }

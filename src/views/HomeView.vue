@@ -1,9 +1,14 @@
 <script setup>
-import SongCard from '../components/SongCard.vue'
+import Feed from '../components/Feed.vue'
 </script>
 
 <template>
-  <main>
-    <SongCard />
-  </main>
+
+
+      <v-navigation-drawer location="right" style="background-color: black;">
+       
+      </v-navigation-drawer>
+      <Feed/>
+
+    
 </template>
