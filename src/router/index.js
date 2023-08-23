@@ -28,6 +28,11 @@ const router = createRouter({
       component: () => import('../views/SongView.vue'),
       props: true, // Pass props to the component
     },
+    {
+      path: '/post/:id',
+      component: () => import('../views/PostView.vue'),
+      props: true,
+    }
   ]
 })
 
