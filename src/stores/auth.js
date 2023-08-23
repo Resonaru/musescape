@@ -24,6 +24,14 @@ export const useAuthStore = defineStore('authStore', () =>{
                 console.log(error.message);
             });
     };
+    const logoutUser = () => {
+        const auth = getAuth();
+        signOut(auth).then(() => {
+            // Sign-out successful.
+        }).catch((error) => {
+            // An error happened.
+        });
+    }
     return{
         registerUser,
         loginUser
