@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <v-card class="justify-center" justify="center" min-width="400" max-width="500" title="User Authentication">
     <v-container>
       <v-text-field v-model="email" label="Email" variant="underlined"></v-text-field>
@@ -42,4 +42,4 @@ onAuthStateChanged(auth, (user) => {
 
 
 
-</script>
+</script> -->
