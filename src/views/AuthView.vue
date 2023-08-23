@@ -1,5 +1,6 @@
 <template>
-    <v-card class="justify-center" justify="center" min-width="400" max-width="500" title="User Authentication">
+    <v-main class="justify-center align-center">
+        <v-card class="justify-center" justify="center" min-width="400" max-width="500" title="User Authentication">
       <v-container>
         <v-text-field v-model="email" label="Email" variant="underlined"></v-text-field>
         <v-text-field v-model="password" label="Password" variant="underlined"></v-text-field>
@@ -12,10 +13,12 @@
         </v-btn>
       </v-card-actions>
     </v-card>
-  </template>
+    </v-main>
+</template>
 
 <script>
     import { useAuthStore } from '../stores/auth';
+    console.log("hi")
     const register = ref(false);
     const authStore = useAuthStore();
     const credentials = reactive({
