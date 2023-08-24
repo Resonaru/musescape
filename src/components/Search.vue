@@ -2,6 +2,7 @@
 <template>
   <div class="bg-black">
     <v-autocomplete
+      ref="autocompleteRef"
       v-model="select"
       v-model:search="search"
       :loading="loading"
@@ -13,6 +14,7 @@
       chips
       closable-chips
       label="Search songs"
+      :menu-props="{ showOnFocus: true, showOnUpDown: true, showOnHover: false, closeOnClick: false, closeOnContentClick: false, openOnClick: false, openOnFocus: showDropdown }"
     >
       <template v-slot:chip="{ props, item }">
         <v-chip
@@ -53,7 +55,7 @@ export default {
       search: null,
       select: null,
       searchResults: [],
-      showDropdown: true,
+      showDropdown: false,
       token : ""
     };
   },
@@ -95,13 +97,23 @@ export default {
             }));
             console.log('Song name: ' + this.searchResults[0].name);
             console.log(this.searchResults[0])
+            this.showDropdown = true; // Open the dropdown
+            this.$nextTick(() => {
+              this.$refs.autocompleteRef.focus(); // Trigger focus
+            });
           } catch (error) {
             console.error('Error fetching data from API:', error);
           }
           this.loading = false;
       } else {
         this.searchResults = [];
+        this.showDropdown = false;
       }
+      this.showDropdown = true; // Open the dropdown
+      this.$nextTick(() => {
+        this.$refs.autocompleteRef.focus(); // Trigger focus
+      });
+      this.select = null;
     },
   },
 
