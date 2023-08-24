@@ -4,8 +4,13 @@
         
         <v-navigation-drawer location="right" style="background-color: black;" :width="450">
           <v-container class="fill-height d-flex align-center justify-center">
-           <template v-if="loading">
-            Loading song...
+           <template v-if="songLoading">
+            <v-skeleton-loader
+            class="mx-auto"
+            elevation="12"
+            max-width="400"
+            type="table-heading, list-item-two-line, image, table-tfoot"
+          ></v-skeleton-loader>
             </template>
             <template v-else>
               <v-card cover class="song-card rounded-xl justify-center" min-height="500" width="350">
@@ -75,15 +80,8 @@
       <v-main class="d-flex align-center">
       <v-row>
           <v-col-12>
-
-          </v-col-12>
-          <v-col-12>
           <h1 class="text-left">Discussions</h1>
 
-              <template v-if="noPosts">
-                No posts yet
-              </template>
-              <template v-else>
                 <v-chip class="ma-2" color="success" variant="outlined">
                   <v-icon start icon="mdi-music"></v-icon>
                   Music Theory
@@ -104,9 +102,17 @@
                   <v-icon end icon="mdi-note"></v-icon>
                 </v-chip>
                 
-
-
-                <template v-for="post in posts">
+                <template v-if="postsLoading">
+                  <v-skeleton-loader
+                  class="mx-auto"
+                  elevation="12"
+                  min-width="600"
+                  type="table-heading, list-item-two-line, image, table-tfoot"
+                ></v-skeleton-loader>
+                </template>
+                
+                <template v-else>
+                  <template v-for="post in posts">
                   <v-col col="12">
                     
                     <v-hover v-slot="{ isHovering, props }">
@@ -125,7 +131,8 @@
                   </v-col>
                   <br>
                 </template>
-              </template>
+                </template>
+
           </v-col-12>
         </v-row>
 
@@ -163,7 +170,8 @@ export default {
     return {
       songData: null,
       posts: [],
-      loading: true, // Loading screen renderred
+      songLoading: true, // Loading screen renderred
+      postsLoading: true,
       noPosts: null
     };
   },
@@ -182,6 +190,7 @@ export default {
             img: song.img
           }
           console.log(`Successfully fetched song ${this.songData.title}`)
+         
 
           console.log("Now fetching artist...");
           const artist = (await getDoc(song.artist)).data() // get artist object from firestore from reference
@@ -190,6 +199,7 @@ export default {
             name: artist.name,
             img: artist.img
           }
+          this.songLoading = false;
           console.log("Fetching discussions")
           song.posts.forEach(async postReference => {
             try {
@@ -203,11 +213,12 @@ export default {
                 content: postObject.content,
                 ID: postID,
               })
+
+              this.postsLoading = false;
             } catch(e) {
               this.noPosts = true;
             }
           })
-          this.loading = false;
         } else {
           // docSnap.data() will be undefined in this case
           console.log("No such document!");
