@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <v-main class="justify-center align-center">
         <v-card class="justify-center" justify="center" min-width="400" max-width="500" title="User Authentication">
       <v-container>
@@ -14,9 +14,16 @@
       </v-card-actions>
     </v-card>
     </v-main>
+</template> -->
+<template>
+  <div>
+    <auth-form></auth-form>
+  </div>
 </template>
 
+
 <script>
+import AuthForm from '../components/AuthForm.vue'
 export default {
   data() {
     return {
@@ -26,6 +33,9 @@ export default {
         password: ''
       }
     };
+  },
+  components:{
+    AuthForm,
   },
   computed: {
     formTitle() {
