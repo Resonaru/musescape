@@ -8,7 +8,7 @@ import Feed from '../components/Feed.vue'
       <v-navigation-drawer location="right" style="background-color: black;">
        
       </v-navigation-drawer>
-      <Feed/>
+        <Feed/>
 
     
 </template>
