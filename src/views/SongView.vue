@@ -216,12 +216,13 @@ export default {
 
               this.postsLoading = false;
             } catch(e) {
-              this.noPosts = true;
+              
             }
           })
         } else {
           // docSnap.data() will be undefined in this case
           console.log("No such document!");
+          this.noSong=true
         }
       } catch(e) {
         console.error('Something went wrong bruh', e)
