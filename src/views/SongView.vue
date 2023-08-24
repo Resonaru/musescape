@@ -2,7 +2,7 @@
       <!-- Right side (Song Card) -->
       <!-- <v-navigation-drawer location="right" style="background-color: black;" :width="325"> -->
         
-        <v-navigation-drawer location="right" style="background-color: black;" :width="500">
+        <v-navigation-drawer location="right" style="background-color: black;" :width="450">
           <v-container class="fill-height d-flex align-center justify-center">
            <template v-if="loading">
             Loading song...
@@ -103,13 +103,14 @@
                   Lyrics
                   <v-icon end icon="mdi-note"></v-icon>
                 </v-chip>
+                
 
 
                 <template v-for="post in posts">
                   <v-col col="12">
                     
                     <v-hover v-slot="{ isHovering, props }">
-                    <v-card class="rounded-xl song-card" color="#5A5252" theme="dark" min-width="500"  :elevation="isHovering ? 12 : 2">
+                    <v-card class="rounded-xl song-card" color="#5A5252" theme="dark" min-width="600"  :elevation="isHovering ? 12 : 2">
                       <v-card-subtitle>
                         <v-avatar color="surface-variant" image="https://64.media.tumblr.com/e3e14a0b25723def857bb5cd8561b30c/720d78986e7588b3-49/s540x810/9b0565d3ea4eacd4b0b85f460be4afd5719556a3.jpg"></v-avatar>
                         {{ post.author }}
