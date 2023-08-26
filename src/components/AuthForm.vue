@@ -29,10 +29,8 @@ export default {
       },
       isRegister: false,
       isSuccess: false,
+      authStore: useAuthStore(),
     };
-  },
-  setup(){
-    
   },
   computed: {
     formTitle() {
@@ -54,10 +52,10 @@ export default {
       console.log("bruh");
       if (this.isRegister) {
         console.log("bruh2");
-        this.$store.authStore.registerUser(this.credentials);
+        this.authStore.registerUser(this.credentials);
       } else {
         console.log("bruh3");
-        this.$store.authStore.loginUser(this.credentials);
+        this.authStore.loginUser(this.credentials);
       }
       this.isSuccess = true;
     },
