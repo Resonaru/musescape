@@ -80,10 +80,8 @@
     <!-- <v-main class="d-flex align-center justify-center" style="min-height: 300px;"> -->
       <v-main class="d-flex align-center">
       <v-row>
-          <v-col-12>
 
-          </v-col-12>
-          <v-col-12>
+          <v-col col="12">
             <div class="d-flex justify-space-between align-center">
               <h1 class="text-left">Discussions</h1>
               <!-- Use RouterLink to navigate to PostFormView -->
@@ -146,7 +144,7 @@
                 </template>
               </template>
             </template>
-          </v-col-12>
+          </v-col>
         </v-row>
     </v-main>
 
