@@ -40,6 +40,11 @@ const router = createRouter({
       path: '/post-form/:id',
       component: () => import('../views/PostFormView.vue'),
     },
+    {
+      path: '/login',
+      component: () => import('../views/AuthView.vue'),
+      props: false
+    },
   ]
 })
 

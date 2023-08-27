@@ -105,7 +105,7 @@ const songConverter = {
         </template>
         <template v-else>
             <template v-for="songItem in songList">
-                <v-col cols="12">
+                <v-col cols="10">
                     <SongCard :songObject="songItem"/>
                 </v-col>
             </template> 

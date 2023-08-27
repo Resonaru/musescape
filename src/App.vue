@@ -1,8 +1,18 @@
-<script setup>
+<script>
 import Sidebar from './components/Sidebar.vue'
 import Feed from './components/Feed.vue'
 import Search from './components/Search.vue'
 import { RouterLink, RouterView } from 'vue-router'
+import { useSpotifyAuthStore } from './stores/spotifyAuthStore'
+import { mapStores } from 'pinia';
+export default{
+  computed: {
+    ...mapStores(useSpotifyAuthStore), 
+  },
+  async created() { 
+    await this.spotifyAuthStore.getSongByID('7fEI29hmaWcCMPi8VJf33C');
+  }
+}
 
 </script>
 
@@ -16,13 +26,18 @@ import { RouterLink, RouterView } from 'vue-router'
       </v-app-bar-nav-icon>
       <v-toolbar-title class="mx-auto" style="color: hsla(160, 100%, 37%, 1);;">Musescape</v-toolbar-title>
       <div class="mx-auto">
-        <Search style="width: 300px;" />
+        <v-sheet class="d-flex">
+          <div>
+            <Search style="width: 300px;" />
+          </div>
+        </v-sheet>
+
       </div>
       <v-spacer></v-spacer>
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
     </v-app-bar>
       
-    <v-navigation-drawer>
+    <v-navigation-drawer location="left" :width="300">
       <v-list>
         <Sidebar/>
       </v-list>
