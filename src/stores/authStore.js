@@ -6,7 +6,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } f
 
 
 console.log('l')
-export const useAuthStore = defineStore('authStore', () =>{
+export const useAuthStore = defineStore('auth', () =>{
     const registerUser = (credentials) => {
         createUserWithEmailAndPassword(auth, credentials.email, credentials.password)
             .then((userCredential) => {
@@ -14,7 +14,8 @@ export const useAuthStore = defineStore('authStore', () =>{
                 console.log(user);
             })
             .catch((error) => {
-                console.log(error.message);
+                console.log("registerUser Error: " + error.message);
+                throw(error);
             });
     };
 
@@ -25,7 +26,8 @@ export const useAuthStore = defineStore('authStore', () =>{
                 console.log(user);
             })
             .catch((error) => {
-                console.log(error.message);
+                console.log("loginUser Error: " + error.message);
+                throw(error)
             });
     };
     const logoutUser = () => {

@@ -18,7 +18,9 @@
 </template>
 
 <script>
-import {useAuthStore} from '../stores/auth.js'
+import { mapStores } from 'pinia';
+import {useAuthStore} from '../stores/authStore.js'
+
 
 export default {
   data() {
@@ -29,10 +31,12 @@ export default {
       },
       isRegister: false,
       isSuccess: false,
-      authStore: useAuthStore(),
+      // authStore: useAuthStore(),
     };
   },
   computed: {
+    ...mapStores(useAuthStore),
+  
     formTitle() {
       return this.isRegister ? 'Register' : 'Login';
     },
