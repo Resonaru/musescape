@@ -161,7 +161,8 @@ import {
   where,
   deleteDoc,
 } from 'firebase/firestore'
-
+import { useSpotifyAuthStore } from '../stores/spotifyAuthStore'
+import { mapStores } from 'pinia';
 
 export default {
 
@@ -175,10 +176,12 @@ export default {
       noPosts: null
     };
   },
-
+  computed: {
+    ...mapStores(useSpotifyAuthStore), 
+  },
   async created() {
       try {
-        console.log(`Attempting to fetch song with id '${this.id}''`);
+        console.log(`Attempting to fetch song with id '${this.id}'`);
         const songDocRef = doc(db, "songs", this.id);
         const docSnap = await getDoc(songDocRef);
         const song = docSnap.data();
@@ -224,24 +227,27 @@ export default {
           console.log("No such document!\nBuilding a new page for this song...");
           try {
             // Fetch data 
-            const newSong = await getSongByID(this.id); // query spotify
+            const newSong = await this.spotifyAuthStore.getSongByID(this.id);// query spotify
+            console.log("Got response from spotify")
+            console.log(newSong);
             // Add new Song AND artist (if artist is not stored yet) to firestore
 
             // Artist
-            const artist = await getDoc(doc(db, "artists", newSong.artist.ID))
+            const artist = await getDoc(doc(db, "artists", newSong.artists[0]['ID']))
             let artistRef;
-            if(!artist) {
+            console.log("artist: ", artist)
+            if(!artist.exists()) {
               // Create new artist doc if none exists yet
-              console.log(`No artist found in db, creating document for ${newSong.artist.name}`)
+              console.log(`No artist found in db, creating document for ${newSong.artists[0].name}`)
 
               artistRef = await addDoc(collection(db, "artists"), {
-                name: newSong.artist.name,
-                img: newSong.artist.img,
+                name: newSong.artists[0].name,
+                img: newSong.artists[0].img,
               })
             } else {
               // Get existing artist doc
-              artistRef = await doc(db, "artists", newSong.artist.ID)
-              console.log(`Artist already exists in db, I'm gonna use that.`)
+              artistRef = await doc(db, "artists", newSong.artists[0].ID)
+              console.log(`Artist ${newSong.artists[0]} already exists in db, using that.`)
             }
 
 
@@ -249,13 +255,14 @@ export default {
 
             
             console.log("New song:", newSong);
-            const docRef = await addDoc(collection(db, "songs"), {
+            const docRef = await setDoc(doc(db, "songs", newSong.ID), {
               title: newSong.title,
               artist: artistRef,
               img: newSong.img,
               ID: newSong.ID
             });
-            console.log("Document written with ID: ", docRef.id);
+            console.log("Document written with ID: ", newSong.ID);
+            console.log(`${newSong.title} saved to db!`)
 
           } catch (error) {
             // Display error screen
