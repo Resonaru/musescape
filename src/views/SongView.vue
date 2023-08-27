@@ -5,12 +5,13 @@
         <v-navigation-drawer location="right" style="background-color: black;" :width="450">
           <v-container class="fill-height d-flex align-center justify-center">
            <template v-if="songLoading">
-            <v-skeleton-loader
+            <!-- <v-skeleton-loader
             class="mx-auto"
             elevation="12"
             max-width="400"
             type="table-heading, list-item-two-line, image, table-tfoot"
-          ></v-skeleton-loader>
+          ></v-skeleton-loader> -->
+          <h1>Loading song...</h1>
             </template>
             <template v-else>
               <v-card cover class="song-card rounded-xl justify-center" min-height="500" width="350">
@@ -82,6 +83,7 @@
           <v-col-12>
           <h1 class="text-left">Discussions</h1>
 
+            <v-row style="min-width: 500;">
                 <v-chip class="ma-2" color="success" variant="outlined">
                   <v-icon start icon="mdi-music"></v-icon>
                   Music Theory
@@ -97,21 +99,29 @@
                   <v-icon end icon="mdi-grease-pencil"></v-icon>
                 </v-chip>
 
+
                 <v-chip class="ma-2" color="orange" variant="outlined">
                   Lyrics
                   <v-icon end icon="mdi-note"></v-icon>
                 </v-chip>
+            </v-row>
                 
                 <template v-if="postsLoading">
-                  <v-skeleton-loader
+                  <!-- <v-skeleton-loader
                   class="mx-auto"
                   elevation="12"
                   min-width="600"
                   type="table-heading, list-item-two-line, image, table-tfoot"
-                ></v-skeleton-loader>
+                ></v-skeleton-loader> -->
+                <h1>Loading discussions...</h1>
                 </template>
                 
                 <template v-else>
+                  <template v-if="noPosts">
+                    <v-col col="12">
+                    <h1> No posts found</h1>
+                  </v-col> 
+                  </template>
                   <template v-for="post in posts">
                   <v-col col="12">
                     
@@ -202,8 +212,11 @@ export default {
             img: artist.img
           }
           this.songLoading = false;
+
+
           console.log("Fetching discussions")
-          song.posts.forEach(async postReference => {
+          if(song.posts) {
+            song.posts.forEach(async postReference => {
             try {
               const postObject = (await getDoc(postReference)).data();
               const postID = postReference.id;
@@ -217,10 +230,18 @@ export default {
               })
 
               this.postsLoading = false;
+              this.noPosts = false;
             } catch(e) {
-              
+              console.log("Error fetching discussion posts")
             }
           })
+          }
+          else {
+            this.noPosts = true;
+            this.postsLoading = false;
+            console.log("No discussion posts found")
+          }
+
         } else {
           // docSnap.data() will be undefined in this case
           console.log("No such document!\nBuilding a new page for this song...");
