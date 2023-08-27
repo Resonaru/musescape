@@ -93,62 +93,59 @@
                 </v-btn>
               </RouterLink>
             </div>
-                          <!-- Post Creation Component -->
-              <!-- <v-row v-if="showPostForm">
-                <v-col cols="12">
-                  <PostForm />
-                </v-col>
-              </v-row> -->
-                <v-chip class="ma-2" color="success" variant="outlined">
-                  <v-icon start icon="mdi-music"></v-icon>
-                  Music Theory
-                </v-chip>
 
-                <v-chip class="ma-2" color="primary" variant="outlined">
-                  Composition
-                  <v-icon end icon="mdi-grease-pencil"></v-icon>
-                </v-chip>
+            <v-chip class="ma-2" color="success" variant="outlined">
+              <v-icon start icon="mdi-music"></v-icon>
+              Music Theory
+            </v-chip>
 
-                <v-chip class="ma-2" color="#fc389a" variant="outlined">
-                  Production
-                  <v-icon end icon="mdi-grease-pencil"></v-icon>
-                </v-chip>
-                <v-chip class="ma-2" color="orange" variant="outlined">
-                  Lyrics
-                  <v-icon end icon="mdi-note"></v-icon>
-                </v-chip>
+            <v-chip class="ma-2" color="primary" variant="outlined">
+              Composition
+              <v-icon end icon="mdi-grease-pencil"></v-icon>
+            </v-chip>
 
-                <template v-if="postsLoading">
-                  <!-- <v-skeleton-loader
-                  class="mx-auto"
-                  elevation="12"
-                  min-width="600"
-                  type="table-heading, list-item-two-line, image, table-tfoot"
-                ></v-skeleton-loader> -->
-                  <h1>Loading discussions...</h1>
+            <v-chip class="ma-2" color="#fc389a" variant="outlined">
+              Production
+              <v-icon end icon="mdi-grease-pencil"></v-icon>
+            </v-chip>
+            <v-chip class="ma-2" color="orange" variant="outlined">
+              Lyrics
+              <v-icon end icon="mdi-note"></v-icon>
+            </v-chip>
+
+            <template v-if="postsLoading">
+              <!-- <v-skeleton-loader
+              class="mx-auto"
+              elevation="12"
+              min-width="600"
+              type="table-heading, list-item-two-line, image, table-tfoot"
+            ></v-skeleton-loader> -->
+              <h1>Loading discussions...</h1>
+            </template>
+            <template v-else>
+              <template v-if="noPosts">
+                <h1>No posts yet</h1>
+              </template>
+              <template v-else>
+                <template v-for="post in posts">
+                  <v-col col="12">
+                    <v-hover v-slot="{ isHovering, props }">
+                    <v-card class="rounded-xl song-card" color="#5A5252" theme="dark" min-width="600"  :elevation="isHovering ? 12 : 2">
+                      <v-card-subtitle>
+                        <v-avatar color="surface-variant" image="https://64.media.tumblr.com/e3e14a0b25723def857bb5cd8561b30c/720d78986e7588b3-49/s540x810/9b0565d3ea4eacd4b0b85f460be4afd5719556a3.jpg"></v-avatar>
+                        {{ post.author }}
+                      </v-card-subtitle>
+                      <RouterLink :to="'/post/' + post.ID">
+                      <v-card-title>{{ post.title }}</v-card-title>
+                      </RouterLink>
+                      <v-card-text>{{ post.content }}</v-card-text>
+                    </v-card>
+                  </v-hover>
+                  </v-col>
+                  <br>
                 </template>
-                <template v-if="noPosts">
-                  <h1>No posts yet</h1>
-                </template>
-                <template v-else>
-                  <template v-for="post in posts">
-                    <v-col col="12">
-                      <v-hover v-slot="{ isHovering, props }">
-                      <v-card class="rounded-xl song-card" color="#5A5252" theme="dark" min-width="600"  :elevation="isHovering ? 12 : 2">
-                        <v-card-subtitle>
-                          <v-avatar color="surface-variant" image="https://64.media.tumblr.com/e3e14a0b25723def857bb5cd8561b30c/720d78986e7588b3-49/s540x810/9b0565d3ea4eacd4b0b85f460be4afd5719556a3.jpg"></v-avatar>
-                          {{ post.author }}
-                        </v-card-subtitle>
-                        <RouterLink :to="'/post/' + post.ID">
-                        <v-card-title>{{ post.title }}</v-card-title>
-                        </RouterLink>
-                        <v-card-text>{{ post.content }}</v-card-text>
-                      </v-card>
-                    </v-hover>
-                    </v-col>
-                    <br>
-                  </template>
-                </template>
+              </template>
+            </template>
           </v-col-12>
         </v-row>
     </v-main>
@@ -238,7 +235,7 @@ export default {
           this.songLoading = false;
           console.log("Fetching discussions")
           // CHECKING FOR POSTS
-          if(song.posts) {
+          if(song.posts && song.posts.length) {
             song.posts.forEach(async postReference => {
             try {
               const postObject = (await getDoc(postReference)).data();
