@@ -2,11 +2,11 @@
   <v-card>
     <v-card-title>{{ formTitle }}</v-card-title>
     <v-card-text>
-      <v-form @submit.prevent="onSubmit">
+      <div>
         <v-text-field v-model.trim="credentials.email" label="Email" required></v-text-field>
         <v-text-field v-model.trim="credentials.password" label="Password" type="password" required></v-text-field>
-        <v-btn type="submit">{{ formTitle }}</v-btn>
-      </v-form>
+        <v-btn @click="submitForm">{{ formTitle }}</v-btn>
+      </div>
     </v-card-text>
     <v-card-actions>
       <v-btn @click="toggleForm">{{ toggleButtonText }}</v-btn>
@@ -44,7 +44,7 @@ export default {
     },
   },
   methods: {
-    onSubmit() {
+    submitForm() {
       if (!this.credentials.email || !this.credentials.password) {
         alert('Please enter email and password');
         return;
