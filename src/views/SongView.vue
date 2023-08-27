@@ -80,51 +80,53 @@
     <!-- <v-main class="d-flex align-center justify-center" style="min-height: 300px;"> -->
       <v-main class="d-flex align-center">
       <v-row>
-          <v-col-12>
-          <h1 class="text-left">Discussions</h1>
 
-            <v-row style="min-width: 500;">
-                <v-chip class="ma-2" color="success" variant="outlined">
-                  <v-icon start icon="mdi-music"></v-icon>
-                  Music Theory
-                </v-chip>
+          <v-col col="12">
+            <div class="d-flex justify-space-between align-center">
+              <h1 class="text-left">Discussions</h1>
+              <!-- Use RouterLink to navigate to PostFormView -->
+              <RouterLink :to="'/post-form/' + this.id">
+                <v-btn color="primary">
+                  Create New Post
+                </v-btn>
+              </RouterLink>
+            </div>
 
-                <v-chip class="ma-2" color="primary" variant="outlined">
-                  Composition
-                  <v-icon end icon="mdi-grease-pencil"></v-icon>
-                </v-chip>
+            <v-chip class="ma-2" color="success" variant="outlined">
+              <v-icon start icon="mdi-music"></v-icon>
+              Music Theory
+            </v-chip>
 
-                <v-chip class="ma-2" color="#fc389a" variant="outlined">
-                  Production
-                  <v-icon end icon="mdi-grease-pencil"></v-icon>
-                </v-chip>
+            <v-chip class="ma-2" color="primary" variant="outlined">
+              Composition
+              <v-icon end icon="mdi-grease-pencil"></v-icon>
+            </v-chip>
 
+            <v-chip class="ma-2" color="#fc389a" variant="outlined">
+              Production
+              <v-icon end icon="mdi-grease-pencil"></v-icon>
+            </v-chip>
+            <v-chip class="ma-2" color="orange" variant="outlined">
+              Lyrics
+              <v-icon end icon="mdi-note"></v-icon>
+            </v-chip>
 
-                <v-chip class="ma-2" color="orange" variant="outlined">
-                  Lyrics
-                  <v-icon end icon="mdi-note"></v-icon>
-                </v-chip>
-            </v-row>
-                
-                <template v-if="postsLoading">
-                  <!-- <v-skeleton-loader
-                  class="mx-auto"
-                  elevation="12"
-                  min-width="600"
-                  type="table-heading, list-item-two-line, image, table-tfoot"
-                ></v-skeleton-loader> -->
-                <h1>Loading discussions...</h1>
-                </template>
-                
-                <template v-else>
-                  <template v-if="noPosts">
-                    <v-col col="12">
-                    <h1> No posts found</h1>
-                  </v-col> 
-                  </template>
-                  <template v-for="post in posts">
+            <template v-if="postsLoading">
+              <!-- <v-skeleton-loader
+              class="mx-auto"
+              elevation="12"
+              min-width="600"
+              type="table-heading, list-item-two-line, image, table-tfoot"
+            ></v-skeleton-loader> -->
+              <h1>Loading discussions...</h1>
+            </template>
+            <template v-else>
+              <template v-if="noPosts">
+                <h1>No posts yet</h1>
+              </template>
+              <template v-else>
+                <template v-for="post in posts">
                   <v-col col="12">
-                    
                     <v-hover v-slot="{ isHovering, props }">
                     <v-card class="rounded-xl song-card" color="#5A5252" theme="dark" min-width="600"  :elevation="isHovering ? 12 : 2">
                       <v-card-subtitle>
@@ -136,19 +138,28 @@
                       </RouterLink>
                       <v-card-text>{{ post.content }}</v-card-text>
                     </v-card>
-                   </v-hover>
-                  
+                  </v-hover>
                   </v-col>
                   <br>
                 </template>
-                </template>
-
-          </v-col-12>
+              </template>
+            </template>
+          </v-col>
         </v-row>
-
     </v-main>
 
-
+    <!-- If post was deleted -->
+    <v-dialog v-model="showDeletedMessage" max-width="500">
+    <v-card>
+      <v-card-title class="headline">Post Deleted</v-card-title>
+      <v-card-text>
+        The post has been deleted successfully.
+      </v-card-text>
+      <v-card-actions>
+        <v-btn text @click="showDeletedMessage = false">Close</v-btn>
+      </v-card-actions>
+    </v-card>
+    </v-dialog>
 
       <!-- </v-navigation-drawer> -->
 
@@ -158,7 +169,7 @@
 </template>
 
 <script>
-
+import PostForm from '../components/PostForm.vue'
 import { db } from '@/firebase';
 import {
   collection,
@@ -171,16 +182,23 @@ import {
   where,
   deleteDoc,
 } from 'firebase/firestore'
+import { useRoute } from 'vue-router';
+
 import { useSpotifyAuthStore } from '../stores/spotifyAuthStore'
 import { mapStores } from 'pinia';
 
 export default {
-
+  components: {
+        PostForm,
+  },
   props: ['id'], // Access the song ID from the route parameter
   data() {
     return {
       songData: null,
       posts: [],
+      // loading: true, // Loading screen renderred
+      showPostForm: false,
+      showDeletedMessage: this.$route.query.deleted === 'true' || false,
       songLoading: true, // Loading screen renderred
       postsLoading: true,
       noPosts: null
@@ -190,6 +208,7 @@ export default {
     ...mapStores(useSpotifyAuthStore), 
   },
   async created() {
+      console.log('showDeletedMessage:', this.showDeletedMessage);
       try {
         console.log(`Attempting to fetch song with id '${this.id}'`);
         const songDocRef = doc(db, "songs", this.id);
@@ -197,12 +216,12 @@ export default {
         const song = docSnap.data();
 
         if (docSnap.exists()) {
-          
           this.songData = {
             title: song.title,
             img: song.img
           }
           console.log(`Successfully fetched song ${this.songData.title}`)
+         
 
           console.log("Now fetching artist...");
           const artist = (await getDoc(song.artist)).data() // get artist object from firestore from reference
@@ -212,10 +231,9 @@ export default {
             img: artist.img
           }
           this.songLoading = false;
-
-
           console.log("Fetching discussions")
-          if(song.posts) {
+          // CHECKING FOR POSTS
+          if(song.posts && song.posts.length) {
             song.posts.forEach(async postReference => {
             try {
               const postObject = (await getDoc(postReference)).data();
@@ -227,6 +245,7 @@ export default {
                 author: author,
                 content: postObject.content,
                 ID: postID,
+                song: this.id,
               })
 
               this.postsLoading = false;
@@ -235,14 +254,14 @@ export default {
               console.log("Error fetching discussion posts")
             }
           })
-          }
-          else {
+        } else { // song.posts is false
             this.noPosts = true;
             this.postsLoading = false;
             console.log("No discussion posts found")
-          }
-
-        } else {
+            }
+        } 
+        // komays part
+        else {
           // docSnap.data() will be undefined in this case
           console.log("No such document!\nBuilding a new page for this song...");
           try {
@@ -270,10 +289,6 @@ export default {
               console.log(`Artist ${newSong.artists[0]} already exists in db, using that.`)
             }
 
-
-
-
-            
             console.log("New song:", newSong);
             const docRef = await setDoc(doc(db, "songs", newSong.ID), {
               title: newSong.title,
@@ -307,7 +322,6 @@ export default {
     },
 
   methods: {
-
   }
 };
 </script>
@@ -329,11 +343,19 @@ export default {
   background-color: #423A42;
 }
 
-.song-card{
+.d-flex {
+  display: flex;
+}
+.justify-space-between {
+  justify-content: space-between;
+}
+.align-center {
+  align-items: center;
+}
+.song-card {
   margin-right: 2px;
   transition: margin 0.2s ease-in-out;
 }
-
 .song-card:hover {
   margin-top: -2;
 }
