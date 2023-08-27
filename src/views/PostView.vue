@@ -4,6 +4,11 @@
           Loading...
         </template>
         <template v-else>
+            <RouterLink :to="'/song/' + songId">
+            <v-row class="back">
+                <h2>Return to {{ songTitle }}</h2>
+            </v-row>
+            </RouterLink>
             <v-card class="post">
                 <div class="text" style="color:rgb(245, 245, 245)">
                 <h1> {{ postData.title }}</h1> 
@@ -71,6 +76,8 @@ export default {
     data() {
         return {
             postData: null,
+            songTitle: null,
+            songId: null,
             comments: [],
             loading: true, // Loading screen renderred
             noComments: null,
@@ -84,17 +91,25 @@ export default {
         console.log(`Attempting to fetch post with id '${this.id}'`);
         const postReference = doc(db, "posts", this.id)
         const postRefDoc = (await getDoc(postReference));
-        const post = postRefDoc.data()
-        const author = (await getDoc(post.author)).data()
+    
         if (postRefDoc.exists()) {
+            const post = postRefDoc.data()
+            const author = (await getDoc(post.author)).data()
+            const song = (await getDoc(post.song)).data()
             this.postData = {
                 title: post.title,
                 content: post.content,
                 author: author,
                 likes: post.likes,
-                song: post.song,
+                song: song,
             }
             console.log(`Successfully fetched post ${this.postData.title}`)
+            // console.log(author)
+            // console.log(song)
+            this.songTitle = this.postData.song.title
+            this.songId = this.postData.song.ID
+            // console.log(this.songTitle)
+            // console.log(this.songId)
 
             // console.log("Now fetching author...");
             // const author = (await getDoc(post.author)).data() // get author object from firestore from reference
@@ -151,7 +166,7 @@ export default {
     },  
     deletedTrue(songDocRef) {
         console.log("attempting to route")
-        this.$router.push({ name: 'song', params: { id: songDocRef.id, deleted: true } });
+        this.$router.push({ name: 'song', params: { id: songDocRef.id }, query: { deleted: true } });
     }
     },
 };
@@ -170,5 +185,9 @@ export default {
 .text {
     padding: 15px;
     
+}
+
+.back {
+    padding-bottom: 10px;
 }
 </style>

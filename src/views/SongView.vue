@@ -87,9 +87,17 @@
     </v-main>
 
     <!-- If post was deleted -->
-    <div v-if="$route.params.deleted" class="deletion-completed-message">
-      Post has been deleted successfully.
-    </div>
+    <v-dialog v-model="showDeletedMessage" max-width="500">
+    <v-card>
+      <v-card-title class="headline">Post Deleted</v-card-title>
+      <v-card-text>
+        The post has been deleted successfully.
+      </v-card-text>
+      <v-card-actions>
+        <v-btn text @click="showDeletedMessage = false">Close</v-btn>
+      </v-card-actions>
+    </v-card>
+    </v-dialog>
 
       <!-- </v-navigation-drawer> -->
 
@@ -127,10 +135,12 @@ export default {
       loading: true, // Loading screen renderred
       noPosts: null,
       showPostForm: false,
+      showDeletedMessage: this.$route.query.deleted === 'true' || false,
     };
   },
 
   async created() {
+      console.log('showDeletedMessage:', this.showDeletedMessage);
       try {
         console.log(`Attempting to fetch song with id '${this.id}''`);
         const songDocRef = doc(db, "songs", this.id);

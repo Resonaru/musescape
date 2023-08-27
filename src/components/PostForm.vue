@@ -75,12 +75,17 @@
             // });
   
             console.log('Post submitted successfully');
+            this.postCreated(newPostRef)
           } else {
             console.error('User is not logged in');
           }
         } catch (error) {
           console.error('Error submitting post:', error);
         }
+      },
+      postCreated(newPostRef) {
+        console.log("attempting to route")
+        this.$router.push({ name: 'post', params: { id: newPostRef.id }});
       },
     },
   };
