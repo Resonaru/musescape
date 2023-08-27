@@ -5189,7 +5189,7 @@
   "resolved" "https://registry.npmjs.org/pify/-/pify-4.0.1.tgz"
   "version" "4.0.1"
 
-"pinia@^2.1.4":
+"pinia@^2.1.6":
   "integrity" "sha512-bIU6QuE5qZviMmct5XwCesXelb5VavdOWKWaB17ggk++NUwQWWbP5YnsONTk3b752QkW9sACiR81rorpeOMSvQ=="
   "resolved" "https://registry.npmjs.org/pinia/-/pinia-2.1.6.tgz"
   "version" "2.1.6"

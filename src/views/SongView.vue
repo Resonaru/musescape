@@ -5,12 +5,13 @@
         <v-navigation-drawer location="right" style="background-color: black;" :width="450">
           <v-container class="fill-height d-flex align-center justify-center">
            <template v-if="songLoading">
-            <v-skeleton-loader
+            <!-- <v-skeleton-loader
             class="mx-auto"
             elevation="12"
             max-width="400"
             type="table-heading, list-item-two-line, image, table-tfoot"
-          ></v-skeleton-loader>
+          ></v-skeleton-loader> -->
+          <h1>Loading song...</h1>
             </template>
             <template v-else>
               <v-card cover class="song-card rounded-xl justify-center" min-height="500" width="350">
@@ -82,6 +83,7 @@
           <v-col-12>
           <h1 class="text-left">Discussions</h1>
 
+            <v-row style="min-width: 500;">
                 <v-chip class="ma-2" color="success" variant="outlined">
                   <v-icon start icon="mdi-music"></v-icon>
                   Music Theory
@@ -97,21 +99,29 @@
                   <v-icon end icon="mdi-grease-pencil"></v-icon>
                 </v-chip>
 
+
                 <v-chip class="ma-2" color="orange" variant="outlined">
                   Lyrics
                   <v-icon end icon="mdi-note"></v-icon>
                 </v-chip>
+            </v-row>
                 
                 <template v-if="postsLoading">
-                  <v-skeleton-loader
+                  <!-- <v-skeleton-loader
                   class="mx-auto"
                   elevation="12"
                   min-width="600"
                   type="table-heading, list-item-two-line, image, table-tfoot"
-                ></v-skeleton-loader>
+                ></v-skeleton-loader> -->
+                <h1>Loading discussions...</h1>
                 </template>
                 
                 <template v-else>
+                  <template v-if="noPosts">
+                    <v-col col="12">
+                    <h1> No posts found</h1>
+                  </v-col> 
+                  </template>
                   <template v-for="post in posts">
                   <v-col col="12">
                     
@@ -161,7 +171,8 @@ import {
   where,
   deleteDoc,
 } from 'firebase/firestore'
-
+import { useSpotifyAuthStore } from '../stores/spotifyAuthStore'
+import { mapStores } from 'pinia';
 
 export default {
 
@@ -175,10 +186,12 @@ export default {
       noPosts: null
     };
   },
-
+  computed: {
+    ...mapStores(useSpotifyAuthStore), 
+  },
   async created() {
       try {
-        console.log(`Attempting to fetch song with id '${this.id}''`);
+        console.log(`Attempting to fetch song with id '${this.id}'`);
         const songDocRef = doc(db, "songs", this.id);
         const docSnap = await getDoc(songDocRef);
         const song = docSnap.data();
@@ -190,7 +203,6 @@ export default {
             img: song.img
           }
           console.log(`Successfully fetched song ${this.songData.title}`)
-         
 
           console.log("Now fetching artist...");
           const artist = (await getDoc(song.artist)).data() // get artist object from firestore from reference
@@ -200,8 +212,11 @@ export default {
             img: artist.img
           }
           this.songLoading = false;
+
+
           console.log("Fetching discussions")
-          song.posts.forEach(async postReference => {
+          if(song.posts) {
+            song.posts.forEach(async postReference => {
             try {
               const postObject = (await getDoc(postReference)).data();
               const postID = postReference.id;
@@ -215,14 +230,76 @@ export default {
               })
 
               this.postsLoading = false;
+              this.noPosts = false;
             } catch(e) {
-              
+              console.log("Error fetching discussion posts")
             }
           })
+          }
+          else {
+            this.noPosts = true;
+            this.postsLoading = false;
+            console.log("No discussion posts found")
+          }
+
         } else {
           // docSnap.data() will be undefined in this case
-          console.log("No such document!");
-          this.noSong=true
+          console.log("No such document!\nBuilding a new page for this song...");
+          try {
+            // Fetch data 
+            const newSong = await this.spotifyAuthStore.getSongByID(this.id);// query spotify
+            console.log("Got response from spotify")
+            console.log(newSong);
+            // Add new Song AND artist (if artist is not stored yet) to firestore
+
+            // Artist
+            const artist = await getDoc(doc(db, "artists", newSong.artists[0]['ID']))
+            let artistRef;
+            console.log("artist: ", newSong.artists[0])
+            if(!artist.exists()) {
+              // Create new artist doc if none exists yet
+              console.log(`No artist found in db, creating document for ${newSong.artists[0].name}`)
+
+              artistRef = await addDoc(collection(db, "artists"), {
+                name: newSong.artists[0].name,
+                img: newSong.artists[0].img,
+              })
+            } else {
+              // Get existing artist doc
+              artistRef = await doc(db, "artists", newSong.artists[0].ID)
+              console.log(`Artist ${newSong.artists[0]} already exists in db, using that.`)
+            }
+
+
+
+
+            
+            console.log("New song:", newSong);
+            const docRef = await setDoc(doc(db, "songs", newSong.ID), {
+              title: newSong.title,
+              artist: artistRef,
+              img: newSong.img,
+              ID: newSong.ID
+            });
+            console.log("Document written with ID: ", newSong.ID);
+            console.log(`${newSong.title} saved to db!`)
+
+
+            // Update the component data so no reload required
+            this.songData = {
+              title: newSong.title,
+              img: newSong.img,
+              artist: {
+                name: newSong.artists[0].name,
+                img: newSong.artists[0].img
+              }
+            }
+            this.songLoading = false;
+
+          } catch (error) {
+            // Display error screen
+            console.error("Error fetching the song:", error);
+  }
         }
       } catch(e) {
         console.error('Something went wrong bruh', e)
