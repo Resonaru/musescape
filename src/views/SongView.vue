@@ -221,8 +221,46 @@ export default {
           })
         } else {
           // docSnap.data() will be undefined in this case
-          console.log("No such document!");
-          this.noSong=true
+          console.log("No such document!\nBuilding a new page for this song...");
+          try {
+            // Fetch data 
+            const newSong = await getSongByID(this.id); // query spotify
+            // Add new Song AND artist (if artist is not stored yet) to firestore
+
+            // Artist
+            const artist = await getDoc(doc(db, "artists", newSong.artist.ID))
+            let artistRef;
+            if(!artist) {
+              // Create new artist doc if none exists yet
+              console.log(`No artist found in db, creating document for ${newSong.artist.name}`)
+
+              artistRef = await addDoc(collection(db, "artists"), {
+                name: newSong.artist.name,
+                img: newSong.artist.img,
+              })
+            } else {
+              // Get existing artist doc
+              artistRef = await doc(db, "artists", newSong.artist.ID)
+              console.log(`Artist already exists in db, I'm gonna use that.`)
+            }
+
+
+
+
+            
+            console.log("New song:", newSong);
+            const docRef = await addDoc(collection(db, "songs"), {
+              title: newSong.title,
+              artist: artistRef,
+              img: newSong.img,
+              ID: newSong.ID
+            });
+            console.log("Document written with ID: ", docRef.id);
+
+          } catch (error) {
+            // Display error screen
+            console.error("Error fetching the song:", error);
+  }
         }
       } catch(e) {
         console.error('Something went wrong bruh', e)
