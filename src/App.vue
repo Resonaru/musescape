@@ -1,8 +1,18 @@
-<script setup>
+<script>
 import Sidebar from './components/Sidebar.vue'
 import Feed from './components/Feed.vue'
 import Search from './components/Search.vue'
 import { RouterLink, RouterView } from 'vue-router'
+import { useSpotifyAuthStore } from './stores/spotifyAuthStore'
+import { mapStores } from 'pinia';
+export default{
+  computed: {
+    ...mapStores(useSpotifyAuthStore), 
+  },
+  async created() { 
+    await this.spotifyAuthStore.getSongByID('7fEI29hmaWcCMPi8VJf33C');
+  }
+}
 
 </script>
 
