@@ -29,8 +29,21 @@
 
           </v-col-12>
           <v-col-12>
-          <h1 class="text-left">Discussions</h1>
-
+            <div class="d-flex justify-space-between align-center">
+              <h1 class="text-left">Discussions</h1>
+              <!-- Use RouterLink to navigate to PostFormView -->
+              <RouterLink :to="'/post-form/' + this.id">
+                <v-btn color="primary">
+                  Create New Post
+                </v-btn>
+              </RouterLink>
+            </div>
+                          <!-- Post Creation Component -->
+              <!-- <v-row v-if="showPostForm">
+                <v-col cols="12">
+                  <PostForm />
+                </v-col>
+              </v-row> -->
               <template v-if="noPosts">
                 No posts yet
               </template>
@@ -73,7 +86,10 @@
 
     </v-main>
 
-
+    <!-- If post was deleted -->
+    <div v-if="$route.params.deleted" class="deletion-completed-message">
+      Post has been deleted successfully.
+    </div>
 
       <!-- </v-navigation-drawer> -->
 
@@ -83,7 +99,7 @@
 </template>
 
 <script>
-
+import PostForm from '../components/PostForm.vue'
 import { db } from '@/firebase';
 import {
   collection,
@@ -96,17 +112,21 @@ import {
   where,
   deleteDoc,
 } from 'firebase/firestore'
+import { useRoute } from 'vue-router';
 
 
 export default {
-
+  components: {
+        PostForm,
+  },
   props: ['id'], // Access the song ID from the route parameter
   data() {
     return {
       songData: null,
       posts: [],
       loading: true, // Loading screen renderred
-      noPosts: null
+      noPosts: null,
+      showPostForm: false,
     };
   },
 
@@ -144,6 +164,7 @@ export default {
                 author: author,
                 content: postObject.content,
                 ID: postID,
+                song: this.id,
               })
             } catch(e) {
               this.noPosts = true;
@@ -160,7 +181,6 @@ export default {
     },
 
   methods: {
-
   }
 };
 </script>
@@ -180,5 +200,15 @@ export default {
 .song-card {
 
   background-color: #423A42;
+}
+
+.d-flex {
+  display: flex;
+}
+.justify-space-between {
+  justify-content: space-between;
+}
+.align-center {
+  align-items: center;
 }
 </style>

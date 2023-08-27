@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import SongView from '../views/SongView.vue'
+// import HomeView from '../views/HomeView.vue'
+// import SongView from '../views/SongView.vue'
+// import PostFormView from '../views/PostFormView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,7 +25,8 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     },
     {
-      path: '/song/:id', // Dynamic route parameter :id
+      path: '/song/:id', // Dynamic route parameter :id,
+      name: 'song',
       component: () => import('../views/SongView.vue'),
       props: true, // Pass props to the component
     },
@@ -32,7 +34,11 @@ const router = createRouter({
       path: '/post/:id',
       component: () => import('../views/PostView.vue'),
       props: true,
-    }
+    },
+    {
+      path: '/post-form/:id',
+      component: () => import('../views/PostFormView.vue'),
+    },
   ]
 })
 
