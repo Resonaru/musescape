@@ -193,7 +193,6 @@ export default {
             img: song.img
           }
           console.log(`Successfully fetched song ${this.songData.title}`)
-         
 
           console.log("Now fetching artist...");
           const artist = (await getDoc(song.artist)).data() // get artist object from firestore from reference
@@ -235,7 +234,7 @@ export default {
             // Artist
             const artist = await getDoc(doc(db, "artists", newSong.artists[0]['ID']))
             let artistRef;
-            console.log("artist: ", artist)
+            console.log("artist: ", newSong.artists[0])
             if(!artist.exists()) {
               // Create new artist doc if none exists yet
               console.log(`No artist found in db, creating document for ${newSong.artists[0].name}`)
@@ -263,6 +262,18 @@ export default {
             });
             console.log("Document written with ID: ", newSong.ID);
             console.log(`${newSong.title} saved to db!`)
+
+
+            // Update the component data so no reload required
+            this.songData = {
+              title: newSong.title,
+              img: newSong.img,
+              artist: {
+                name: newSong.artists[0].name,
+                img: newSong.artists[0].img
+              }
+            }
+            this.songLoading = false;
 
           } catch (error) {
             // Display error screen
