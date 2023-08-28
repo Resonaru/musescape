@@ -3,6 +3,19 @@ import Sidebar from './components/Sidebar.vue'
 import Feed from './components/Feed.vue'
 import Search from './components/Search.vue'
 import { RouterLink, RouterView } from 'vue-router'
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './firebase'; // Import your Firebase auth instance
+
+// Inside your main app component
+console.log("aaaaslkdjaslkdjaskldja");  
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        console.log("user signed in");
+        const uid = user.uid;
+    } else {
+        console.log("not signed in");
+    }
+});
 
 </script>
 

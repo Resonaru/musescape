@@ -1,6 +1,6 @@
 <template>
     <div class="auth">
-        <template v-if="!loggedIn">
+        <template v-if="!user">
             Email: <input type="text" v-model.trim="email"/>
             <br>
             Password: <input type="password" v-model.trim="password"/>
@@ -8,7 +8,7 @@
             <button @click="login()">Login</button>
             <RouterLink to="/register"><button>Sign Up</button></RouterLink>
         </template>
-        <template v-if="loggedIn">
+        <template v-if="user">
             <!--button @click="logout()">Log Out</button>-->
             <button @click="logout()">Sign Out</button>
         </template>
@@ -21,6 +21,8 @@ import { auth } from '../firebase';
 import { signInWithEmailAndPassword, signOut, setPersistence, browserLocalPersistence, onAuthStateChanged } from 'firebase/auth';
 import { useAuthStore } from '../stores/authStore';
 import { mapStores } from 'pinia';
+
+const { user } = useAuthStore();
 
 export default{
     data(){
