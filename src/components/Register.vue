@@ -1,14 +1,15 @@
 <template>
     <div class="auth">
         <template v-if="!loggedIn">
-            <!-- Display Name: <input id="name" type="text" v-model.trim="name"/>
+            Display Name: <input id="name" type="text" v-model.trim="name"/>
             <br>
             Email: <input id="email" type="text" v-model.trim="email"/>
             <br>
-            Password: <input id="pswd" type="password" v-model.trim="pswd"/>
+            Password: <input id="password" type="password" v-model.trim="password"/>
             <br>
-            <button @click="createAccountAndLogin()">Create Account</button> -->
-            <v-sheet rounded>
+            <button @click="this.authStore.register(this.name,this.email,this.password)" style = "color:#1DB954; background-color:#404040;">Create Account</button>
+            <p v-if="errorMessage" class="error-message" style="color:red">{{ errorMessage }}</p>
+            <!-- <v-sheet rounded>
                 <v-card class="mx-auto px-6 py-8" min-width="344">
                     <v-form
                     v-model="form"
@@ -51,12 +52,13 @@
                         size="large"
                         type="submit"
                         variant="elevated"
-                        @click="register(name,email, password)">
+                        @click="this.authStore.register(this.name,this.email,this.password)">
                         Register
                         </v-btn>
+
                     </v-form>
                 </v-card>
-            </v-sheet>
+            </v-sheet> -->
         </template>
         <template v-if="loggedIn">
            Account created successfully! 
@@ -69,6 +71,8 @@
 
 <script>
 import { RouterLink } from 'vue-router';
+import { useAuthStore } from '../stores/authStore';
+import { mapStores } from 'pinia';
 // import { auth } from '../firebase';
 // import { createUserWithEmailAndPassword } from 'firebase/auth'
 
@@ -83,11 +87,17 @@ export default{
     },
     methods: {
     },
+    computed: {
+        ...mapStores(useAuthStore),
+        errorMessage() {
+            return this.authStore.error; // Access the error message from the store
+        },
+    },
     components: { RouterLink }
 }
 </script>
 
-<!-- 
+
 <style>
 input[type="text"], textarea {
     background-color : #d1d1d1; 
@@ -95,4 +105,4 @@ input[type="text"], textarea {
 input[type="password"], textarea {
     background-color : #d1d1d1; 
 }
-</style> -->
+</style>
