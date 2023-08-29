@@ -82,17 +82,8 @@ export default{
         };
     },
     methods: {
-        async createAccountAndLogin(email, password) {
-            try {
-                console.log('creating...');
-                await createUserWithEmailAndPassword(auth, email, password);
-                console.log('account created!');
-                this.loggedIn = true;
-                console.log('Current user', auth.currentUser);
-            }
-            catch (err) {
-                console.error('Couldn\'t create account', err);
-            }
+        async createAccountAndLogin() {
+
         }
     },
     components: { RouterLink }
