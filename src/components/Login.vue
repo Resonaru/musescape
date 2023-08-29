@@ -5,20 +5,24 @@
             <br>
             Password: <input type="password" v-model.trim="password"/>
             <br>
-            <button @click="authStore.login()">Login</button>
+            <button @click="this.authStore.login(this.email, this.password)">Login</button>
             <br/>
             <RouterLink to="/register"><button>Sign Up</button></RouterLink>
         </template>
         <template v-else>
-            <button @click="authStore.logout()">Sign Out</button>
+            <div>
+                {{ this.authStore.email + ', ' + this.authStore.password }}
+                <br>
+            </div>
+            <button @click="this.authStore.logout()">Sign Out</button>
         </template>
     </div>
 </template>
 
 
 <script>
-import { auth } from '../firebase';
-import { signInWithEmailAndPassword, signOut, setPersistence, browserLocalPersistence, onAuthStateChanged } from 'firebase/auth';
+// import { auth } from '../firebase';
+// import { signInWithEmailAndPassword, signOut, setPersistence, browserLocalPersistence, onAuthStateChanged } from 'firebase/auth';
 import { useAuthStore } from '../stores/authStore';
 import { mapStores } from 'pinia';
 

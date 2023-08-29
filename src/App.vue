@@ -9,15 +9,6 @@ import { useSpotifyAuthStore } from './stores/spotifyAuthStore'
 import { mapStores } from 'pinia';
 
 // Inside your main app component
-console.log("aaaaslkdjaslkdjaskldja");  
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        console.log("user signed in");
-        const uid = user.uid;
-    } else {
-        console.log("not signed in");
-    }
-});
 
 export default{
   computed: {

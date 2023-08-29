@@ -23,11 +23,6 @@ const vuetify = createVuetify({
 
 const app = createApp(App)
 
-auth.onAuthStateChanged((user) => {
-  const authStore = useAuthStore();
-  authStore.setUser(user);
-});
-
 app.use(createPinia())
 app.use(router)
 app.use(vuetify)

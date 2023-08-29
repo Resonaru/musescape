@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import {auth} from '../firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 // import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js'
 //import { ref } from 'vue';
@@ -24,15 +24,18 @@ export const useAuthStore = defineStore('auth', {
             });
             return this.user;
         },
-        async login(){
+        async login(emailSubmit, passwordSubmit){
             try{
                 // setPersistence(auth, browserLocalPersistence);
                 this.notFound = false;
                 this.invalidPassword = false;
                 console.log('logging in...');
-                await signInWithEmailAndPassword(auth, this.email, this.password);
+                this.email = emailSubmit;
+                this.password = passwordSubmit;
+                await signInWithEmailAndPassword(auth, emailSubmit, passwordSubmit);
                 console.log('successfully logged in!')
                 this.loggedIn = true;
+                this.user = auth.currentUser;
                 
             }
             catch(e){
@@ -46,20 +49,17 @@ export const useAuthStore = defineStore('auth', {
                     await signOut(auth);
                     console.log('Successfully logged out!')
                     this.loggedIn = false;
+                    this.user=null;
+                    this.email= null;
+                    this.password= null;
                 }
                 else{
                     console.log('no user signed in');
                 }
             }
              catch(err){
-                console.log('error logging out');
+                console.error('try catch in logout', err)
              }
-        },
-    },
-    mutations: {
-        setUser(state, payload) {
-          state.user = payload;
-          console.log(state.user);
         },
     },
 });
