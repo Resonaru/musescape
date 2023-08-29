@@ -59,9 +59,9 @@ export const useSpotifyAuthStore = defineStore('spotifyAuth', {
             img: data.album.images.length > 0 ? data.album.images[0].url : '',
             // img: data.album.images[0].url,
             id: data.id,
-            artists: data.artists.map(item => ({
+            artists: data.artists.map((item) => ({
                 name: item.name,
-                img: item.images && item.images.length > 0 ? item.images[0].url : '',
+                img: item.images.length > 0 ? item.images[0].url : '',
                 link: `/'artist'/${item.id}`,
                 id: item.id
             })),
