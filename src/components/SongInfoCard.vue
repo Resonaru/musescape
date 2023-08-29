@@ -77,7 +77,7 @@ export default {
                 img: newSong.artists[0].img,
               })
             } else {
-              // Get existing artist doc
+              // Use existing artist doc if already in our database
               artistRef = await doc(db, "artists", newSong.artists[0].ID)
               console.log(`Artist ${newSong.artists[0]} already exists in db, using that.`)
             }
@@ -102,7 +102,7 @@ export default {
                 img: newSong.artists[0].img
               }
             }
-            this.songLoading = false;
+            this.loading = false;
 
           } catch (error) {
             // Display error screen

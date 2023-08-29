@@ -168,7 +168,7 @@ export default {
               console.log("Error fetching discussion posts")
             }
           })
-
+          if(!this.posts.length) this.noPosts = true;
           console.log("All discussion posts successfully fetched")
     }
 
