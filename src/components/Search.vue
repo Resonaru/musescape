@@ -10,7 +10,6 @@
       class="mx-4"
       density="comfortable"
       hide-no-data
-      hide-details
       chips
       closable-chips
       label="Search songs"
@@ -40,6 +39,7 @@
 <script>
 import { mapStores } from 'pinia';
 import { useSpotifyAuthStore } from '../stores/spotifyAuthStore.js';
+import _debounce from 'lodash.debounce';
 
 export default {
   computed: {
@@ -51,17 +51,19 @@ export default {
   },
   data() {
     return {
+      lengthOfResults : 3,
       loading: false,
       search: null,
       select: null,
       searchResults: [],
       showDropdown: false,
-      token : ""
+      token : "",
+      debouncedSearch: _debounce(this.getSearchQuery, 500),
     };
   },
   watch: {
     search(val){
-      val && val !== this.select && this.getSearchQuery(val)
+      val && val !== this.select && this.debouncedSearch(val)
     }
   },
   methods: {
@@ -79,7 +81,7 @@ export default {
             try {
             console.log('token ' + this.token)
             const response = await fetch(
-              `https://api.spotify.com/v1/search?q=${userInput}&type=track&limit=3`, 
+              `https://api.spotify.com/v1/search?q=${userInput}&type=track&limit=${this.lengthOfResults}&market=US`, 
               {
                 headers: {
                   Authorization: 'Bearer ' + this.token,
@@ -93,6 +95,7 @@ export default {
               img: track.album.images.length > 0 ? track.album.images[0].url : '',
               type: track.type,
               id: track.id,
+              artist:track.artists.reduce((accumulator, item) => accumulator += item.name + ', ', '').slice(0, -2),
               link:`/${track.type === 'track' ? 'song' : 'artist'}/${track.id}`,
             }));
             console.log('Song name: ' + this.searchResults[0].name);

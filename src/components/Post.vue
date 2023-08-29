@@ -8,6 +8,7 @@
                         author: "komay sugiyama",
                         content: "default text",
                         likes: 0,
+                        song: "/songs/",
                         timestamp: new Date('August 15, 2023 03:24:00'),
                 }
             }
@@ -15,6 +16,7 @@
     }
 </script>
 
+<!-- // this is useless currently -->
 <template>
     <div class="component">
       <v-row class="overlap-group">
