@@ -3,78 +3,9 @@
       <!-- <v-navigation-drawer location="right" style="background-color: black;" :width="325"> -->
         
         <v-navigation-drawer location="right" style="background-color: black;" :width="450">
-          <v-container class="fill-height d-flex align-center justify-center">
-           <template v-if="songLoading">
-            <!-- <v-skeleton-loader
-            class="mx-auto"
-            elevation="12"
-            max-width="400"
-            type="table-heading, list-item-two-line, image, table-tfoot"
-          ></v-skeleton-loader> -->
-          <h1>Loading song...</h1>
-            </template>
-            <template v-else>
-              <v-card cover class="song-card rounded-xl justify-center" min-height="500" width="350">
-                <br><br>
-                <v-img class="rounded-xl mx-auto" :src="songData.img" alt="Album Cover" :width="250"></v-img>
-
-                <v-card-title class="text-center" style="color: aliceblue">{{ songData.title }}</v-card-title>
-                <v-card-subtitle class="text-center song-artist">{{ songData.artist.name }}</v-card-subtitle>
-                <v-card-text style="color: aliceblue">
-                  I hate the silence now that you're not here<br>
-                  I thought one day you'd come around<br>
-                  Am I living in the past with all these questions never asked?<br>
-                  Will they keep me here?<br>
-                  It's so quiet in the stratosphere<br>
-                  I keep my space but I'm still bound<br>
-                  To the spell that we both cast but sometimes magic doesn't last<br>
-                  For me it did, for me it did<br>
-                  <br>
-                  I played out this scene<br>
-                  Of you with each other<br>
-                  But not that with me<br>
-                  And that kind of love<br>
-                  Is so hard to see<br>
-                  Now here we are<br>
-                  It's him that you need<br>
-                  Looks just like us<br>
-                  Us without me<br>
-                  <br>
-                  Why do I fade into that heart of yours?<br>
-                  'Cause you still hold a spot in mine<br>
-                  But you're in someone else's room<br>
-                  While mine still smells of your perfume<br>
-                  I'm tethered<br>
-                  Forever<br>
-                  <br>
-                  I played out this scene<br>
-                  Of you with each other<br>
-                  But not that with me<br>
-                  And that kind of love<br>
-                  Is so hard to see<br>
-                  Now here we are<br>
-                  It's him that you need<br>
-                  Looks just like us<br>
-                  Us without me<br>
-                  <br>
-                  Ooh, oh oh oh<br>
-                  Without me, oh oh<br>
-                  <br>
-                  Oh, I played out this scene<br>
-                  Of you with each other<br>
-                  But not that with me<br>
-                  And that kind of love<br>
-                  Is so hard to see<br>
-                  Now here we are<br>
-                  It's him that you need<br>
-                  Looks just like us<br>
-                  Us without me
-                </v-card-text>
-                
-              </v-card>
-            </template>
-          </v-container>
+          <SongInfoCard :songID="this.id"/>
         </v-navigation-drawer>
+        
 
 
     <!-- <v-main class="d-flex align-center justify-center" style="min-height: 300px;"> -->
@@ -169,6 +100,7 @@
 
 <script>
 import PostForm from '../components/PostForm.vue'
+import SongInfoCard from '../components/SongInfoCard.vue'
 import { db } from '@/firebase';
 import {
   collection,
@@ -189,6 +121,7 @@ import { mapStores } from 'pinia';
 export default {
   components: {
         PostForm,
+        SongInfoCard
   },
   props: ['id'], // Access the song ID from the route parameter
   data() {
@@ -208,37 +141,25 @@ export default {
   },
   async created() {
       console.log('showDeletedMessage:', this.showDeletedMessage);
-      try {
-        console.log(`Attempting to fetch song with id '${this.id}'`);
-        const songDocRef = doc(db, "songs", this.id);
-        const docSnap = await getDoc(songDocRef);
-        const song = docSnap.data();
+      console.log("Fetching discussions for song with id ", this.id)
 
-        if (docSnap.exists()) {
-          this.songData = {
-            title: song.title,
-            img: song.img
-          }
-          console.log(`Successfully fetched song ${this.songData.title}`)
-         
+      const songRef = doc(db, "songs", this.id)
+      const q = query(collection(db, "posts"), where("song", "==", songRef))
+      const queryResponse = await getDocs(q);
+      // queryResponse.forEach(doc => {
+      //   console.log(doc.data())
+      // })
 
-          console.log("Now fetching artist...");
-          const artist = (await getDoc(song.artist)).data() // get artist object from firestore from reference
-          console.log(`Successfully fetched artist ${artist.name}`)
-          this.songData.artist = {
-            name: artist.name,
-            img: artist.img
-          }
-          this.songLoading = false;
-          console.log("Fetching discussions")
+
           // CHECKING FOR POSTS
-          if(song.posts && song.posts.length) {
-            song.posts.forEach(async postReference => {
+          if(queryResponse) {
+            console.log("pushing a post to discussion array")
+            queryResponse.forEach(async doc => {
             try {
-              const postObject = (await getDoc(postReference)).data();
-              const postID = postReference.id;
-              const author = (await getDoc(postObject.author)).data().username
+              const postObject = doc.data();
               console.log(postObject)
+              const postID = postObject.id;
+              const author = (await getDoc(postObject.author)).data().username
               this.posts.push({
                 title: postObject.title,
                 author: author,
@@ -253,72 +174,9 @@ export default {
               console.log("Error fetching discussion posts")
             }
           })
-        } else { // song.posts is false
-            this.noPosts = true;
-            this.postsLoading = false;
-            console.log("No discussion posts found")
-            }
-        } 
-        // komays part
-        else {
-          // docSnap.data() will be undefined in this case
-          console.log("No such document!\nBuilding a new page for this song...");
-          try {
-            // Fetch data 
-            const newSong = await this.spotifyAuthStore.getSongByID(this.id);// query spotify
-            console.log("Got response from spotify")
-            console.log(newSong);
-            // Add new Song AND artist (if artist is not stored yet) to firestore
+    }
 
-            // Artist
-            const artist = await getDoc(doc(db, "artists", newSong.artists[0]['ID']))
-            let artistRef;
-            console.log("artist: ", newSong.artists[0])
-            if(!artist.exists()) {
-              // Create new artist doc if none exists yet
-              console.log(`No artist found in db, creating document for ${newSong.artists[0].name}`)
-
-              artistRef = await addDoc(collection(db, "artists"), {
-                name: newSong.artists[0].name,
-                img: newSong.artists[0].img,
-              })
-            } else {
-              // Get existing artist doc
-              artistRef = await doc(db, "artists", newSong.artists[0].ID)
-              console.log(`Artist ${newSong.artists[0]} already exists in db, using that.`)
-            }
-
-            console.log("New song:", newSong);
-            const docRef = await setDoc(doc(db, "songs", newSong.ID), {
-              title: newSong.title,
-              artist: artistRef,
-              img: newSong.img,
-              ID: newSong.ID
-            });
-            console.log("Document written with ID: ", newSong.ID);
-            console.log(`${newSong.title} saved to db!`)
-
-
-            // Update the component data so no reload required
-            this.songData = {
-              title: newSong.title,
-              img: newSong.img,
-              artist: {
-                name: newSong.artists[0].name,
-                img: newSong.artists[0].img
-              }
-            }
-            this.songLoading = false;
-
-          } catch (error) {
-            // Display error screen
-            console.error("Error fetching the song:", error);
-  }
-        }
-      } catch(e) {
-        console.error('Something went wrong bruh', e)
-      }
-    },
+  },
 
   methods: {
   }
