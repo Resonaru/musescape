@@ -11,11 +11,16 @@ import {
   where,
   deleteDoc,
 } from 'firebase/firestore'
+import { useSpotifyAuthStore } from '../stores/spotifyAuthStore'
+import { mapStores } from 'pinia';
 
 export default {
     props: {
         songID: String
     },
+    computed: {
+    ...mapStores(useSpotifyAuthStore), 
+  },
     data() {
         return {
             songData: null, // Song being shown on the page
@@ -54,7 +59,7 @@ export default {
           console.log("No such document!\nBuilding a new page for this song...");
           try {
             // Fetch data 
-            const newSong = await this.spotifyAuthStore.getSongByID(this.id);// query spotify
+            const newSong = await this.spotifyAuthStore.getSongByID(this.songID);// query spotify
             console.log("Got response from spotify")
             console.log(newSong);
             // Add new Song AND artist (if artist is not stored yet) to firestore
