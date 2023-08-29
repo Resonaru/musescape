@@ -5,7 +5,6 @@
         <v-navigation-drawer location="right" style="background-color: black;" :width="450">
           <SongInfoCard :songID="this.id"/>
         </v-navigation-drawer>
-        
 
 
     <!-- <v-main class="d-flex align-center justify-center" style="min-height: 300px;"> -->
@@ -131,7 +130,6 @@ export default {
       // loading: true, // Loading screen renderred
       showPostForm: false,
       showDeletedMessage: this.$route.query.deleted === 'true' || false,
-      songLoading: true, // Loading screen renderred
       postsLoading: true,
       noPosts: null
     };
@@ -146,14 +144,10 @@ export default {
       const songRef = doc(db, "songs", this.id)
       const q = query(collection(db, "posts"), where("song", "==", songRef))
       const queryResponse = await getDocs(q);
-      // queryResponse.forEach(doc => {
-      //   console.log(doc.data())
-      // })
 
 
           // CHECKING FOR POSTS
           if(queryResponse) {
-            console.log("pushing a post to discussion array")
             queryResponse.forEach(async doc => {
             try {
               const postObject = doc.data();
@@ -174,6 +168,8 @@ export default {
               console.log("Error fetching discussion posts")
             }
           })
+
+          console.log("All discussion posts successfully fetched")
     }
 
   },
@@ -185,9 +181,6 @@ export default {
 
 <style>
 
-/* .song-img {
-  
-} */
 .song-title {
   color: #FFFFFF
 }
