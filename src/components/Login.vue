@@ -1,12 +1,53 @@
 <template>
     <div class="auth">
         <template v-if="!this.authStore.user">
-            Email: <input type="text" v-model.trim="email"/>
+            <!--OLD CODE-->
+            <!-- Email: <input type="text" v-model.trim="email"/>
             <br>
             Password: <input type="password" v-model.trim="password"/>
             <br>
             <button @click="this.authStore.login(this.email, this.password)">Login</button>
-            <br/>
+            <br/> -->
+            <v-sheet rounded>
+                <v-card class="mx-auto px-6 py-8" min-width="344">
+                    <v-form
+                    v-model="form"
+                    @submit.prevent="onSubmit">
+                        <v-text-field
+                        v-model="email"
+                        :readonly="loading"
+                        :rules="[required]"
+                        class="mb-2"
+                        clearable
+                        label="Email"
+                        ></v-text-field>
+
+                        <v-text-field
+                        v-model="password"
+                        :readonly="loading"
+                        :rules="[required]"
+                        :type="show1 ? 'text' : 'password'"
+                        clearable
+                        label="Password"
+                        placeholder="Enter your password"
+                        ></v-text-field>
+
+                        <br>
+
+                        <v-btn
+                        :disabled="!form"
+                        :loading="loading"
+                        block
+                        color="success"
+                        size="large"
+                        type="submit"
+                        variant="elevated"
+                        @click="this.authStore.login(this.email, this.password)">
+                        Sign In
+                        </v-btn>
+                    </v-form>
+                </v-card>
+            </v-sheet>
             <RouterLink to="/register"><button>Sign Up</button></RouterLink>
         </template>
         <template v-else>
@@ -21,12 +62,9 @@
 
 
 <script>
-// import { auth } from '../firebase';
-// import { signInWithEmailAndPassword, signOut, setPersistence, browserLocalPersistence, onAuthStateChanged } from 'firebase/auth';
 import { useAuthStore } from '../stores/authStore';
 import { mapStores } from 'pinia';
 
-// const { user } = useAuthStore();
 
 export default{
     data(){
@@ -41,48 +79,6 @@ export default{
     computed:{
         ...mapStores(useAuthStore),
     },
-    // methods:{
-    //     async login(){
-    //         try{
-    //             setPersistence(auth, browserLocalPersistence);
-    //             this.notFound = false;
-    //             this.invalidPassword = false;
-    //             console.log('logging in...');
-    //             await signInWithEmailAndPassword(auth, this.email, this.password);
-    //             console.log('successfully logged in!')
-    //             this.loggedIn = true;
-                
-    //         }
-    //         catch(e){
-    //             console.error('Error in login', e);
-    //         }
-    //     },
-    //     async logout(){
-    //         try{
-    //             if(auth.currentUser){
-    //                 console.log('logging out...');
-    //                 await signOut(auth);
-    //                 console.log('Successfully logged out!')
-    //                 this.loggedIn = false;
-    //             }
-    //             else{
-    //                 console.log('no user signed in');
-    //             }
-    //         }
-    //          catch(err){
-    //             console.log('error logging out');
-    //          }
-    //     }
-    // }
 }
 
 </script>
-
-<style>
-input[type="text"], textarea {
-    background-color : #d1d1d1; 
-}
-input[type="password"], textarea {
-    background-color : #d1d1d1; 
-}
-</style>
