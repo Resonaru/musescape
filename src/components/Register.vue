@@ -51,7 +51,7 @@
                         size="large"
                         type="submit"
                         variant="elevated"
-                        @click="createAccountAndLogin(email, password)">
+                        @click="register(name,email, password)">
                         Register
                         </v-btn>
                     </v-form>
@@ -61,7 +61,7 @@
         <template v-if="loggedIn">
            Account created successfully! 
            <br>
-           <RouterLink to="/login">Please proceed to the login page to login!</RouterLink>
+           <RouterLink to="/feed">Please proceed to the feed</RouterLink>
         </template>
     </div>
 </template>
@@ -69,8 +69,8 @@
 
 <script>
 import { RouterLink } from 'vue-router';
-import { auth } from '../firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+// import { auth } from '../firebase';
+// import { createUserWithEmailAndPassword } from 'firebase/auth'
 
 export default{
     data() {
@@ -82,9 +82,6 @@ export default{
         };
     },
     methods: {
-        async createAccountAndLogin() {
-
-        }
     },
     components: { RouterLink }
 }
