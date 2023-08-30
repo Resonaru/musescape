@@ -89,9 +89,8 @@ export const useSpotifyAuthStore = defineStore('spotifyAuth', {
             artists: artistsData,
             link: `/'song'/${data.id}`,
             genres: data.genres,
-            lyrics: this.getLyrics(data.name, data.artists[0].name),
           };
-          console.log(`results: ${searchResults.title}`);
+          // console.log(`results: ${searchResults.title}`);
         return searchResults;
         } else {
           console.error('getSongByID Failed to get access token ');
@@ -103,12 +102,16 @@ export const useSpotifyAuthStore = defineStore('spotifyAuth', {
       }
     },
     async getLyrics(songTitle, artistName){
+      console.log(`getLyrics(${songTitle}, ${artistName})`)
       try {
+        let apiKey = import.meta.env.VITE_MUSIXMATCH_API_KEY;
         const response = await fetch(
-          `https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?q_artist=${artistName}&q_track=${songTitle}&apikey=${import.meta.env.VITE_MUSIXMATCH_API_KEY}`
+          `https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?q_artist=${artistName}&q_track=${songTitle}&apikey=${apiKey}`
         );
         if(response.ok){
           const data = await response.json();
+          console.log("lyrics");
+          console.log(data);
           const searchResults = {
             lyrics: data.message.body.lyrics.lyrics_body,
             scriptTracking: data.message.body.lyrics.script_tracking_url,
@@ -121,7 +124,6 @@ export const useSpotifyAuthStore = defineStore('spotifyAuth', {
         console.error('GetLyrics broke', error);
         throw error;
       }
-
     }
   },
 });
