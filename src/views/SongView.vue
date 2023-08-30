@@ -162,13 +162,14 @@ export default {
                 song: this.id,
               })
 
-              this.postsLoading = false;
-              this.noPosts = false;
+              
             } catch(e) {
               console.log("Error fetching discussion posts")
             }
           })
           if(!this.posts.length) this.noPosts = true;
+          else this.noPosts = false;
+          this.postsLoading = false;
           console.log("All discussion posts successfully fetched")
     }
 

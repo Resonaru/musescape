@@ -128,7 +128,7 @@ export default {
             max-width="400"
             type="table-heading, list-item-two-line, image, table-tfoot"
           ></v-skeleton-loader> -->
-          <h1>Loading song...</h1>
+           <h1 style="color:aliceblue">Loading song...</h1>
             </template>
             <template v-else>
               <v-card cover class="song-card rounded-xl justify-center" min-height="500" width="350">
