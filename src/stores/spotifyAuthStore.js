@@ -81,9 +81,9 @@ export const useSpotifyAuthStore = defineStore('spotifyAuth', {
               throw error;
             }
           });
-    
+          
           const artistsData = await Promise.all(artistsPromises);
-    
+          const lyricsData = await this.getLyrics(data.name, artistsData[0].name);
           const searchResults = {
             title: data.name,
             img: data.album.images.length > 0 ? data.album.images[0].url : '',
@@ -91,8 +91,10 @@ export const useSpotifyAuthStore = defineStore('spotifyAuth', {
             artists: artistsData,
             link: `/'song'/${data.id}`,
             genres: data.genres,
+            lyrics: lyricsData,
           };
-    
+          console.log("searchREsults.lyrics")
+          console.log(searchResults.lyrics);
           return searchResults;
         } else {
           console.error('getSongByID Failed to get access token ');
@@ -115,15 +117,21 @@ export const useSpotifyAuthStore = defineStore('spotifyAuth', {
           console.log("lyrics");
           console.log(data);
           const searchResults = {
-            lyrics: data.message.body.lyrics.lyrics_body,
-            scriptTracking: data.message.body.lyrics.script_tracking_url,
-            copyright: `<script type="text/javascript" src="${data.message.body.lyrics.lyrics_copyright}">`,
+            lyrics: data.message.body?.lyrics?.lyrics_body,
+            scriptTracking: data.message.body?.lyrics?.script_tracking_url,
+            copyright: `<script type="text/javascript" src="${data.message.body?.lyrics?.lyrics_copyright}">`,
+            lyricsArray: [],
           };
-          searchResults.lyrics = searchResults.lyrics .replace(/(?:\r\n|\r|\n)/g, '<br>');
+          searchResults.lyricsArray = searchResults?.lyrics?.split(/(?:\r\n|\r|\n)/g);
+          console.log(searchResults)
           return searchResults;
+        } else {
+          throw new Error("response was not ok")
         }
       } catch (error){
         console.error('GetLyrics broke', error);
+        console.log(error);
+        // return null;
         throw error;
       }
     }
