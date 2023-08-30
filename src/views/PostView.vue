@@ -54,10 +54,10 @@ import Post from '../components/Post.vue'
 import PostForm from '../components/PostForm.vue'
 import { db } from '@/firebase';
 import {
-collection,
+// collection,
 doc,
-addDoc,
-setDoc,
+// addDoc,
+// setDoc,
 getDoc,
 getDocs,
 query,
@@ -173,14 +173,14 @@ export default {
 </script>
 
 <style>
-.post {
+/* .post {
     vertical-align: text-top;
     width:800px;
     min-height: 300px;
     margin:5px;
     border-radius: 25px;
     background-color: #423A42;
-}
+} */
 
 .text {
     padding: 15px;
