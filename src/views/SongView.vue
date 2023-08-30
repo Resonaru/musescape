@@ -152,13 +152,16 @@ export default {
     const queryResponse = await getDocs(q);
 
     // CHECKING FOR POSTS
+
     if (queryResponse) {
+      console.log('Fetching discussions')
       try {
         const postPromises = queryResponse.docs.map(async doc => {
           const postObject = doc.data();
-          const postID = postObject.id;
+          const postID = doc.id;
           const authorDoc = await getDoc(postObject.author);
           const author = authorDoc.data().username;
+          console.log('fetched discussion with id', doc.id)
           
           return {
             title: postObject.title,
