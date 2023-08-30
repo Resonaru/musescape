@@ -156,3 +156,17 @@ export default {
             </template>
           </v-container>
 </template>
+
+<style>
+.song-title {
+  color: #FFFFFF
+}
+.song-artist {
+  color: #959090
+}
+
+.song-card {
+
+  background-color: #423A42;
+}
+</style>

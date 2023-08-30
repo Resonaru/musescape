@@ -188,18 +188,6 @@ export default {
 
 <style>
 
-.song-title {
-  color: #FFFFFF
-}
-.song-artist {
-  color: #959090
-}
-
-.song-card {
-
-  background-color: #423A42;
-}
-
 .d-flex {
   display: flex;
 }
