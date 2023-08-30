@@ -35,71 +35,72 @@ export const useSpotifyAuthStore = defineStore('spotifyAuth', {
         console.error('Error:', error);
       }
     },
-    async getSongByID(id){  
+    async getSongByID(id) {
       if (!this.token) {
-        console.log('fetching token')
+        console.log('fetching token');
         await this.getSpotifyToken(); // Call the action to get the token
         this.token = this.token; // Access the token from the store
       }
-      console.log(`running getSongByID: ${id}`)
+      
+      console.log(`running getSongByID: ${id}`);
+    
       try {
         const response = await fetch(
-          `https://api.spotify.com/v1/tracks/${id}`, 
+          `https://api.spotify.com/v1/tracks/${id}`,
           {
             headers: {
               Authorization: 'Bearer ' + this.token,
-            }
+            },
           }
         );
+    
         if (response.ok) {
           const data = await response.json();
-          console.log(`data: `)
-          console.log(data);
-          const artistsData = [];
-          data.artists.forEach(async (artist) => {
+    
+          const artistsPromises = data.artists.map(async (artist) => {
             try {
               const artistResponse = await fetch(
-                `https://api.spotify.com/v1/artists/${artist.id}`, 
+                `https://api.spotify.com/v1/artists/${artist.id}`,
                 {
                   headers: {
                     Authorization: 'Bearer ' + this.token,
-                  }
+                  },
                 }
               );
+    
               const artistData = await artistResponse.json();
-              console.log("artist Data");
-              console.log(artistData);
               const artistResult = {
                 name: artistData.name,
                 img: artistData.images.length > 0 ? artistData.images[0].url : '',
                 link: `/'artist'/${artistData.id}`,
-                ID: artistData.id
-              }
-              console.log(artistResult)
-              artistsData.push(artistResult)
+                ID: artistData.id,
+              };
+              return artistResult;
             } catch (error) {
               console.error('artists ForEach breaking', error);
               throw error;
-            }}
-          );
+            }
+          });
+    
+          const artistsData = await Promise.all(artistsPromises);
+    
           const searchResults = {
             title: data.name,
             img: data.album.images.length > 0 ? data.album.images[0].url : '',
-            img: data.album.images[0].url,
             ID: data.id,
             artists: artistsData,
             link: `/'song'/${data.id}`,
             genres: data.genres,
           };
-          // console.log(`results: ${searchResults.title}`);
-        return searchResults;
+    
+          return searchResults;
         } else {
           console.error('getSongByID Failed to get access token ');
-          throw(error);
+          throw error;
         }
       } catch (error) {
         console.error('Error:', error);
-        throw(error);
+        throw error;
       }
     },
     async getLyrics(songTitle, artistName){

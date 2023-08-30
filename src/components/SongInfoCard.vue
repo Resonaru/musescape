@@ -109,7 +109,7 @@ export default {
           } catch (error) {
             // Display error screen
             console.error("Error fetching the song:", error);
-  }
+          }
         }
       } catch(e) {
         console.error('Something went wrong bruh', e)
