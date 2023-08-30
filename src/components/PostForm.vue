@@ -56,13 +56,8 @@
         try {
             // get the song its associated to
             const songDocRef = doc(db, 'songs', this.songId);
-<<<<<<< HEAD
           // Get the currently logged-in user's data
             const userDocRef = doc(db, 'users', this.username);
-=======
-          // FIXME: Get the currently logged-in user's data
-            const userDocRef = doc(db, 'users', '5p3YAJMQICKBj8VqRWat');
->>>>>>> 6246d8e11f401483d60825afd41da31c26c9cd20
           if (userDocRef) {
             const postsCollection = collection(db, 'posts');
             const newPostRef = await addDoc(postsCollection, {
