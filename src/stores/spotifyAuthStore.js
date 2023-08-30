@@ -53,7 +53,8 @@ export const useSpotifyAuthStore = defineStore('spotifyAuth', {
         );
         if (response.ok) {
           const data = await response.json();
-          // console.log(`data: ${data}`)
+          console.log(`data: `)
+          console.log(data);
           const artistsData = [];
           data.artists.forEach(async (artist) => {
             try {

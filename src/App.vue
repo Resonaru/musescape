@@ -15,7 +15,7 @@ export default{
     ...mapStores(useSpotifyAuthStore), 
   },
   async created() { 
-    await this.spotifyAuthStore.getSongByID('7fEI29hmaWcCMPi8VJf33C');
+    // await this.spotifyAuthStore.getSongByID('7fEI29hmaWcCMPi8VJf33C');
   },
   components: {
     Sidebar,

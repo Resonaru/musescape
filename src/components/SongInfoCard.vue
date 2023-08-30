@@ -61,10 +61,12 @@ export default {
             // Fetch data 
             const newSong = await this.spotifyAuthStore.getSongByID(this.songID);// query spotify
             console.log("Got response from spotify")
-            console.log(newSong);
+            await console.log(newSong);
             // Add new Song AND artist (if artist is not stored yet) to firestore
 
             // Artist
+            console.log("trying artists[0]")
+            console.log(newSong.artists[0])
             const artist = await getDoc(doc(db, "artists", newSong.artists[0].ID))
             let artistRef;
             console.log("artist: ", newSong.artists[0])
