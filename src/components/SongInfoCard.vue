@@ -65,7 +65,7 @@ export default {
             // Add new Song AND artist (if artist is not stored yet) to firestore
 
             // Artist
-            const artist = await getDoc(doc(db, "artists", newSong.artists[0]['ID']))
+            const artist = await getDoc(doc(db, "artists", newSong.artists[0].ID))
             let artistRef;
             console.log("artist: ", newSong.artists[0])
             if(!artist.exists()) {
