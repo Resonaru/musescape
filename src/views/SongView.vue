@@ -156,9 +156,10 @@ export default {
       try {
         const postPromises = queryResponse.docs.map(async doc => {
           const postObject = doc.data();
-          const postID = postObject.id;
+          const postID = doc.id;
           const authorDoc = await getDoc(postObject.author);
           const author = authorDoc.data().username;
+          console.log('post id', doc.id)
           
           return {
             title: postObject.title,
