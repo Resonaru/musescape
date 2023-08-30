@@ -77,19 +77,47 @@ const songConverter = {
             this.loading = true;
             console.log("querying song database...")
             const querySnapshot = await getDocs(collection(db, "songs"));
-            querySnapshot.forEach(async (doc) => {
-            // doc.data() is never undefined for query doc snapshots
+            // querySnapshot.forEach(async (doc) => {
+            // // doc.data() is never undefined for query doc snapshots
+            //     const song = doc.data();
+            //     const artist = (await getDoc(song.artist)).data();
+            //     this.songList.push({
+            //         title: song.title,
+            //         artist: artist.name,
+            //         img: song.img,
+            //         timestamp: new Date('August 15, 2023 03:24:00'),
+            //         ID: doc.id,
+            //         numPosts: song.posts?.length || 0
+            //     })
+            //     // console.log(doc.id, " => ", doc.data());
+            // });
+
+            const fetchArtistPromises = querySnapshot.docs.map(async (doc) => {
                 const song = doc.data();
-                const artist = (await getDoc(song.artist)).data();
+                const artistDoc = await getDoc(song.artist);
+                const artist = artistDoc.data();
+            
                 this.songList.push({
                     title: song.title,
                     artist: artist.name,
                     img: song.img,
                     timestamp: new Date('August 15, 2023 03:24:00'),
-                    ID: doc.id
-                })
-                // console.log(doc.id, " => ", doc.data());
+                    ID: doc.id,
+                    numPosts: song.posts?.length || 0
+                });
             });
+
+            await Promise.all(fetchArtistPromises);
+
+
+
+            // Sort array based on popularity
+            this.songList.forEach(song => console.log(song))
+
+            this.songList.sort((a, b) => {
+                if(a.numPosts > b.numPosts) return -1;
+                else return 1;
+            })
             console.log('all songs loaded')
             this.loading = false;
             this.songList.forEach(song => console.log(song))
