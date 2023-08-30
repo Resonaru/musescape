@@ -13,12 +13,20 @@
           <v-col col="12">
             <div class="d-flex justify-space-between align-center">
               <h1 class="text-left">Discussions</h1>
-              <!-- Use RouterLink to navigate to PostFormView -->
-              <RouterLink :to="'/post-form/' + this.id">
-                <v-btn color="primary">
-                  Create New Post
+              <!-- FIXME: Use RouterLink to navigate to PostFormView if logged in-->
+              <template v-if="isLoggedIn">
+                <RouterLink :to="'/post-form/' + this.id">
+                  <v-btn color="primary">
+                    Create New Post
+                  </v-btn>
+                </RouterLink>
+              </template>
+              <template v-else>
+                <v-btn color="primary"
+                  @click="toLogin">
+                  Log in to make posts
                 </v-btn>
-              </RouterLink>
+              </template>
             </div>
 
             <v-chip class="ma-2" color="success" variant="outlined">
@@ -120,7 +128,7 @@ import {
 } from 'firebase/firestore'
 import { useRoute } from 'vue-router';
 
-import { useSpotifyAuthStore } from '../stores/spotifyAuthStore'
+import { useAuthStore } from '../stores/authStore'
 import { mapStores } from 'pinia';
 
 export default {
@@ -137,14 +145,20 @@ export default {
       showPostForm: false,
       showDeletedMessage: this.$route.query.deleted === 'true' || false,
       postsLoading: true,
-      noPosts: null
+      noPosts: null,
+      isLoggedIn: false, //SET IT TO TRUE SOMEWHERE
     };
   },
   computed: {
-    ...mapStores(useSpotifyAuthStore), 
+    ...mapStores(useAuthStore), 
   },
     async created() {
-    console.log('showDeletedMessage:', this.showDeletedMessage);
+      // console.log(this.authStore);
+      if(this.authStore.name){
+        this.isLoggedIn = true;
+        // console.log("LOGGED IN SONGVIEW")
+      }
+    // console.log('showDeletedMessage:', this.showDeletedMessage);
     console.log("Fetching discussions for song with id ", this.id)
 
     const songRef = doc(db, "songs", this.id);
@@ -180,8 +194,12 @@ export default {
     }
   },
 
-
   methods: {
+    toLogin() {
+      // const loginMessage = 'Please log in to submit a post.'
+      // this.$emit('loginMessage', loginMessage)
+      this.$router.push({name: 'login'})
+    }
   }
 };
 </script>

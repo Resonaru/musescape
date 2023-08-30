@@ -9,14 +9,20 @@
               <v-btn @click="cancelReply">Cancel</v-btn>
             </div>
           </template> -->
-          <v-form class="textbox" @submit.prevent="submitComment">
-            <v-textarea class="text-box" 
-              v-model="commentContent" 
-              label="Content" 
-              required
-            />
-            <v-btn class="submit" type="submit" color="primary">Submit</v-btn>
-          </v-form>
+          <!-- FIXME -->
+          <template v-if="isLoggedIn">
+            <v-form class="textbox" @submit.prevent="submitComment">
+              <v-textarea class="text-box" 
+                v-model="commentContent" 
+                label="Content" 
+                required
+              />
+              <v-btn class="submit" type="submit" color="primary">Submit</v-btn>
+            </v-form>
+          </template>
+          <template v-else>
+            <p>You need to be <RouterLink :to="'/login/'">logged in</RouterLink> to comment!</p>
+          </template>
         </div>
       <!-- </v-container> -->
     </v-main>
@@ -62,6 +68,7 @@
       return {
         commentContent: '',
         postId: null, // Store the post ID
+        isLoggedIn: false,
         // replyingState: false,
       };
     },
@@ -80,6 +87,9 @@
       this.postId = this.$route.params.id;
       // this.replyingState = this.isReply;
       console.log(this.postId)
+      if(this.authStore.id){
+        isLoggedIn = true;
+      }
     },
     methods: {
       async submitComment() {

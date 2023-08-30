@@ -71,6 +71,7 @@ export const useAuthStore = defineStore('auth', {
                     this.email = null;
                     this.password = null;
                     this.id = null;
+                    this.name = null;
                 }
                 else{
                     console.log('no user signed in');
