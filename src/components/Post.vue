@@ -18,6 +18,7 @@
         data() {
             return {
               showDeleteDialogue: false,
+              loggedUser: null,
             }
         },
         props: {
@@ -71,9 +72,12 @@
     <!-- displays content -->
     <p v-html="postData.content"></p>
     <!-- Button to toggle PostForm visibility -->
-    <v-btn color="error" @click="showDeleteDialogue = !showDeleteDialogue">
-        Delete
-    </v-btn>
+      <!-- FIXME -->
+    <div v-if="loggedUser === postData.author">
+      <v-btn color="error" @click="showDeleteDialogue = !showDeleteDialogue">
+          Delete
+      </v-btn>
+    </div>
     <!-- Confirmation Dialog -->
     <v-dialog v-model="showDeleteDialogue" max-width="500">
     <v-card>

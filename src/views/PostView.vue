@@ -76,8 +76,8 @@ export default {
             noComments: null,
             showDeletedMessage: false,
             // for replies
-            isReply: false,
-            parentCommentId: null,
+            // isReply: false,
+            // parentCommentId: null,
         };
     },
 
@@ -145,21 +145,21 @@ export default {
             }
             else console.log("No comments found")
         },
-        handleReplyToComment(replyInfo) {
-            this.isReply=replyInfo.isReply;
-            this.parentCommentId = replyInfo.parentCommentId;
-        },
-        scrollToCommentForm(commentId) {
-            // Use $refs to scroll to the comment form
-            if (this.$refs.commentForm) {
-                const commentFormElement = this.$refs.commentForm.$el;
-                const targetCommentElement = document.getElementById(commentId);
+        // handleReplyToComment(replyInfo) {
+        //     this.isReply=replyInfo.isReply;
+        //     this.parentCommentId = replyInfo.parentCommentId;
+        // },
+        // scrollToCommentForm(commentId) {
+        //     // Use $refs to scroll to the comment form
+        //     if (this.$refs.commentForm) {
+        //         const commentFormElement = this.$refs.commentForm.$el;
+        //         const targetCommentElement = document.getElementById(commentId);
                 
-                if (targetCommentElement) {
-                targetCommentElement.scrollIntoView({ behavior: 'smooth' });
-                }
-            }
-        },
+        //         if (targetCommentElement) {
+        //         targetCommentElement.scrollIntoView({ behavior: 'smooth' });
+        //         }
+        //     }
+        // },
     },
 };
 </script>
