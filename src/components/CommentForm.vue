@@ -88,7 +88,7 @@
       // this.replyingState = this.isReply;
       console.log(this.postId)
       if(this.authStore.id){
-        isLoggedIn = true;
+        this.isLoggedIn = true;
       }
     },
     methods: {
