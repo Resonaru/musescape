@@ -1,64 +1,59 @@
 <template>
     <div class="auth">
         <template v-if="!this.authStore.loggedIn">
-            Display Name: <input id="name" type="text" v-model.trim="name"/>
+            <!-- OLD CODE -->
+            <!-- Display Name: <input id="name" type="text" v-model.trim="name"/>
             <br>
             Email: <input id="email" type="text" v-model.trim="email"/>
             <br>
             Password: <input id="password" type="password" v-model.trim="password"/>
             <br>
-            <button @click="this.authStore.register(this.name,this.email,this.password)" style = "color:#1DB954; background-color:#404040;">Create Account</button>
-            <p v-if="errorMessage" class="error-message" style="color:red">{{ errorMessage }}</p>
-            <!-- <v-sheet rounded>
-                <v-card class="mx-auto px-6 py-8" min-width="344">
-                    <v-form
-                    v-model="form"
-                    @submit.prevent="onSubmit">
+            <button @click="this.authStore.register(this.name,this.email,this.password)" style = "color:#1DB954; background-color:#404040;">Create Account</button> -->
+            <v-sheet rounded>
+                <v-card color="#101010" class="mx-auto px-6 py-8" min-width="344">
+                    <v-form @submit.prevent>
                         <v-text-field
                         v-model="name"
-                        :readonly="loading"
-                        :rules="[required]"
-                        class="mb-2"
                         clearable
                         label="Display Name"
+                        bg-color="white"
                         ></v-text-field>
 
                         <v-text-field
                         v-model="email"
-                        :readonly="loading"
-                        :rules="[required]"
-                        class="mb-2"
                         clearable
                         label="Email"
+                        bg-color="white"
                         ></v-text-field>
 
                         <v-text-field
                         v-model="password"
-                        :readonly="loading"
-                        :rules="[required]"
-                        :type="show1 ? 'text' : 'password'"
+                        :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                        :type="show ? 'text' : 'password'"
                         clearable
                         label="Password"
                         placeholder="Enter your password"
+                        bg-color="white"
+                        @click:append="show = !show"
+                        class="white-append-icon"
                         ></v-text-field>
 
                         <br>
 
                         <v-btn
-                        :disabled="!form"
-                        :loading="loading"
                         block
                         color="success"
                         size="large"
                         type="submit"
                         variant="elevated"
-                        @click="this.authStore.register(this.name,this.email, this.password)">
+                        @click="this.authStore.register(this.name,this.email,this.password)">
                         Register
                         </v-btn>
-
                     </v-form>
                 </v-card>
-            </v-sheet> -->
+            </v-sheet>
+            <p v-if="errorMessage" class="error-message" style="color:red">{{ errorMessage }}</p>
+            
         </template>
         <template v-if="this.authStore.loggedIn">
            Account created successfully! 
@@ -79,6 +74,7 @@ import { useAuthStore } from '../stores/authStore';
 export default{
     data() {
         return {
+            show: false,
             loggedIn: false,
             name: null,
             email: null,
@@ -99,11 +95,8 @@ export default{
 </script>
 
 
-<style>
-input[type="text"], textarea {
-    background-color : #d1d1d1; 
-}
-input[type="password"], textarea {
-    background-color : #d1d1d1; 
+<style scoped>
+.white-append-icon  {
+  color: white; 
 }
 </style>

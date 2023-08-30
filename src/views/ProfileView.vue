@@ -30,7 +30,7 @@
                 size="125"
                 rounded="1"
                 >
-                <v-img src="https://cdn.discordapp.com/attachments/722208323981803585/1146261244110700564/stupid.jpg"></v-img>
+                <v-img src="https://cdn.discordapp.com/attachments/722208323981803585/1146438827934744616/white-square-background-56v690fpm25a3o6s.png"></v-img>
                 </v-avatar>
                 <div>
                 <v-card-title class="text-h5">
