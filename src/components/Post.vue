@@ -74,7 +74,8 @@
     <div class="text" style="color:rgb(245, 245, 245)">
     <h1> {{ postData.title }}</h1> 
     <p>
-        <span style="float:left">by {{ postData.author.username }}</span>
+      <v-avatar style="float:left" color="surface-variant" :image="postData.author.avatarURL"></v-avatar> 
+        <span style="float:left"> {{ ' ' + postData.author.username }}</span>
         <span style="float:right">Likes: {{ postData.likes }}</span>
     </p> <br/> <br/>
     <!-- displays content -->

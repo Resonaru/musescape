@@ -139,7 +139,10 @@ export default {
                         console.log(commentObject)
                         this.comments.push({
                             id: commentReference.id,
-                            author: author,
+                            author: {
+                                username: author.username,
+                                avatarURL: author.avatarURL || "https://cdn4.iconfinder.com/data/icons/forum-buttons-and-community-signs-1/794/profile-3-512.png"
+                            },
                             content: commentObject.content,
                             likes: commentObject.likes,
                             post: this.id,

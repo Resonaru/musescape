@@ -2,10 +2,9 @@
   <v-card class="post">
     <div class="text" style="color:rgb(245, 245, 245)">
     <h1> {{ commentData.title }}</h1> 
-    <p>
-        <span style="float:left">by {{ commentData.author.username }}</span>
-        <span style="float:right">Likes: {{ commentData.likes }}</span>
-    </p> <br/> 
+      <v-avatar style="float:left" color="surface-variant" :image="commentData.author.avatarURL"></v-avatar>
+        <span style="float:left">{{ commentData.author.username }}</span>
+        <span style="float:right">Likes: {{ commentData.likes }}</span><br/> 
     <!-- <template v-if="isReply">
         <div>
           <p>Replying to {{ parentComment.author }}</p>
@@ -13,13 +12,13 @@
     </template> -->
     <br/>
     <!-- displays html ver of content -->
-    <p v-html="commentData.content"></p>
+    <v-card-text v-html="commentData.content"></v-card-text>
     <!-- Display parent comment if this is a reply -->
     <!-- Button to toggle commentForm visibility -->
     <!-- <v-btn color="primary" @click="reply(commentData.author.username)">
         Reply
     </v-btn> -->
-    <v-btn color="error" @click="showDeleteDialogue = !showDeleteDialogue">
+      <v-btn color="error" @click="showDeleteDialogue = !showDeleteDialogue">
         Delete
     </v-btn>
     <!-- Confirmation Dialog -->
