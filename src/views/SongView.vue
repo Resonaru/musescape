@@ -143,43 +143,41 @@ export default {
   computed: {
     ...mapStores(useSpotifyAuthStore), 
   },
-  async created() {
-  console.log('showDeletedMessage:', this.showDeletedMessage);
-  console.log("Fetching discussions for song with id ", this.id)
+    async created() {
+    console.log('showDeletedMessage:', this.showDeletedMessage);
+    console.log("Fetching discussions for song with id ", this.id)
 
-  const songRef = doc(db, "songs", this.id);
-  const q = query(collection(db, "posts"), where("song", "==", songRef));
-  const queryResponse = await getDocs(q);
+    const songRef = doc(db, "songs", this.id);
+    const q = query(collection(db, "posts"), where("song", "==", songRef));
+    const queryResponse = await getDocs(q);
 
-  // CHECKING FOR POSTS
-  if (queryResponse) {
-    try {
-      console.log("Fetching all posts...")
-      const postPromises = queryResponse.docs.map(async doc => {
-        const postObject = doc.data();
-        const postID = postObject.id;
-        const authorDoc = await getDoc(postObject.author);
-        const author = authorDoc.data().username;
-        
-        return {
-          title: postObject.title,
-          author: author,
-          content: postObject.content,
-          ID: postID,
-          song: this.id,
-        };
-      });
+    // CHECKING FOR POSTS
+    if (queryResponse) {
+      try {
+        const postPromises = queryResponse.docs.map(async doc => {
+          const postObject = doc.data();
+          const postID = postObject.id;
+          const authorDoc = await getDoc(postObject.author);
+          const author = authorDoc.data().username;
+          
+          return {
+            title: postObject.title,
+            author: author,
+            content: postObject.content,
+            ID: postID,
+            song: this.id,
+          };
+        });
 
-      this.posts = await Promise.all(postPromises);
-      this.noPosts = this.posts.length === 0;
-      this.postsLoading = false;
-      console.log("All discussion posts successfully fetched");
-    } catch (e) {
-      console.log("Error fetching discussion posts", e);
+        this.posts = await Promise.all(postPromises);
+        this.noPosts = this.posts.length === 0;
+        this.postsLoading = false;
+        console.log("All discussion posts successfully fetched");
+      } catch (e) {
+        console.log("Error fetching discussion posts", e);
+      }
     }
-  }
-},
-
+  },
 
 
   methods: {
