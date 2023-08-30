@@ -12,6 +12,7 @@ import { doc, setDoc, getDoc } from 'firebase/firestore';
 console.log('l')
 export const useAuthStore = defineStore('auth', {
     state: () => ({
+        id: null,
         name: null,
         user: null,
         email: null,
@@ -47,7 +48,7 @@ export const useAuthStore = defineStore('auth', {
                     this.name = userRef.data().username;
                     this.email = userRef.data().email;
                     this.password = userRef.data().password;
-
+                    this.id = auth.currentUser.uid;
                   } else {
                     // docSnap.data() will be undefined in this case
                     console.log("No such document!");
@@ -69,6 +70,7 @@ export const useAuthStore = defineStore('auth', {
                     this.user = null;
                     this.email = null;
                     this.password = null;
+                    this.id = null;
                 }
                 else{
                     console.log('no user signed in');
@@ -93,6 +95,7 @@ export const useAuthStore = defineStore('auth', {
                 this.password = passwordSubmit;
                 this.name = nameSubmit;
                 this.user=auth.currentUser;
+                this.id = auth.currentUser.uid;
                 this.loggedIn = true;
                 console.log('Current user', auth.currentUser);
             }
