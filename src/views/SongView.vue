@@ -41,12 +41,6 @@
             </v-chip>
 
             <template v-if="postsLoading">
-              <!-- <v-skeleton-loader
-              class="mx-auto"
-              elevation="12"
-              min-width="600"
-              type="table-heading, list-item-two-line, image, table-tfoot"
-            ></v-skeleton-loader> -->
               <h1>Loading discussions...</h1>
             </template>
             <template v-else>
@@ -77,6 +71,18 @@
         </v-row>
     </v-main>
 
+    <!-- If post was deleted -->
+    <v-dialog v-model="showDeletedMessage" max-width="500">
+    <v-card>
+      <v-card-title class="headline">Post Deleted</v-card-title>
+      <v-card-text>
+        The post has been deleted successfully.
+      </v-card-text>
+      <v-card-actions>
+        <v-btn text @click="showDeletedMessage = false">Close</v-btn>
+      </v-card-actions>
+    </v-card>
+    </v-dialog>
     <!-- If post was deleted -->
     <v-dialog v-model="showDeletedMessage" max-width="500">
     <v-card>
@@ -137,43 +143,42 @@ export default {
   computed: {
     ...mapStores(useSpotifyAuthStore), 
   },
-  async created() {
-      console.log('showDeletedMessage:', this.showDeletedMessage);
-      console.log("Fetching discussions for song with id ", this.id)
+    async created() {
+    console.log('showDeletedMessage:', this.showDeletedMessage);
+    console.log("Fetching discussions for song with id ", this.id)
 
-      const songRef = doc(db, "songs", this.id)
-      const q = query(collection(db, "posts"), where("song", "==", songRef))
-      const queryResponse = await getDocs(q);
+    const songRef = doc(db, "songs", this.id);
+    const q = query(collection(db, "posts"), where("song", "==", songRef));
+    const queryResponse = await getDocs(q);
 
+    // CHECKING FOR POSTS
+    if (queryResponse) {
+      try {
+        const postPromises = queryResponse.docs.map(async doc => {
+          const postObject = doc.data();
+          const postID = postObject.id;
+          const authorDoc = await getDoc(postObject.author);
+          const author = authorDoc.data().username;
+          
+          return {
+            title: postObject.title,
+            author: author,
+            content: postObject.content,
+            ID: postID,
+            song: this.id,
+          };
+        });
 
-          // CHECKING FOR POSTS
-          if(queryResponse) {
-            queryResponse.forEach(async doc => {
-            try {
-              const postObject = doc.data();
-              console.log(postObject)
-              const postID = postObject.id;
-              const author = (await getDoc(postObject.author)).data().username
-              this.posts.push({
-                title: postObject.title,
-                author: author,
-                content: postObject.content,
-                ID: postID,
-                song: this.id,
-              })
-
-              
-            } catch(e) {
-              console.log("Error fetching discussion posts")
-            }
-          })
-          if(!this.posts.length) this.noPosts = true;
-          else this.noPosts = false;
-          this.postsLoading = false;
-          console.log("All discussion posts successfully fetched")
+        this.posts = await Promise.all(postPromises);
+        this.noPosts = this.posts.length === 0;
+        this.postsLoading = false;
+        console.log("All discussion posts successfully fetched");
+      } catch (e) {
+        console.log("Error fetching discussion posts", e);
+      }
     }
-
   },
+
 
   methods: {
   }
