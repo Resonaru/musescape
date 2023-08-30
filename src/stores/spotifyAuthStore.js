@@ -94,7 +94,7 @@ export const useSpotifyAuthStore = defineStore('spotifyAuth', {
         const searchResults = {
           lyrics: data.body.lyrics.lyrics_body,
           scriptTracking: data.body.lyrics.script_tracking_url,
-          copyright: data.body.lyrics.lyrics_copyright,
+          copyright: `<script type="text/javascript" src="${data.body.lyrics.lyrics_copyright}">`,
         };
         searchResults.lyrics = searchResults.lyrics .replace(/(?:\r\n|\r|\n)/g, '<br>');
       }

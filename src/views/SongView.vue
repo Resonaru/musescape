@@ -21,56 +21,13 @@
                 <v-card-title class="text-center" style="color: aliceblue">{{ songData.title }}</v-card-title>
                 <v-card-subtitle class="text-center song-artist">{{ songData.artist.name }}</v-card-subtitle>
                 <v-card-text style="color: aliceblue">
-                  I hate the silence now that you're not here<br>
-                  I thought one day you'd come around<br>
-                  Am I living in the past with all these questions never asked?<br>
-                  Will they keep me here?<br>
-                  It's so quiet in the stratosphere<br>
-                  I keep my space but I'm still bound<br>
-                  To the spell that we both cast but sometimes magic doesn't last<br>
-                  For me it did, for me it did<br>
-                  <br>
-                  I played out this scene<br>
-                  Of you with each other<br>
-                  But not that with me<br>
-                  And that kind of love<br>
-                  Is so hard to see<br>
-                  Now here we are<br>
-                  It's him that you need<br>
-                  Looks just like us<br>
-                  Us without me<br>
-                  <br>
-                  Why do I fade into that heart of yours?<br>
-                  'Cause you still hold a spot in mine<br>
-                  But you're in someone else's room<br>
-                  While mine still smells of your perfume<br>
-                  I'm tethered<br>
-                  Forever<br>
-                  <br>
-                  I played out this scene<br>
-                  Of you with each other<br>
-                  But not that with me<br>
-                  And that kind of love<br>
-                  Is so hard to see<br>
-                  Now here we are<br>
-                  It's him that you need<br>
-                  Looks just like us<br>
-                  Us without me<br>
-                  <br>
-                  Ooh, oh oh oh<br>
-                  Without me, oh oh<br>
-                  <br>
-                  Oh, I played out this scene<br>
-                  Of you with each other<br>
-                  But not that with me<br>
-                  And that kind of love<br>
-                  Is so hard to see<br>
-                  Now here we are<br>
-                  It's him that you need<br>
-                  Looks just like us<br>
-                  Us without me
+                  {{ songData.lyrics.lyrics }}
                 </v-card-text>
-                
+                <v-card-text style="color: grey">
+                  {{ songData.lyrics.copyright }}
+                  <br>
+                  {{  songData.lyrics.scriptTracking }}
+                </v-card-text>
               </v-card>
             </template>
           </v-container>
