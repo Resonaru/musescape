@@ -68,6 +68,7 @@ export default {
     props: ['id'], // Access the post ID from the route parameter
     data() {
         return {
+            postData: null,
             songTitle: null,
             songId: null,
             comments: [],

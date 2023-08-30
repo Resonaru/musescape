@@ -17,16 +17,14 @@
         name: 'Post',
         data() {
             return {
-                // showCommentForm:false,
-                showDeleteDialogue:false,
-                // postData: {
-                //   title: "Default post",
-                //   author: "/users/",
-                //   content: "default text",
-                //   likes: 0,
-                //   song: "/songs/",
-                //   replies: [],
-                // }
+                postData: {
+                        title: "Default post/comment",
+                        author: "komay sugiyama",
+                        content: "default text",
+                        likes: 0,
+                        song: "/songs/",
+                        timestamp: new Date('August 15, 2023 03:24:00'),
+                }
             }
         },
         props: {
@@ -67,6 +65,7 @@
     };
 </script>
 
+<!-- // this is useless currently -->
 <template>
   <v-card class="post">
     <div class="text" style="color:rgb(245, 245, 245)">
