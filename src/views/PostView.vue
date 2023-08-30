@@ -1,28 +1,35 @@
 <template>
+    <v-navigation-drawer location="right" style="background-color: black;" :width="400">
+          <SongInfoCard :songID="songId" v-if="readyToLoadSong"/>
+    </v-navigation-drawer>
+
+
     <v-main>
         <template v-if="loading">
           Loading...
         </template>
         <template v-else>
-            <RouterLink :to="'/song/' + songId">
-            <v-row class="back">
-                <h2>Return to {{ songTitle }}</h2>
-            </v-row>
-            </RouterLink>
-            <Post :postData="postData" :id="this.id"/>
-            <CommentForm 
-                id="comment-form" 
-                :isReply="isReply"
-                :parentCommentId="parentCommentId"
-                @commentAdded="fetchComments()"/>
-            <!-- Display comments -->
-            <Comment v-for="comment in comments" 
-                :id="comment.id" 
-                :commentData="comment" 
-                @commentDeleted="fetchComments(); showDeletedMessage = true"
-                @scrollToCommentForm="scrollToCommentForm"
-                @replyToComment="handleReplyToComment"
-            />
+            <div class="postswrapper">
+                <RouterLink :to="'/song/' + songId">
+                <v-row class="back">
+                    <h2>Return to {{ songTitle }}</h2>
+                </v-row>
+                </RouterLink>
+                <Post :postData="postData" :id="this.id"/>
+                <CommentForm 
+                    id="comment-form" 
+                    :isReply="isReply"
+                    :parentCommentId="parentCommentId"
+                    @commentAdded="fetchComments()"/>
+                <!-- Display comments -->
+                <Comment v-for="comment in comments" 
+                    :id="comment.id" 
+                    :commentData="comment" 
+                    @commentDeleted="fetchComments(); showDeletedMessage = true"
+                    @scrollToCommentForm="scrollToCommentForm"
+                    @replyToComment="handleReplyToComment"
+                />
+            </div>
         </template>
     </v-main>
     <!-- If comment has been deleted -->
@@ -43,6 +50,7 @@
 import Post from '../components/Post.vue'
 import CommentForm from '../components/CommentForm.vue';
 import Comment from '../components/Comment.vue';
+import SongInfoCard from '../components/SongInfoCard.vue'
 import { db } from '@/firebase';
 import {
 // collection,
@@ -64,6 +72,7 @@ export default {
         Post,
         CommentForm,
         Comment,
+        SongInfoCard
     },
     props: ['id'], // Access the post ID from the route parameter
     data() {
@@ -76,8 +85,8 @@ export default {
             noComments: null,
             showDeletedMessage: false,
             // for replies
-            isReply: false,
-            parentCommentId: null,
+            // isReply: false,
+            // parentCommentId: null,
         };
     },
 
@@ -101,7 +110,9 @@ export default {
             console.log(`Successfully fetched post ${this.postData.title}`)
             this.songTitle = this.postData.song.title
             this.songId = this.postData.song.ID
+            console.log('song id', this.songId)
             this.loading = false;
+            this.readyToLoadSong = true;
 
             await this.fetchComments();
         } else {
@@ -145,21 +156,21 @@ export default {
             }
             else console.log("No comments found")
         },
-        handleReplyToComment(replyInfo) {
-            this.isReply=replyInfo.isReply;
-            this.parentCommentId = replyInfo.parentCommentId;
-        },
-        scrollToCommentForm(commentId) {
-            // Use $refs to scroll to the comment form
-            if (this.$refs.commentForm) {
-                const commentFormElement = this.$refs.commentForm.$el;
-                const targetCommentElement = document.getElementById(commentId);
+        // handleReplyToComment(replyInfo) {
+        //     this.isReply=replyInfo.isReply;
+        //     this.parentCommentId = replyInfo.parentCommentId;
+        // },
+        // scrollToCommentForm(commentId) {
+        //     // Use $refs to scroll to the comment form
+        //     if (this.$refs.commentForm) {
+        //         const commentFormElement = this.$refs.commentForm.$el;
+        //         const targetCommentElement = document.getElementById(commentId);
                 
-                if (targetCommentElement) {
-                targetCommentElement.scrollIntoView({ behavior: 'smooth' });
-                }
-            }
-        },
+        //         if (targetCommentElement) {
+        //         targetCommentElement.scrollIntoView({ behavior: 'smooth' });
+        //         }
+        //     }
+        // },
     },
 };
 </script>
@@ -176,6 +187,10 @@ export default {
 
 .highlight {
   animation: highlightEffect 0.5s ease;
+}
+
+.postswrapper {
+    min-width: 600px
 }
 
 @keyframes highlightEffect {
