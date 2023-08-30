@@ -103,7 +103,7 @@
             //   numComments = postObject.comments.length;
             // }
             // FIXME: Get the currently logged-in user's data
-            const userDocRef = doc(db, 'users', 'this.username');
+            const userDocRef = doc(db, 'users', this.authStore.id);
           if (userDocRef) {
             const commentsCollection = collection(db, 'comments');
             const comment = {

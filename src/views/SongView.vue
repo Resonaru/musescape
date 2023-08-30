@@ -24,7 +24,7 @@
               <template v-else>
                 <v-btn color="primary"
                   @click="toLogin">
-                  Create New Post
+                  Log in to make posts
                 </v-btn>
               </template>
             </div>
@@ -128,7 +128,7 @@ import {
 } from 'firebase/firestore'
 import { useRoute } from 'vue-router';
 
-import { useSpotifyAuthStore } from '../stores/spotifyAuthStore'
+import { useAuthStore } from '../stores/authStore'
 import { mapStores } from 'pinia';
 
 export default {
@@ -150,11 +150,13 @@ export default {
     };
   },
   computed: {
-    ...mapStores(useSpotifyAuthStore), 
+    ...mapStores(useAuthStore), 
   },
     async created() {
-      if(this.authStore.id){
-        isLoggedIn = true;
+      // console.log(this.authStore);
+      if(this.authStore.name){
+        this.isLoggedIn = true;
+        // console.log("LOGGED IN SONGVIEW")
       }
     // console.log('showDeletedMessage:', this.showDeletedMessage);
     console.log("Fetching discussions for song with id ", this.id)
