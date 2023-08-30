@@ -61,13 +61,13 @@
                     <v-hover v-slot="{ isHovering, props }">
                     <v-card class="rounded-xl song-card" color="#5A5252" theme="dark" min-width="600"  :elevation="isHovering ? 12 : 2">
                       <v-card-subtitle>
-                        <v-avatar color="surface-variant" image="https://64.media.tumblr.com/e3e14a0b25723def857bb5cd8561b30c/720d78986e7588b3-49/s540x810/9b0565d3ea4eacd4b0b85f460be4afd5719556a3.jpg"></v-avatar>
+                        <v-avatar color="surface-variant" :image="post.avatarURL"></v-avatar>
                         {{ post.author }}
                       </v-card-subtitle>
                       <RouterLink :to="'/post/' + post.ID">
                       <v-card-title>{{ post.title }}</v-card-title>
                       </RouterLink>
-                      <v-card-text>{{ post.content }}</v-card-text>
+                      <v-card-text v-html="post.content"></v-card-text>
                     </v-card>
                   </v-hover>
                   </v-col>
@@ -172,15 +172,16 @@ export default {
           const postObject = doc.data();
           const postID = doc.id;
           const authorDoc = await getDoc(postObject.author);
-          const author = authorDoc.data().username;
+          const author = authorDoc.data();
           console.log('post id', doc.id)
           
           return {
             title: postObject.title,
-            author: author,
+            author: author.username,
             content: postObject.content,
             ID: postID,
             song: this.id,
+            avatarURL: author.avatarURL || "https://cdn4.iconfinder.com/data/icons/forum-buttons-and-community-signs-1/794/profile-3-512.png"
           };
         });
 

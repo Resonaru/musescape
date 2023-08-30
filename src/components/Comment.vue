@@ -157,7 +157,7 @@
 <style scoped>
 .post {
   vertical-align: text-top;
-  width: 800px;
+  /* width: 800px; */
   margin: 5px;
   border-radius: 25px;
   background-color: #423a42;

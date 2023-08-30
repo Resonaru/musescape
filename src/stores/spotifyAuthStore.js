@@ -131,8 +131,8 @@ export const useSpotifyAuthStore = defineStore('spotifyAuth', {
       } catch (error){
         console.error('GetLyrics broke', error);
         console.log(error);
-        // return null;
-        throw error;
+        return null;
+        // throw error;
       }
     }
   },
