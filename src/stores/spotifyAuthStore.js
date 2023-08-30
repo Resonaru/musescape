@@ -83,8 +83,9 @@ export const useSpotifyAuthStore = defineStore('spotifyAuth', {
     async getLyrics(songTitle, artistName){
       console.log(`getLyrics(${songTitle}, ${artistName})`)
       try {
+        let apiKey = import.meta.env.VITE_MUSIXMATCH_API_KEY;
         const response = await fetch(
-          `https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?q_artist=${artistName}&q_track=${songTitle}&apikey=${import.meta.env.VITE_MUSIXMATCH_API_KEY}`
+          `https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?q_artist=${artistName}&q_track=${songTitle}&apikey=${apiKey}`
         );
         if(response.ok){
           const data = await response.json();
