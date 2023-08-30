@@ -10,13 +10,9 @@
             <br/> -->
             <v-sheet rounded>
                 <v-card color="#101010" class="mx-auto px-6 py-8" min-width="344">
-                    <v-form
-                    v-model="form"
-                    @submit.prevent="onSubmit">
+                    <v-form @submit.prevent>
                         <v-text-field
                         v-model="email"
-                        :readonly="loading"
-                        :rules="[required]"
                         class="mb-2"
                         clearable
                         label="Email"
@@ -25,32 +21,32 @@
 
                         <v-text-field
                         v-model="password"
-                        :readonly="loading"
-                        :rules="[required]"
-                        :type="show1 ? 'text' : 'password'"
+                        :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                        :type="show ? 'text' : 'password'"
                         clearable
                         label="Password"
                         placeholder="Enter your password"
                         bg-color="white"
-                        ></v-text-field>
+                        @click:append="show = !show"
+                        class="white-append-icon"
+                        >
+                        </v-text-field>
 
                         <br>
 
                         <v-btn
-                        :disabled="!form"
-                        :loading="loading"
                         block
                         color="success"
                         size="large"
                         type="submit"
                         variant="elevated"
                         @click="this.authStore.login(this.email, this.password)">
-                        Sign In
+                        Log In
                         </v-btn>
                     </v-form>
                 </v-card>
             </v-sheet>
-            <RouterLink to="/register"><button>Sign Up</button></RouterLink>
+            <RouterLink to="/register"><button>Register</button></RouterLink>
         </template>
         <template v-else>
             <div>
@@ -84,6 +80,7 @@ import { mapStores } from 'pinia';
 export default{
     data(){
         return{
+            show: false,
             email: null,
             password: null,
             notFound: false,
@@ -97,3 +94,9 @@ export default{
 }
 
 </script>
+
+<style scoped>
+.white-append-icon  {
+  color: white; 
+}
+</style>

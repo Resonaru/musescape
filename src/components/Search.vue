@@ -29,7 +29,7 @@
           :prepend-avatar="item?.raw.img"
           :title="item?.raw.name"
           :subtitle="item?.raw.artist"
-          :href="item?.raw.link"
+          :to="item?.raw.link"
         ></v-list-item>
       </template>
     </v-autocomplete>

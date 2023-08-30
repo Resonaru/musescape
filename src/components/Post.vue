@@ -13,16 +13,25 @@
     updateDoc,
     arrayRemove,
     } from 'firebase/firestore'
+    import { mapStores } from 'pinia';
+    import { useAuthStore } from '../stores/authStore.js';  
     export default {
         name: 'Post',
         data() {
             return {
               showDeleteDialogue: false,
+              loggedUser: null,
             }
+        },
+        computed: {
+          ...mapStores(useAuthStore)
         },
         props: {
           postData: Object,
           id: String,
+        },
+        created(){
+          this.loggedUser = this.authStore.name;
         },
         components: {
           // CommentForm,
@@ -71,9 +80,12 @@
     <!-- displays content -->
     <p v-html="postData.content"></p>
     <!-- Button to toggle PostForm visibility -->
-    <v-btn color="error" @click="showDeleteDialogue = !showDeleteDialogue">
-        Delete
-    </v-btn>
+      <!-- FIXME -->
+    <div v-if="loggedUser === postData.author.username">
+      <v-btn color="error" @click="showDeleteDialogue = !showDeleteDialogue">
+          Delete
+      </v-btn>
+    </div>
     <!-- Confirmation Dialog -->
     <v-dialog v-model="showDeleteDialogue" max-width="500">
     <v-card>
