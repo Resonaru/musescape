@@ -32,6 +32,8 @@
   <script>
   import { db } from '@/firebase';
   import { addDoc, collection, doc, updateDoc, arrayUnion } from 'firebase/firestore';
+  import { mapStores } from 'pinia';
+  import { useAuthStore } from '../stores/authStore.js';  
   
   export default {
     data() {
@@ -39,6 +41,9 @@
         commentContent: '',
         postId: null, // Store the post ID
       };
+    },
+    computed:{
+      ...mapStores(useAuthStore)
     },
     created() {
       // Retrieve the post ID from the route parameter
@@ -51,7 +56,7 @@
             // get the post its associated to
             const postDocRef = doc(db, 'posts', this.postId);
           // Get the currently logged-in user's data
-            const userDocRef = doc(db, 'users', '5p3YAJMQICKBj8VqRWat');
+          const userDocRef = doc(db, 'users', this.username);
           if (userDocRef) {
             const commentsCollection = collection(db, 'comments');
             const newCommentRef = await addDoc(commentsCollection, {
