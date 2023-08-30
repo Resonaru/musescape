@@ -17,14 +17,7 @@
         name: 'Post',
         data() {
             return {
-                postData: {
-                        title: "Default post/comment",
-                        author: "komay sugiyama",
-                        content: "default text",
-                        likes: 0,
-                        song: "/songs/",
-                        timestamp: new Date('August 15, 2023 03:24:00'),
-                }
+              showDeleteDialogue: false,
             }
         },
         props: {
@@ -37,6 +30,7 @@
         methods: {
           async deletePost() {
               try {
+              console.log("trying to delete post")
               const postReference = doc(db, "posts", this.id);
               const postDocRef = await getDoc(postReference);
               const songDocRef = postDocRef.data().song;
