@@ -67,6 +67,8 @@ getDocs,
 // arrayRemove,
 } from 'firebase/firestore'
 
+
+const DEFAULT_PFP = "https://cdn4.iconfinder.com/data/icons/forum-buttons-and-community-signs-1/794/profile-3-512.png"
 export default {
     components: {
         Post,
@@ -103,7 +105,10 @@ export default {
             this.postData = {
                 title: post.title,
                 content: post.content,
-                author: author,
+                author: {
+                    username: author.username,
+                    avatarURL: author.avatarURL || DEFAULT_PFP
+                },
                 likes: post.likes,
                 song: song,
             }
@@ -141,7 +146,7 @@ export default {
                             id: commentReference.id,
                             author: {
                                 username: author.username,
-                                avatarURL: author.avatarURL || "https://cdn4.iconfinder.com/data/icons/forum-buttons-and-community-signs-1/794/profile-3-512.png"
+                                avatarURL: author.avatarURL || DEFAULT_PFP
                             },
                             content: commentObject.content,
                             likes: commentObject.likes,
