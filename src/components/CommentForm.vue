@@ -87,6 +87,9 @@
       this.postId = this.$route.params.id;
       // this.replyingState = this.isReply;
       console.log(this.postId)
+      if(this.authStore.id){
+        isLoggedIn = true;
+      }
     },
     methods: {
       async submitComment() {

@@ -153,6 +153,9 @@ export default {
     ...mapStores(useSpotifyAuthStore), 
   },
     async created() {
+      if(this.authStore.id){
+        isLoggedIn = true;
+      }
     // console.log('showDeletedMessage:', this.showDeletedMessage);
     console.log("Fetching discussions for song with id ", this.id)
 
