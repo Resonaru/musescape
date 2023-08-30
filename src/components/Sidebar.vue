@@ -1,13 +1,13 @@
 <script setup>
     import { RouterLink, RouterView } from 'vue-router'
-
+    import {useAuthStore} from '../stores/authStore'
 </script>
 
 <template>
       <nav class="sidebar-nav">
         <RouterLink to="/"><i class="material-icons icon-center">home</i>Home</RouterLink>
         <RouterLink to="/notifications"><i class="material-icons icon-center">notifications</i>Notifications</RouterLink>
-        <RouterLink to="/profile" v-if="loggedIn"><i class="material-icons icon-center">account_circle</i>Profile</RouterLink>
+        <RouterLink to="/profile"><i class="material-icons icon-center">account_circle</i>Profile</RouterLink>
         <RouterLink to="/login"><i class="material-icons icon-center">account_circle</i>Log in</RouterLink>
         <RouterLink to="/register"><i class="material-icons icon-center">account_circle</i>Register</RouterLink>
         

@@ -37,6 +37,7 @@ export const useAuthStore = defineStore('auth', {
                 console.log('logging in...');
                 this.email = emailSubmit;
                 this.password = passwordSubmit;
+                //find the user associated with the account and assign the username
                 await signInWithEmailAndPassword(auth, emailSubmit, passwordSubmit);
                 console.log('successfully logged in!')
                 this.loggedIn = true;
@@ -80,6 +81,7 @@ export const useAuthStore = defineStore('auth', {
                 this.password = passwordSubmit;
                 this.name = nameSubmit;
                 this.user=auth.currentUser;
+                this.loggedIn = true;
                 console.log('Current user', auth.currentUser);
             }
             catch (err) {
