@@ -67,7 +67,7 @@
                       <RouterLink :to="'/post/' + post.ID">
                       <v-card-title>{{ post.title }}</v-card-title>
                       </RouterLink>
-                      <v-card-text>{{ post.content }}</v-card-text>
+                      <v-card-text v-html="post.content"></v-card-text>
                     </v-card>
                   </v-hover>
                   </v-col>
