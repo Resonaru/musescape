@@ -41,12 +41,12 @@
                         type="submit"
                         variant="elevated"
                         @click="this.authStore.login(this.email, this.password)">
-                        Sign In
+                        Log In
                         </v-btn>
                     </v-form>
                 </v-card>
             </v-sheet>
-            <RouterLink to="/register"><button>Sign Up</button></RouterLink>
+            <RouterLink to="/register"><button>Register</button></RouterLink>
         </template>
         <template v-else>
             <div>
