@@ -31,6 +31,8 @@
   <script>
   import { db } from '@/firebase';
   import { addDoc, collection, doc, updateDoc, arrayUnion } from 'firebase/firestore';
+  import { mapStores } from 'pinia';
+  import { useAuthStore } from '../stores/authStore.js';  
   
   export default {
     data() {
@@ -39,6 +41,9 @@
         postContent: '',
         songId: null, // Store the song ID
       };
+    },
+    computed:{
+      ...mapStores(useAuthStore)
     },
     created() {
       // Retrieve the song ID from the route parameter
@@ -52,7 +57,7 @@
             const songDocRef = doc(db, 'songs', this.songId);
 
           // Get the currently logged-in user's data
-            const userDocRef = doc(db, 'users', this.username);
+            const userDocRef = doc(db, 'users', this.authStore.username);
 
           if (userDocRef) {
             const postsCollection = collection(db, 'posts');
