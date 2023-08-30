@@ -106,7 +106,7 @@
 <style scoped>
 .post {
   vertical-align: text-top;
-  width: 800px;
+  /* width: 600px; */
   min-height: 300px;
   margin: 5px;
   border-radius: 25px;

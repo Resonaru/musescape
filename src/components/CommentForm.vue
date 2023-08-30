@@ -1,5 +1,5 @@
 <template>
-    <v-main class="post-form-view align-center d-flex flex-start" style="--v-layout-left:0px; --v-layout-top:2px">
+    <div class="post-form-view align-center d-flex flex-start" style="--v-layout-left:0px; --v-layout-top:2px">
       <!-- <v-container fluid fill-height> -->
         <div class="post-form-container align-center" style="width:90%">
           <h3>Add a Comment</h3>
@@ -25,7 +25,7 @@
           </template>
         </div>
       <!-- </v-container> -->
-    </v-main>
+      </div>
   </template>
   
   <style scoped>
