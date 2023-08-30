@@ -3,7 +3,7 @@ import Feed from '../components/Feed.vue'
 </script>
 
 <template>
-      <v-main>
+      <v-main class="w-auto">
       <Feed/>
       </v-main>
       <v-navigation-drawer location="right" style="background-color: black;">   

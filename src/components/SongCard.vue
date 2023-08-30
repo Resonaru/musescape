@@ -4,14 +4,14 @@
 <template>
     <RouterLink :to="'/song/'+songObject.ID">
     <v-card color="#1F7087" theme="dark">
-        <div class="d-flex flex-no-wrap justify-space-between">
+        <div class="d-flex flex-no-wrap justify-space-between w-100%" width="100%">
             <div>
-            <v-card-title class="text-h5">
-                {{songObject.title}}
+            <v-card-title class="text-h5 overflow-auto">
+                {{songObject.title.length < 40 ? songObject.title : `${songObject.title.substring(0,30)}...`}}
             </v-card-title>
 
-            <v-card-subtitle>{{ songObject.artist }}</v-card-subtitle>
-            <v-card-text>{{ songObject.text }}</v-card-text>
+            <v-card-subtitle class="overflow-auto">{{ songObject.artist }}</v-card-subtitle>
+            <v-card-text class="overflow-auto">{{ songObject.text }}</v-card-text>
             
             <v-card-actions>
                 <v-btn
