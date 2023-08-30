@@ -1,6 +1,6 @@
 <template>
     <div class="auth">
-        <template v-if="!loggedIn">
+        <template v-if="!this.authStore.loggedIn">
             Display Name: <input id="name" type="text" v-model.trim="name"/>
             <br>
             Email: <input id="email" type="text" v-model.trim="email"/>
@@ -60,7 +60,7 @@
                 </v-card>
             </v-sheet> -->
         </template>
-        <template v-if="loggedIn">
+        <template v-if="this.authStore.loggedIn">
            Account created successfully! 
            <br>
            <RouterLink to="/feed">Please proceed to the feed</RouterLink>
