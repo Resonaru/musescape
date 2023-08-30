@@ -63,7 +63,7 @@
         <template v-if="this.authStore.loggedIn">
            Account created successfully! 
            <br>
-           <RouterLink to="/feed">Please proceed to the feed</RouterLink>
+           <RouterLink to="/">Please proceed to the feed.</RouterLink>
         </template>
     </div>
 </template>

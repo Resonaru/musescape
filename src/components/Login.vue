@@ -52,10 +52,24 @@
         </template>
         <template v-else>
             <div>
-                {{ this.authStore.email + ', ' + this.authStore.password  + ', ' + this.authStore.name}}
+                <v-card color="#4C4948" theme="dark">
+                    <div class="d-flex flex-no-wrap justify-space-between"
+                    max-width="800"
+                    width="100%"
+                    height="500"
+                    >
+                        <div>
+                        <v-card-title class="text-h5">
+                            Sucessfully logged in!
+                        </v-card-title>
+                        <RouterLink to="/"><button>Go to Feed</button></RouterLink>
+                        </div>
+                    </div>
+
+                </v-card>
                 <br>
             </div>
-            <button @click="this.authStore.logout()">Sign Out</button>
+            <!-- <button @click="this.authStore.logout()">Sign Out</button> -->
         </template>
     </div>
 </template>

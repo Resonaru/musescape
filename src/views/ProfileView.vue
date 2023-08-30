@@ -41,6 +41,15 @@
                 <v-card-text> Placeholder description </v-card-text>
                 </div>
             </div>
+            <v-btn
+                    :loading="loading"
+                    block
+                    color="success"
+                    type="submit"
+                    variant="elevated"
+                    @click="this.authStore.logout()">
+                    Log out
+            </v-btn>
         </v-card>
         </template>
         <template v-else>
@@ -53,10 +62,6 @@
                 <RouterLink to="/register">create a new account.</RouterLink>
             </v-sheet>
         </template>
-        <!-- <div>
-            {{ this.authStore.email + ', ' + this.authStore.password  + ', ' + this.authStore.name}}
-            <br>
-        </div> -->
     </div>
     
 </template>
