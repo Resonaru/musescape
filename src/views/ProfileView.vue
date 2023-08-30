@@ -37,8 +37,10 @@
                     {{this.authStore.name}}
                 </v-card-title>
 
-                <v-card-subtitle>{{ this.authStore.email }}</v-card-subtitle>
-                <v-card-text> Nice to meet you! </v-card-text>
+                <!-- <v-card-subtitle>{{ this.authStore.email }}</v-card-subtitle> -->
+                <v-card-subtitle class="font-weight-medium text-green">Enthusiast</v-card-subtitle>  
+                <v-card-text> Nice to meet you! </v-card-text> 
+                <br>
                 </div>
             </div>
             <v-btn

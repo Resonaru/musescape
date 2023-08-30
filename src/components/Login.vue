@@ -9,7 +9,7 @@
             <button @click="this.authStore.login(this.email, this.password)">Login</button>
             <br/> -->
             <v-sheet rounded>
-                <v-card color="#4C4948" class="mx-auto px-6 py-8" min-width="344">
+                <v-card color="#101010" class="mx-auto px-6 py-8" min-width="344">
                     <v-form
                     v-model="form"
                     @submit.prevent="onSubmit">
@@ -54,7 +54,7 @@
         </template>
         <template v-else>
             <div>
-                <v-card color="#4C4948" theme="dark">
+                <v-card color="#101010" theme="dark">
                     <div class="d-flex flex-no-wrap justify-space-between"
                     max-width="800"
                     width="100%"
