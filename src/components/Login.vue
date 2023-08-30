@@ -9,7 +9,7 @@
             <button @click="this.authStore.login(this.email, this.password)">Login</button>
             <br/> -->
             <v-sheet rounded>
-                <v-card class="mx-auto px-6 py-8" min-width="344">
+                <v-card color="#4C4948" class="mx-auto px-6 py-8" min-width="344">
                     <v-form
                     v-model="form"
                     @submit.prevent="onSubmit">
@@ -20,6 +20,7 @@
                         class="mb-2"
                         clearable
                         label="Email"
+                        bg-color="white"
                         ></v-text-field>
 
                         <v-text-field
@@ -30,6 +31,7 @@
                         clearable
                         label="Password"
                         placeholder="Enter your password"
+                        bg-color="white"
                         ></v-text-field>
 
                         <br>
@@ -58,16 +60,15 @@
                     width="100%"
                     height="500"
                     >
-                        <div>
+                        <div class = "text-center">
                         <v-card-title class="text-h5">
                             Sucessfully logged in!
                         </v-card-title>
-                        <RouterLink to="/"><button>Go to Feed</button></RouterLink>
+                        <RouterLink to="/"><button >Go to Feed</button></RouterLink>
                         </div>
                     </div>
 
                 </v-card>
-                <br>
             </div>
             <!-- <button @click="this.authStore.logout()">Sign Out</button> -->
         </template>

@@ -38,13 +38,13 @@
                 </v-card-title>
 
                 <v-card-subtitle>{{ this.authStore.email }}</v-card-subtitle>
-                <v-card-text> Placeholder description </v-card-text>
+                <v-card-text> Nice to meet you! </v-card-text>
                 </div>
             </div>
             <v-btn
                     :loading="loading"
                     block
-                    color="success"
+                    color="error"
                     type="submit"
                     variant="elevated"
                     @click="this.authStore.logout()">
@@ -53,14 +53,25 @@
         </v-card>
         </template>
         <template v-else>
-            <v-sheet rounded>
-                <p>You are not signed in!</p>
-                <br>
-                <p>Please </p>
-                <RouterLink to="/login">login here </RouterLink>
-                <p>or </p>
-                <RouterLink to="/register">create a new account.</RouterLink>
-            </v-sheet>
+            <div>
+                <v-card color="#4C4948" theme="dark">
+                    <div class="d-flex flex-no-wrap justify-space-between"
+                    max-width="800"
+                    width="100%"
+                    height="500"
+                    >
+                        <div class = "text-center">
+                        <v-card-title class="text-h5">
+                            You are not signed in!
+                        </v-card-title>
+                        <RouterLink to="/login"><button >Login</button></RouterLink>
+                        <br>
+                        <RouterLink to="/register"><button >Register</button></RouterLink>
+                        </div>
+                    </div>
+
+                </v-card>
+            </div>
         </template>
     </div>
     
