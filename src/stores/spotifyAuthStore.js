@@ -69,7 +69,7 @@ export const useSpotifyAuthStore = defineStore('spotifyAuth', {
             genres: data.genres,
             lyrics: this.getLyrics(data.name, data.artists[0].name),
           };
-          // console.log(`results: ${searchResults.title}`);
+          console.log(`results: ${searchResults.title}`);
         return searchResults;
         } else {
           console.error('getSongByID Failed to get access token ');
@@ -85,20 +85,21 @@ export const useSpotifyAuthStore = defineStore('spotifyAuth', {
         const response = await fetch(
           `https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?q_artist=${artistName}&q_track=${songTitle}&apikey=${import.meta.env.VITE_MUSIXMATCH_API_KEY}`
         );
+        if(response.ok){
+          const data = await response.json();
+          const searchResults = {
+            lyrics: data.message.body.lyrics.lyrics_body,
+            scriptTracking: data.message.body.lyrics.script_tracking_url,
+            copyright: `<script type="text/javascript" src="${data.message.body.lyrics.lyrics_copyright}">`,
+          };
+          searchResults.lyrics = searchResults.lyrics .replace(/(?:\r\n|\r|\n)/g, '<br>');
+          return searchResults;
+        }
       } catch (error){
         console.error('GetLyrics broke', error);
         throw error;
       }
-      if(response.ok){
-        const data = await response.json();
-        const searchResults = {
-          lyrics: data.body.lyrics.lyrics_body,
-          scriptTracking: data.body.lyrics.script_tracking_url,
-          copyright: `<script type="text/javascript" src="${data.body.lyrics.lyrics_copyright}">`,
-        };
-        searchResults.lyrics = searchResults.lyrics .replace(/(?:\r\n|\r|\n)/g, '<br>');
-      }
-      return searchResults;
+
     }
   },
 });
