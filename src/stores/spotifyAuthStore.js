@@ -67,6 +67,7 @@ export const useSpotifyAuthStore = defineStore('spotifyAuth', {
             })),
             link: `/'song'/${data.id}`,
             genres: data.genres,
+            lyrics: this.getLyrics(data.name, data.artists[0].name),
           };
           // console.log(`results: ${searchResults.title}`);
         return searchResults;
@@ -78,6 +79,26 @@ export const useSpotifyAuthStore = defineStore('spotifyAuth', {
         console.error('Error:', error);
         throw(error);
       }
+    },
+    async getLyrics(songTitle, artistName){
+      try {
+        const response = await fetch(
+          `https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?q_artist=${artistName}&q_track=${songTitle}&apikey=${import.meta.env.VITE_MUSIXMATCH_API_KEY}`
+        );
+      } catch (error){
+        console.error('GetLyrics broke', error);
+        throw error;
+      }
+      if(response.ok){
+        const data = await response.json();
+        const searchResults = {
+          lyrics: data.body.lyrics.lyrics_body,
+          scriptTracking: data.body.lyrics.script_tracking_url,
+          copyright: data.body.lyrics.lyrics_copyright,
+        };
+        searchResults.lyrics = searchResults.lyrics .replace(/(?:\r\n|\r|\n)/g, '<br>');
+      }
+      return searchResults;
     }
   },
 });
