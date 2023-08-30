@@ -21,6 +21,13 @@
                 >
                 Join Discussion
                 </v-btn>
+                <v-chip
+                class="ma-2"
+                color="pink"
+                text-color="white"
+                >
+                {{ songObject.numPosts + ' posts' }}
+                </v-chip>
             </v-card-actions>
             </div>
 
