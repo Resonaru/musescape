@@ -48,17 +48,22 @@
     created() {
       // Retrieve the song ID from the route parameter
       this.songId = this.$route.params.id;
-      console.log(this.songId)
+      console.log(`songID: ${this.songId}`)
     },
     methods: {
       async submitPost() {
         try {
             // get the song its associated to
             const songDocRef = doc(db, 'songs', this.songId);
+            // console.log(songDocRef);
 
           // Get the currently logged-in user's data
-            const userDocRef = doc(db, 'users', this.authStore.username);
-
+          if(!this.authStore.id){
+            alert("log in stupid");
+            throw new Error("not logged in");
+          }
+            const userDocRef = doc(db, 'users', this.authStore.id);
+            // console.log(userDocRef);
           if (userDocRef) {
             const postsCollection = collection(db, 'posts');
             const newPostRef = await addDoc(postsCollection, {

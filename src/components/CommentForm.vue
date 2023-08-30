@@ -84,6 +84,10 @@
     methods: {
       async submitComment() {
         try {
+            if(!this.authStore.id){
+              alert("log in stupid");
+              throw new Error("not logged in");
+            }
             // get the post its associated to
             const postDocRef = doc(db, 'posts', this.postId);
             // const postReference = await(getDoc(postDocRef));
@@ -93,7 +97,7 @@
             //   numComments = postObject.comments.length;
             // }
             // FIXME: Get the currently logged-in user's data
-            const userDocRef = doc(db, 'users', this.authStore.username);
+            const userDocRef = doc(db, 'users', this.authStore.id);
           if (userDocRef) {
             const commentsCollection = collection(db, 'comments');
             const comment = {
