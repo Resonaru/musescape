@@ -51,7 +51,7 @@
                         size="large"
                         type="submit"
                         variant="elevated"
-                        @click="register(name,email, password)">
+                        @click="this.authStore.register(this.name,this.email, this.password)">
                         Register
                         </v-btn>
                     </v-form>
@@ -68,7 +68,9 @@
 
 
 <script>
+import { mapStores } from 'pinia';
 import { RouterLink } from 'vue-router';
+import { useAuthStore } from '../stores/authStore';
 // import { auth } from '../firebase';
 // import { createUserWithEmailAndPassword } from 'firebase/auth'
 
@@ -81,7 +83,8 @@ export default{
             password: null,
         };
     },
-    methods: {
+    computed:{
+        ...mapStores(useAuthStore)
     },
     components: { RouterLink }
 }

@@ -7,7 +7,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } f
 import { onAuthStateChanged } from 'firebase/auth';
 
 import { db } from '@/firebase';
-import { addDoc } from 'firebase/firestore';
+import { setDoc } from 'firebase/firestore';
 
 console.log('l')
 export const useAuthStore = defineStore('auth', {
@@ -66,6 +66,7 @@ export const useAuthStore = defineStore('auth', {
              }
         },
         async register(nameSubmit, emailSubmit, passwordSubmit){
+            console.log(`${nameSubmit} ${emailSubmit}, ${passwordSubmit}`)
             // if(this.emailAlreadyExists(emailSubmit)){
             //     throw('email already exists');
             // }
