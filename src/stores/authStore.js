@@ -7,7 +7,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } f
 import { onAuthStateChanged } from 'firebase/auth';
 
 import { db } from '@/firebase';
-import { setDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 console.log('l')
 export const useAuthStore = defineStore('auth', {
@@ -42,6 +42,17 @@ export const useAuthStore = defineStore('auth', {
                 console.log('successfully logged in!')
                 this.loggedIn = true;
                 this.user = auth.currentUser;
+                let userRef = await getDoc(doc(db,"users", auth.currentUser.uid));
+                if (userRef.exists()) {
+                    this.name = userRef.data().username;
+                    this.email = userRef.data().email;
+                    this.password = userRef.data().password;
+
+                  } else {
+                    // docSnap.data() will be undefined in this case
+                    console.log("No such document!");
+                  }
+
                 
             }
             catch(e){

@@ -73,7 +73,6 @@
 import { mapStores } from 'pinia';
 import { RouterLink } from 'vue-router';
 import { useAuthStore } from '../stores/authStore';
-import { mapStores } from 'pinia';
 // import { auth } from '../firebase';
 // import { createUserWithEmailAndPassword } from 'firebase/auth'
 
