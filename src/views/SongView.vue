@@ -131,6 +131,10 @@ import { useRoute } from 'vue-router';
 import { useAuthStore } from '../stores/authStore'
 import { mapStores } from 'pinia';
 
+
+
+const DEFAULT_PFP = "https://cdn4.iconfinder.com/data/icons/forum-buttons-and-community-signs-1/794/profile-3-512.png"
+
 export default {
   components: {
         PostForm,
@@ -181,7 +185,7 @@ export default {
             content: postObject.content,
             ID: postID,
             song: this.id,
-            avatarURL: author.avatarURL || "https://cdn4.iconfinder.com/data/icons/forum-buttons-and-community-signs-1/794/profile-3-512.png"
+            avatarURL: author.avatarURL || DEFAULT_PFP
           };
         });
 
