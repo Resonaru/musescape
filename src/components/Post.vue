@@ -75,7 +75,8 @@
         <span style="float:left">by {{ postData.author.username }}</span>
         <span style="float:right">Likes: {{ postData.likes }}</span>
     </p> <br/> <br/>
-    <p>{{ postData.content }}</p>
+    <!-- displays content -->
+    <p v-html="postData.content"></p>
     <!-- Button to toggle PostForm visibility -->
     <v-btn color="error" @click="showDeleteDialogue = !showDeleteDialogue">
         Delete
