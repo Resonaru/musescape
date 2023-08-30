@@ -52,7 +52,7 @@
         </template>
         <template v-else>
             <div>
-                {{ this.authStore.email + ', ' + this.authStore.password }}
+                {{ this.authStore.email + ', ' + this.authStore.password  + ', ' + this.authStore.name}}
                 <br>
             </div>
             <button @click="this.authStore.logout()">Sign Out</button>

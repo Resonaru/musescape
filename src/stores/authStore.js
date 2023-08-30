@@ -19,6 +19,7 @@ export const useAuthStore = defineStore('auth', {
         notFound: false,
         invalidPassword: false,
         loggedIn: false,
+        error: null,
     }),
 
     actions :{
@@ -36,6 +37,7 @@ export const useAuthStore = defineStore('auth', {
                 console.log('logging in...');
                 this.email = emailSubmit;
                 this.password = passwordSubmit;
+                //find the user associated with the account and assign the username
                 await signInWithEmailAndPassword(auth, emailSubmit, passwordSubmit);
                 console.log('successfully logged in!')
                 this.loggedIn = true;
@@ -70,20 +72,23 @@ export const useAuthStore = defineStore('auth', {
             // if(this.emailAlreadyExists(emailSubmit)){
             //     throw('email already exists');
             // }
+            console.log(nameSubmit + emailSubmit + passwordSubmit);
             try{
                 console.log('creating...');
-                await createUserWithEmailAndPassword(auth, this.emailSubmit, this.passwordSubmit);
+                await createUserWithEmailAndPassword(auth, emailSubmit, passwordSubmit);
 
                 console.log('account created!');
                 this.email = emailSubmit;
                 this.password = passwordSubmit;
                 this.name = nameSubmit;
                 this.user=auth.currentUser;
+                this.loggedIn = true;
                 console.log('Current user', auth.currentUser);
             }
             catch (err) {
                 if(err.code === "auth/email-already-in-use"){
-                    throw (err)
+                    //throw (err)
+                    this.error = "Email is already in use.";
                 }
                 console.error('Couldn\'t create account', err);
             }
