@@ -1,14 +1,14 @@
 <script>
     import { db } from '@/firebase';
     import {
-    // collection,
+    collection,
     doc,
     // addDoc,
     // setDoc,
     getDoc,
-    // getDocs,
-    // query,
-    // where,
+    getDocs,
+    query,
+    where,
     deleteDoc,
     updateDoc,
     arrayRemove,
@@ -36,6 +36,16 @@
               const songDocRef = postDocRef.data().song;
               const postRef = postDocRef.ref;
 
+              // Fetch all comments associated with the post
+              const commentsQuery = query(collection(db, 'comments'), where('post', '==', postRef));
+              const commentsSnapshot = await getDocs(commentsQuery);
+              
+              // Delete each comment
+              commentsSnapshot.forEach(async (commentDoc) => {
+                const commentRef = commentDoc.ref;
+                await deleteDoc(commentRef);
+              });
+
               // Update the song document to remove the post reference
               await updateDoc(songDocRef, {
                   posts: arrayRemove(postRef),
@@ -59,7 +69,6 @@
     };
 </script>
 
-<!-- // this is useless currently -->
 <template>
   <v-card class="post">
     <div class="text" style="color:rgb(245, 245, 245)">
