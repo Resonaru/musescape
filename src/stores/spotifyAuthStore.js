@@ -41,7 +41,7 @@ export const useSpotifyAuthStore = defineStore('spotifyAuth', {
         await this.getSpotifyToken(); // Call the action to get the token
         this.token = this.token; // Access the token from the store
       }
-      console.log(`getSongByID: ${id}`)
+      console.log(`running getSongByID: ${id}`)
       try {
         const response = await fetch(
           `https://api.spotify.com/v1/tracks/${id}`, 
@@ -53,22 +53,22 @@ export const useSpotifyAuthStore = defineStore('spotifyAuth', {
         );
         if (response.ok) {
           const data = await response.json();
-          console.log(`data: ${data}`)
+          // console.log(`data: ${data}`)
           const searchResults = {
             title: data.name,
             img: data.album.images.length > 0 ? data.album.images[0].url : '',
             // img: data.album.images[0].url,
-            id: data.id,
-            artists: data.artists.map((item) => ({
+            ID: data.id,
+            artists: data.artists.map(item => ({
                 name: item.name,
                 img: item.images.length > 0 ? item.images[0].url : '',
                 link: `/'artist'/${item.id}`,
-                id: item.id
+                ID: item.id
             })),
             link: `/'song'/${data.id}`,
             genres: data.genres,
           };
-          console.log(`results: ${searchResults.title}`);
+          // console.log(`results: ${searchResults.title}`);
         return searchResults;
         } else {
           console.error('getSongByID Failed to get access token ');

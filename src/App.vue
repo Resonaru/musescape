@@ -11,6 +11,11 @@ export default{
   },
   async created() { 
     await this.spotifyAuthStore.getSongByID('7fEI29hmaWcCMPi8VJf33C');
+  },
+  components: {
+    Sidebar,
+    Search
+
   }
 }
 
