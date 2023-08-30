@@ -1,14 +1,22 @@
 <script>
     import { RouterLink, RouterView } from 'vue-router'
-
+    import {useAuthStore} from '../stores/authStore'
+    import { mapStores } from 'pinia';
+    
+    export default{
+    computed:{
+        ...mapStores(useAuthStore),
+    },
+}
 </script>
 
 <template>
       <nav class="sidebar-nav">
         <RouterLink to="/"><i class="material-icons icon-center">home</i>Home</RouterLink>
         <RouterLink to="/notifications"><i class="material-icons icon-center">notifications</i>Notifications</RouterLink>
-        <RouterLink to="/profile" v-if="loggedIn"><i class="material-icons icon-center">account_circle</i>Profile</RouterLink>
-        <RouterLink to="/login" v-else><i class="material-icons icon-center">account_circle</i>Log in</RouterLink>
+        <RouterLink to="/profile" v-if="this.authStore.loggedIn"><i class="material-icons icon-center">account_circle</i>Profile</RouterLink>
+        <RouterLink to="/login" v-if="!this.authStore.loggedIn"><i class="material-icons icon-center">account_circle</i>Log in</RouterLink>
+        <RouterLink to="/register" v-if="!this.authStore.loggedIn"><i class="material-icons icon-center">account_circle</i>Register</RouterLink>
         
         <!-- TODO: if user is logged in, show profile, else show login -->
       </nav>

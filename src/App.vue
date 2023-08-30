@@ -3,8 +3,13 @@ import Sidebar from './components/Sidebar.vue'
 import Feed from './components/Feed.vue'
 import Search from './components/Search.vue'
 import { RouterLink, RouterView } from 'vue-router'
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './firebase'; // Import your Firebase auth instance
 import { useSpotifyAuthStore } from './stores/spotifyAuthStore'
 import { mapStores } from 'pinia';
+
+// Inside your main app component
+
 export default{
   computed: {
     ...mapStores(useSpotifyAuthStore), 
@@ -18,6 +23,7 @@ export default{
 
   }
 }
+
 
 </script>
 
