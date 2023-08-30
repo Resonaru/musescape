@@ -54,17 +54,39 @@ export const useSpotifyAuthStore = defineStore('spotifyAuth', {
         if (response.ok) {
           const data = await response.json();
           // console.log(`data: ${data}`)
+          const artistsData = [];
+          data.artists.forEach(async (artist) => {
+            try {
+              const artistResponse = await fetch(
+                `https://api.spotify.com/v1/artists/${artist.id}`, 
+                {
+                  headers: {
+                    Authorization: 'Bearer ' + this.token,
+                  }
+                }
+              );
+              const artistData = await artistResponse.json();
+              console.log("artist Data");
+              console.log(artistData);
+              const artistResult = {
+                name: artistData.name,
+                img: artistData.images.length > 0 ? artistData.images[0].url : '',
+                link: `/'artist'/${artistData.id}`,
+                ID: artistData.id
+              }
+              console.log(artistResult)
+              artistsData.push(artistResult)
+            } catch (error) {
+              console.error('artists ForEach breaking', error);
+              throw error;
+            }}
+          );
           const searchResults = {
             title: data.name,
             img: data.album.images.length > 0 ? data.album.images[0].url : '',
-            // img: data.album.images[0].url,
+            img: data.album.images[0].url,
             ID: data.id,
-            artists: data.artists.map(item => ({
-                name: item.name,
-                img: item.images.length > 0 ? item.images[0].url : '',
-                link: `/'artist'/${item.id}`,
-                ID: item.id
-            })),
+            artists: artistsData,
             link: `/'song'/${data.id}`,
             genres: data.genres,
             lyrics: this.getLyrics(data.name, data.artists[0].name),

@@ -17,14 +17,7 @@
         name: 'Post',
         data() {
             return {
-                postData: {
-                        title: "Default post/comment",
-                        author: "komay sugiyama",
-                        content: "default text",
-                        likes: 0,
-                        song: "/songs/",
-                        timestamp: new Date('August 15, 2023 03:24:00'),
-                }
+              showDeleteDialogue: false,
             }
         },
         props: {
@@ -37,6 +30,7 @@
         methods: {
           async deletePost() {
               try {
+              console.log("trying to delete post")
               const postReference = doc(db, "posts", this.id);
               const postDocRef = await getDoc(postReference);
               const songDocRef = postDocRef.data().song;
@@ -74,7 +68,8 @@
         <span style="float:left">by {{ postData.author.username }}</span>
         <span style="float:right">Likes: {{ postData.likes }}</span>
     </p> <br/> <br/>
-    <p>{{ postData.content }}</p>
+    <!-- displays content -->
+    <p v-html="postData.content"></p>
     <!-- Button to toggle PostForm visibility -->
     <v-btn color="error" @click="showDeleteDialogue = !showDeleteDialogue">
         Delete
