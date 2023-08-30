@@ -61,7 +61,7 @@ export const useSpotifyAuthStore = defineStore('spotifyAuth', {
             ID: data.id,
             artists: data.artists.map(item => ({
                 name: item.name,
-                img: item.images.length > 0 ? item.images[0].url : '',
+                // img: item?.images?.length > 0 ? item.images[0].url : '',
                 link: `/'artist'/${item.id}`,
                 ID: item.id
             })),
@@ -81,12 +81,15 @@ export const useSpotifyAuthStore = defineStore('spotifyAuth', {
       }
     },
     async getLyrics(songTitle, artistName){
+      console.log(`getLyrics(${songTitle}, ${artistName})`)
       try {
         const response = await fetch(
           `https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?q_artist=${artistName}&q_track=${songTitle}&apikey=${import.meta.env.VITE_MUSIXMATCH_API_KEY}`
         );
         if(response.ok){
           const data = await response.json();
+          console.log("lyrics");
+          console.log(data);
           const searchResults = {
             lyrics: data.message.body.lyrics.lyrics_body,
             scriptTracking: data.message.body.lyrics.script_tracking_url,
