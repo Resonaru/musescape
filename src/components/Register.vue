@@ -11,13 +11,9 @@
             <button @click="this.authStore.register(this.name,this.email,this.password)" style = "color:#1DB954; background-color:#404040;">Create Account</button> -->
             <v-sheet rounded>
                 <v-card color="#101010" class="mx-auto px-6 py-8" min-width="344">
-                    <v-form
-                    v-model="form"
-                    @submit.prevent="onSubmit">
+                    <v-form @submit.prevent>
                         <v-text-field
                         v-model="name"
-                        :readonly="loading"
-                        :rules="[required]"
                         clearable
                         label="Display Name"
                         bg-color="white"
@@ -25,8 +21,6 @@
 
                         <v-text-field
                         v-model="email"
-                        :readonly="loading"
-                        :rules="[required]"
                         clearable
                         label="Email"
                         bg-color="white"
@@ -34,19 +28,19 @@
 
                         <v-text-field
                         v-model="password"
-                        :readonly="loading"
-                        :rules="[required]"
-                        :type="show1 ? 'text' : 'password'"
+                        :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                        :type="show ? 'text' : 'password'"
                         clearable
                         label="Password"
                         placeholder="Enter your password"
                         bg-color="white"
+                        @click:append="show = !show"
+                        class="white-append-icon"
                         ></v-text-field>
 
                         <br>
 
                         <v-btn
-                        :loading="loading"
                         block
                         color="success"
                         size="large"
@@ -80,6 +74,7 @@ import { useAuthStore } from '../stores/authStore';
 export default{
     data() {
         return {
+            show: false,
             loggedIn: false,
             name: null,
             email: null,
@@ -100,11 +95,8 @@ export default{
 </script>
 
 
-<style>
-input[type="text"], textarea {
-    background-color : #d1d1d1; 
-}
-input[type="password"], textarea {
-    background-color : #d1d1d1; 
+<style scoped>
+.white-append-icon  {
+  color: white; 
 }
 </style>
