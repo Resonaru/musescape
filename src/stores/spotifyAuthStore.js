@@ -35,48 +35,74 @@ export const useSpotifyAuthStore = defineStore('spotifyAuth', {
         console.error('Error:', error);
       }
     },
-    async getSongByID(id){  
+    async getSongByID(id) {
       if (!this.token) {
-        console.log('fetching token')
+        console.log('fetching token');
         await this.getSpotifyToken(); // Call the action to get the token
         this.token = this.token; // Access the token from the store
       }
-      console.log(`running getSongByID: ${id}`)
+      
+      console.log(`running getSongByID: ${id}`);
+    
       try {
         const response = await fetch(
-          `https://api.spotify.com/v1/tracks/${id}`, 
+          `https://api.spotify.com/v1/tracks/${id}`,
           {
             headers: {
               Authorization: 'Bearer ' + this.token,
-            }
+            },
           }
         );
+    
         if (response.ok) {
           const data = await response.json();
-          // console.log(`data: ${data}`)
+    
+          const artistsPromises = data.artists.map(async (artist) => {
+            try {
+              const artistResponse = await fetch(
+                `https://api.spotify.com/v1/artists/${artist.id}`,
+                {
+                  headers: {
+                    Authorization: 'Bearer ' + this.token,
+                  },
+                }
+              );
+    
+              const artistData = await artistResponse.json();
+              const artistResult = {
+                name: artistData.name,
+                img: artistData.images.length > 0 ? artistData.images[0].url : '',
+                link: `/'artist'/${artistData.id}`,
+                ID: artistData.id,
+              };
+              return artistResult;
+            } catch (error) {
+              console.error('artists ForEach breaking', error);
+              throw error;
+            }
+          });
+          
+          const artistsData = await Promise.all(artistsPromises);
+          const lyricsData = await this.getLyrics(data.name, artistsData[0].name);
           const searchResults = {
             title: data.name,
             img: data.album.images.length > 0 ? data.album.images[0].url : '',
-            // img: data.album.images[0].url,
             ID: data.id,
-            artists: data.artists.map(item => ({
-                name: item.name,
-                img: item.images.length > 0 ? item.images[0].url : '',
-                link: `/'artist'/${item.id}`,
-                ID: item.id
-            })),
+            artists: artistsData,
             link: `/'song'/${data.id}`,
             genres: data.genres,
+            lyrics: lyricsData,
           };
-          // console.log(`results: ${searchResults.title}`);
-        return searchResults;
+          console.log("searchREsults.lyrics")
+          console.log(searchResults.lyrics);
+          return searchResults;
         } else {
           console.error('getSongByID Failed to get access token ');
-          throw(error);
+          throw error;
         }
       } catch (error) {
         console.error('Error:', error);
-        throw(error);
+        throw error;
       }
     },
     async getLyrics(songTitle, artistName){
@@ -91,15 +117,21 @@ export const useSpotifyAuthStore = defineStore('spotifyAuth', {
           console.log("lyrics");
           console.log(data);
           const searchResults = {
-            lyrics: data.message.body.lyrics.lyrics_body,
-            scriptTracking: data.message.body.lyrics.script_tracking_url,
-            copyright: `<script type="text/javascript" src="${data.message.body.lyrics.lyrics_copyright}">`,
+            lyrics: data.message.body?.lyrics?.lyrics_body,
+            scriptTracking: data.message.body?.lyrics?.script_tracking_url,
+            copyright: `<script type="text/javascript" src="${data.message.body?.lyrics?.lyrics_copyright}">`,
+            lyricsArray: [],
           };
-          searchResults.lyrics = searchResults.lyrics .replace(/(?:\r\n|\r|\n)/g, '<br>');
+          searchResults.lyricsArray = searchResults?.lyrics?.split(/(?:\r\n|\r|\n)/g);
+          console.log(searchResults)
           return searchResults;
+        } else {
+          throw new Error("response was not ok")
         }
       } catch (error){
         console.error('GetLyrics broke', error);
+        console.log(error);
+        // return null;
         throw error;
       }
     }

@@ -50,6 +50,7 @@
         try {
             // get the song its associated to
             const songDocRef = doc(db, 'songs', this.songId);
+
           // Get the currently logged-in user's data
             const userDocRef = doc(db, 'users', this.username);
 

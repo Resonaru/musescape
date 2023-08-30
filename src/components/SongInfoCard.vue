@@ -25,6 +25,7 @@ export default {
         return {
             songData: null, // Song being shown on the page
             loading: true,
+            formattedLyrics : null,
         }
     },
     async created() {
@@ -37,8 +38,10 @@ export default {
         if (docSnap.exists()) {
           this.songData = {
             title: song.title,
-            img: song.img
+            img: song.img,
+            lyrics: song.lyrics
           }
+
           console.log(`Successfully fetched song ${this.songData.title}`)
          
 
@@ -49,6 +52,7 @@ export default {
             name: artist.name,
             img: artist.img
           }
+          this.formattedLyrics = this.songData.lyrics?.lyricsArray ? this.songData.lyrics.lyricsArray.join('<br>') : "no lyrics found :(";
           this.loading = false;
 
           console.log(this.songData.artist);
@@ -61,11 +65,13 @@ export default {
             // Fetch data 
             const newSong = await this.spotifyAuthStore.getSongByID(this.songID);// query spotify
             console.log("Got response from spotify")
-            console.log(newSong);
+            await console.log(newSong);
             // Add new Song AND artist (if artist is not stored yet) to firestore
 
             // Artist
-            const artist = await getDoc(doc(db, "artists", newSong.artists[0]['ID']))
+            console.log("trying artists[0]")
+            console.log(newSong.artists[0])
+            const artist = await getDoc(doc(db, "artists", newSong.artists[0].ID))
             let artistRef;
             console.log("artist: ", newSong.artists[0])
             if(!artist.exists()) {
@@ -87,7 +93,8 @@ export default {
               title: newSong.title,
               artist: artistRef,
               img: newSong.img,
-              ID: newSong.ID
+              ID: newSong.ID,
+              lyrics:newSong.lyrics
             });
             console.log("Document written with ID: ", newSong.ID);
             console.log(`${newSong.title} saved to db!`)
@@ -97,17 +104,19 @@ export default {
             this.songData = {
               title: newSong.title,
               img: newSong.img,
+              lyrics: newSong.lyrics,
               artist: {
                 name: newSong.artists[0].name,
                 img: newSong.artists[0].img
               }
             }
+            this.formattedLyrics = this.songData.lyrics?.lyricsArray ? this.songData.lyrics.lyricsArray.join('<br>') : "no lyrics found :(";
             this.loading = false;
 
           } catch (error) {
             // Display error screen
             console.error("Error fetching the song:", error);
-  }
+          }
         }
       } catch(e) {
         console.error('Something went wrong bruh', e)
@@ -138,54 +147,9 @@ export default {
                 <v-card-title class="text-center" style="color: aliceblue">{{ songData.title }}</v-card-title>
                 <v-card-subtitle class="text-center song-artist">{{ songData.artist.name }}</v-card-subtitle>
                 <v-card-text style="color: aliceblue">
-                  I hate the silence now that you're not here<br>
-                  I thought one day you'd come around<br>
-                  Am I living in the past with all these questions never asked?<br>
-                  Will they keep me here?<br>
-                  It's so quiet in the stratosphere<br>
-                  I keep my space but I'm still bound<br>
-                  To the spell that we both cast but sometimes magic doesn't last<br>
-                  For me it did, for me it did<br>
-                  <br>
-                  I played out this scene<br>
-                  Of you with each other<br>
-                  But not that with me<br>
-                  And that kind of love<br>
-                  Is so hard to see<br>
-                  Now here we are<br>
-                  It's him that you need<br>
-                  Looks just like us<br>
-                  Us without me<br>
-                  <br>
-                  Why do I fade into that heart of yours?<br>
-                  'Cause you still hold a spot in mine<br>
-                  But you're in someone else's room<br>
-                  While mine still smells of your perfume<br>
-                  I'm tethered<br>
-                  Forever<br>
-                  <br>
-                  I played out this scene<br>
-                  Of you with each other<br>
-                  But not that with me<br>
-                  And that kind of love<br>
-                  Is so hard to see<br>
-                  Now here we are<br>
-                  It's him that you need<br>
-                  Looks just like us<br>
-                  Us without me<br>
-                  <br>
-                  Ooh, oh oh oh<br>
-                  Without me, oh oh<br>
-                  <br>
-                  Oh, I played out this scene<br>
-                  Of you with each other<br>
-                  But not that with me<br>
-                  And that kind of love<br>
-                  Is so hard to see<br>
-                  Now here we are<br>
-                  It's him that you need<br>
-                  Looks just like us<br>
-                  Us without me
+                  <!-- {{ console.log("lyric check") }}
+                  {{console.log(songData)}} -->
+                  <span v-html="formattedLyrics"></span>
                 </v-card-text>
                 
               </v-card>

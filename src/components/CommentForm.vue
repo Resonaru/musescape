@@ -53,7 +53,9 @@
   
   <script>
   import { db } from '@/firebase';
-  import { addDoc, collection, doc, updateDoc, arrayUnion, getDoc } from 'firebase/firestore';
+  import { addDoc, collection, doc, updateDoc, arrayUnion } from 'firebase/firestore';
+  import { mapStores } from 'pinia';
+  import { useAuthStore } from '../stores/authStore.js';  
   
   export default {
     data() {
@@ -62,6 +64,9 @@
         postId: null, // Store the post ID
         // replyingState: false,
       };
+    },
+    computed:{
+      ...mapStores(useAuthStore)
     },
     components: {
       Comment,
@@ -88,7 +93,7 @@
             //   numComments = postObject.comments.length;
             // }
             // FIXME: Get the currently logged-in user's data
-            const userDocRef = doc(db, 'users', '5p3YAJMQICKBj8VqRWat');
+            const userDocRef = doc(db, 'users', 'this.username');
           if (userDocRef) {
             const commentsCollection = collection(db, 'comments');
             const comment = {
