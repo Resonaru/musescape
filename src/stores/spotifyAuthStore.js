@@ -78,6 +78,30 @@ export const useSpotifyAuthStore = defineStore('spotifyAuth', {
         console.error('Error:', error);
         throw(error);
       }
+    },
+    async getLyrics(songTitle, artistName){
+      console.log(`getLyrics(${songTitle}, ${artistName})`)
+      try {
+        let apiKey = import.meta.env.VITE_MUSIXMATCH_API_KEY;
+        const response = await fetch(
+          `https://api.musixmatch.com/ws/1.1/matcher.lyrics.get?q_artist=${artistName}&q_track=${songTitle}&apikey=${apiKey}`
+        );
+        if(response.ok){
+          const data = await response.json();
+          console.log("lyrics");
+          console.log(data);
+          const searchResults = {
+            lyrics: data.message.body.lyrics.lyrics_body,
+            scriptTracking: data.message.body.lyrics.script_tracking_url,
+            copyright: `<script type="text/javascript" src="${data.message.body.lyrics.lyrics_copyright}">`,
+          };
+          searchResults.lyrics = searchResults.lyrics .replace(/(?:\r\n|\r|\n)/g, '<br>');
+          return searchResults;
+        }
+      } catch (error){
+        console.error('GetLyrics broke', error);
+        throw error;
+      }
     }
   },
 });
