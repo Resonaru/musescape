@@ -1,7 +1,7 @@
 # Musescape
 #### A music discussion website made with music producers and music enthusiasts in mind.
 
-[https://musescape-89f0a.web.app/]([url](https://musescape-89f0a.web.app/))
+[https://musescape-89f0a.web.app/](https://musescape-89f0a.web.app/)
 
 [Gryphon Kumfert](https://github.com/GLKumfert)
 
