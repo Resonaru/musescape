@@ -126,20 +126,18 @@ const songConverter = {
 </script>
 
 <template>
-    <!-- <div class="scrollable text-center green flex-grow-1 flex-shrink-0 overflow-auto"> -->
         <div class="w-100%">
-            <v-row dense class="d-flex w-100% fill-height ml-300px mr-300px float">
+            <v-row dense class="d-flex justify-center">
                 <template v-if="loading">
                     <h1>Loading feed...</h1>
                 </template>
                 <template v-else>
                     <template v-for="songItem in songList">
-                        <v-col>
+                        <v-col cols="12">
                             <SongCard :songObject="songItem"/>
                         </v-col>
                     </template> 
                 </template>
             </v-row>
         </div>
-    <!-- </div> -->
 </template>

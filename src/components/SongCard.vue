@@ -3,40 +3,40 @@
 
 <template>
     <RouterLink :to="'/song/'+songObject.ID">
-    <v-card color="" theme="dark">
-        <div class="d-flex flex-no-wrap justify-space-between w-100%" width="100%">
+    <v-card color="#282733" theme="dark" style="padding:5%; border-radius: 1%;">
+        <div class="d-flex flex-no-wrap justify-space-between" >
             <div>
-            <v-card-title class="text-h5 overflow-auto">
-                {{songObject.title.length < 40 ? songObject.title : `${songObject.title.substring(0,30)}...`}}
-            </v-card-title>
+                <v-card-title class="text-h5 overflow-auto">
+                    {{songObject.title.length < 30 ? songObject.title : `${songObject.title.substring(0,20)}...`}}
+                </v-card-title>
 
-            <v-card-subtitle class="overflow-auto">{{ songObject.artist }}</v-card-subtitle>
-            <v-card-text class="overflow-auto">{{ songObject.text }}</v-card-text>
-            
-            <v-card-actions>
-                <v-btn
-                class="ms-2"
-                variant="outlined"
-                size="small"
-                >
-                Join Discussion
-                </v-btn>
-                <v-chip
-                class="ma-2"
-                color="pink"
-                text-color="white"
-                >
-                {{ songObject.numPosts + ' posts' }}
-                </v-chip>
-            </v-card-actions>
+                <v-card-subtitle class="overflow-auto">{{ songObject.artist }}</v-card-subtitle>
+                <v-card-text class="overflow-auto">{{ songObject.text }}</v-card-text>
+                
+                <v-card-actions>
+                    <v-btn
+                    class="ms-2"
+                    variant="outlined"
+                    size="small"
+                    >
+                    Join Discussion
+                    </v-btn>
+                    <v-chip
+                    class="ma-2"
+                    color="pink"
+                    text-color="white"
+                    >
+                    {{ songObject.numPosts + ' posts' }}
+                    </v-chip>
+                </v-card-actions>
             </div>
 
             <v-avatar
-            class="ma-3"
-            size="125"
+            class="ma-5"
+            size="10rem"
             rounded="0"
             >
-            <v-img :src="songObject.img"></v-img>
+            <v-img :src="songObject.img"  style="border-radius: 15%;"></v-img>
             </v-avatar>
         </div>
         </v-card>
