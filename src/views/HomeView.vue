@@ -3,10 +3,10 @@ import Feed from '../components/Feed.vue'
 </script>
 
 <template>
-      <v-main class="w-auto">
-      <Feed/>
+      <v-main class="w-auto flex-fill">
+        <Feed />
       </v-main>
-      <v-navigation-drawer location="right" style="background-color: black;">   
+      <v-navigation-drawer location="right" color="#282733">   
       </v-navigation-drawer>
 
       <!-- 

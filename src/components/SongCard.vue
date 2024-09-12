@@ -3,7 +3,7 @@
 
 <template>
     <RouterLink :to="'/song/'+songObject.ID">
-    <v-card color="#1F7087" theme="dark">
+    <v-card color="" theme="dark">
         <div class="d-flex flex-no-wrap justify-space-between w-100%" width="100%">
             <div>
             <v-card-title class="text-h5 overflow-auto">

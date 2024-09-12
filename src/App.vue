@@ -31,15 +31,16 @@ export default{
   <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
   <v-container>
     <v-layout class="rounded rounded-md">
-    <v-app-bar app color="rgb(16,16,16)">
+    <v-app-bar app color="#282733">
       <v-app-bar-nav-icon icon="mdi-music" style="color: green">
         <RouterLink to="/"></RouterLink>
       </v-app-bar-nav-icon>
-      <v-toolbar-title class="mx-auto" style="color: hsla(160, 100%, 37%, 1);;">Musescape</v-toolbar-title>
+      <v-img src="musescape.webp" ></v-img>
+      <!-- <v-toolbar-title class="mx-auto" style="color: hsla(160, 100%, 37%, 1);;">Musescape</v-toolbar-title> -->
       <div class="mx-auto">
         <v-sheet class="d-flex">
           <div>
-            <Search style="width: 300px;" />
+            <Search style="width: 40rem;" />
           </div>
         </v-sheet>
 
@@ -48,10 +49,8 @@ export default{
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
     </v-app-bar>
       
-    <v-navigation-drawer location="left" :width="300">
-      <v-list>
+    <v-navigation-drawer color="#282733" location="left" :width="300">
         <Sidebar/>
-      </v-list>
     </v-navigation-drawer>
 
 
@@ -102,5 +101,9 @@ header {
     /* padding: 1rem 0; */
     margin-top: 1rem;
   }
+/* 
+  title {
+    margin: 
+  } */
 }
 </style>

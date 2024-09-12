@@ -9,8 +9,6 @@
   </div> -->
   <div>
     <v-main >
-
-      <v-img min-width="1000" class="rounded-xl error" src="https://files.catbox.moe/hu414f.png"></v-img>
       <h1 class="text-center">Notifications currently available</h1>
     </v-main>
     
