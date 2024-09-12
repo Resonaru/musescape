@@ -45,7 +45,7 @@ export default{
           </v-sheet>
         </div>
       <v-spacer></v-spacer>
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
     </v-app-bar>
       
     <v-navigation-drawer color="#282733" location="left" :width="300">
@@ -97,8 +97,7 @@ header {
     margin-left: -1rem;
     font-size: 1rem;
     background-color: rgb(16, 16, 16);
-    /* padding: 1rem 0; */
-    margin-top: 1rem;
+    padding: 1rem 0;
   }
   #navbar-logo{
     height: 12em;

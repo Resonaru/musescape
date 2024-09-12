@@ -33,7 +33,7 @@
     vertical-align: text-top;
     margin: 5px;
     border-radius: 25px;
-    background-color: #423a42;
+    background-color: #282733;
     max-height: 200px;
   }
   

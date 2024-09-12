@@ -70,16 +70,16 @@
 
 <!-- // this is useless currently -->
 <template>
-  <v-card class="post">
+  <v-card class="post" style="padding: 2%;">
     <div class="text" style="color:rgb(245, 245, 245)">
     <h1> {{ postData.title }}</h1> 
     <p>
       <v-avatar style="float:left" color="surface-variant" :image="postData.author.avatarURL"></v-avatar> 
-        <span style="float:left"> {{ ' ' + postData.author.username }}</span>
+        <span style="float:left; padding-left:2%"> {{ ' ' + postData.author.username }}</span>
         <span style="float:right">Likes: {{ postData.likes }}</span>
     </p> <br/> <br/>
     <!-- displays content -->
-    <p v-html="postData.content"></p>
+    <p style="padding: 2%;" v-html="postData.content"></p>
     <!-- Button to toggle PostForm visibility -->
       <!-- FIXME -->
     <div v-if="loggedUser === postData.author.username">
@@ -111,7 +111,7 @@
   min-height: 300px;
   margin: 5px;
   border-radius: 25px;
-  background-color: #423a42;
+  background-color: #282733;
 }
 
 .text {
