@@ -40,7 +40,7 @@ export default{
       <div class="mx-auto">
         <v-sheet class="d-flex">
           <div>
-            <Search style="width: 40rem;" />
+            <Search style="width: 40rem; color:#223333" />
           </div>
         </v-sheet>
 

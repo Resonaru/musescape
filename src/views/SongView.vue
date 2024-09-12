@@ -2,7 +2,7 @@
       <!-- Right side (Song Card) -->
       <!-- <v-navigation-drawer location="right" style="background-color: black;" :width="325"> -->
         
-        <v-navigation-drawer location="right" style="background-color: black;" :width="450">
+        <v-navigation-drawer location="right" style="background-color: #282733;" :width="450">
           <SongInfoCard :songID="this.id"/>
         </v-navigation-drawer>
 

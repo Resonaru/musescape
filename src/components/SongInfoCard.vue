@@ -162,11 +162,10 @@ export default {
   color: #FFFFFF
 }
 .song-artist {
-  color: #959090
+  color: #ff6a92
 }
 
 .song-card {
-
-  background-color: #423A42;
+  background-color: #353445;
 }
 </style>
