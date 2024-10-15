@@ -1,6 +1,6 @@
 <!-- Search.vue -->
 <template>
-  <div class="bg-black">
+  <div class="text-white" style="background-color: #282733; padding: 5px;">
     <v-autocomplete
       ref="autocompleteRef"
       v-model="select"
@@ -122,3 +122,7 @@ export default {
 
 };
 </script>
+
+<style>
+
+</style>

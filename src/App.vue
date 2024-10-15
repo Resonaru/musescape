@@ -13,6 +13,10 @@ import { mapStores } from 'pinia';
 export default{
   computed: {
     ...mapStores(useSpotifyAuthStore), 
+    isSongPage() {
+      console.log(this.$route.name);
+      return this.$route.name == "song" || this.$route.name == "post";
+    }
   },
   async created() { 
     // await this.spotifyAuthStore.getSongByID('7fEI29hmaWcCMPi8VJf33C');
@@ -20,8 +24,7 @@ export default{
   components: {
     Sidebar,
     Search
-
-  }
+  },
 }
 
 
@@ -31,30 +34,25 @@ export default{
   <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
   <v-container>
     <v-layout class="rounded rounded-md">
-    <v-app-bar app color="rgb(16,16,16)">
-      <v-app-bar-nav-icon icon="mdi-music" style="color: green">
-        <RouterLink to="/"></RouterLink>
-      </v-app-bar-nav-icon>
-      <v-toolbar-title class="mx-auto" style="color: hsla(160, 100%, 37%, 1);;">Musescape</v-toolbar-title>
-      <div class="mx-auto">
-        <v-sheet class="d-flex">
-          <div>
-            <Search style="width: 300px;" />
-          </div>
-        </v-sheet>
-
-      </div>
+    <v-app-bar app color="#282733">
+      <RouterLink to="/">
+        <v-img src="src\assets\musescape.webp" alt="logo" id="navbar-logo"/>
+      </RouterLink>
+      <!-- <v-toolbar-title class="mx-auto" style="color: hsla(160, 100%, 37%, 1);;">Musescape</v-toolbar-title> -->
+        <div class="mx-auto d-flex justify-center" style="position: absolute; width:100%;">
+          <v-sheet>
+            <Search style="padding-top: 5%; padding-bottom: 2%; width: 40rem; color:#223333" />
+          </v-sheet>
+        </div>
       <v-spacer></v-spacer>
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
     </v-app-bar>
       
-    <v-navigation-drawer location="left" :width="300">
-      <v-list>
+    <v-navigation-drawer color="#282733" location="left" :width="300">
         <Sidebar/>
-      </v-list>
     </v-navigation-drawer>
 
-
+    <v-navigation-drawer v-if="!isSongPage" location="right" color="#282733" width="300"/>
     <RouterView/>
 
 
@@ -99,8 +97,13 @@ header {
     margin-left: -1rem;
     font-size: 1rem;
     background-color: rgb(16, 16, 16);
-    /* padding: 1rem 0; */
-    margin-top: 1rem;
+    padding: 1rem 0;
+  }
+  #navbar-logo{
+    height: 12em;
+    width: 12em;
+    margin-left: 3em;
+    margin-right: 3em;
   }
 }
 </style>

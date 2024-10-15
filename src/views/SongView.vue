@@ -2,13 +2,13 @@
       <!-- Right side (Song Card) -->
       <!-- <v-navigation-drawer location="right" style="background-color: black;" :width="325"> -->
         
-        <v-navigation-drawer location="right" style="background-color: black;" :width="450">
+        <v-navigation-drawer location="right" style="background-color: #282733;" :width="400">
           <SongInfoCard :songID="this.id"/>
         </v-navigation-drawer>
 
 
     <!-- <v-main class="d-flex align-center justify-center" style="min-height: 300px;"> -->
-      <v-main class="d-flex align-center">
+      <v-main class="d-flex align-center justify-center">
       <v-row>
           <v-col col="12">
             <div class="d-flex justify-space-between align-center">
@@ -24,7 +24,7 @@
               <template v-else>
                 <v-btn color="primary"
                   @click="toLogin">
-                  Log in to make posts
+                  Log in to post
                 </v-btn>
               </template>
             </div>
@@ -59,13 +59,13 @@
                 <template v-for="post in posts">
                   <v-col col="12">
                     <v-hover v-slot="{ isHovering, props }">
-                    <v-card class="rounded-xl song-card" color="#5A5252" theme="dark" min-width="600"  :elevation="isHovering ? 12 : 2">
+                    <v-card class="rounded-l song-card pa-5" color="#282733" theme="dark" style="min-width: 30rem;" :elevation="isHovering ? 12 : 2">
                       <v-card-subtitle>
-                        <v-avatar color="surface-variant" :image="post.avatarURL"></v-avatar>
+                        <v-avatar style="margin-right: 2%;" color="surface-variant" :image="post.avatarURL"></v-avatar>
                         {{ post.author }}
                       </v-card-subtitle>
                       <RouterLink :to="'/post/' + post.ID">
-                      <v-card-title>{{ post.title }}</v-card-title>
+                      <v-card-title style="color: white; font-weight: bold;">{{ post.title }}</v-card-title>
                       </RouterLink>
                       <v-card-text v-html="post.content"></v-card-text>
                     </v-card>

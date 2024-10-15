@@ -159,7 +159,7 @@
   /* width: 800px; */
   margin: 5px;
   border-radius: 25px;
-  background-color: #423a42;
+  background-color: #282733;
 }
 
 .text {

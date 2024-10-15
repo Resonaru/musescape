@@ -1,10 +1,9 @@
 <template>
-    <v-navigation-drawer location="right" style="background-color: black;" :width="400">
+    <v-navigation-drawer location="right" style="background-color: #282733;" :width="400">
           <SongInfoCard :songID="songId" v-if="readyToLoadSong"/>
     </v-navigation-drawer>
 
-
-    <v-main>
+    <v-main class="d-flex align-center justify-center">
         <template v-if="loading">
           Loading...
         </template>
@@ -12,7 +11,7 @@
             <div class="postswrapper">
                 <RouterLink :to="'/song/' + songId">
                 <v-row class="back">
-                    <h2>Return to {{ songTitle }}</h2>
+                    <h2 style="padding-left: 5%; color: white;">Return to {{ songTitle }}</h2>
                 </v-row>
                 </RouterLink>
                 <Post :postData="postData" :id="this.id"/>
