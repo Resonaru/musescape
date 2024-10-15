@@ -1,11 +1,17 @@
-# Musescape
-#### A music discussion website made with music producers and music enthusiasts in mind.
+<h1 align=center>
+  <a href="https://musescape-89f0a.web.app/">
+    <img src="./src/assets/musescape.webp" width=350 height=100>
+  </a>
+</h1>
+<p align=center>
+  <i align=center>Music discussion platform for music producers and enthusiasts alike. 🎵</i>
+</p>
 
-[https://musescape-89f0a.web.app/](https://musescape-89f0a.web.app/)
+### Developers
 
 [Gryphon Kumfert](https://github.com/GLKumfert)
 
-[Tingxuan Wu](https://github.com/twu148)
+[Tingxuan Wu](https://github.com/tingtingtingtingtingtingtingtingtingtin)
 
 [Komay Sugiyama](https://github.com/zenxha)
 
