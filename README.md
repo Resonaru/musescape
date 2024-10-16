@@ -7,7 +7,10 @@
   <i align=center>Music discussion platform for music producers and enthusiasts alike. 🎵</i>
 </p>
 
-### Developers
+## Figma
+[Musescape Figma File](https://www.figma.com/design/AjduVEWPQlGNqSNX8Bfqp9/Musescape?node-id=0-1&node-type=canvas&t=EhbzLtZBNd9FVSe9-0)
+
+## Developers
 
 [Gryphon Kumfert](https://github.com/GLKumfert)
 
